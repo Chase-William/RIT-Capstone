@@ -1,8 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-model user {
-  
+model User {
+  id        Int     @id @default(autoincrement())
+  username  String  @unique // Added mod, Make this unique across db
+  password  String
+  role      String
+  email     String  @unique // Added mod
+  courses   Course[] // Implicit many to many with Course
+}
+
+model Student {
+  id              Int     @id @default(autoincrement())
+  first_name      String
+  last_name       String
+  email           String  @unique
+  courses         Course[] // Implicit many to many with Course
+  // Student can have many login failed login attempts
+  login_attempts  FailedLoginAttempt[] 
+}
+
+model Course {
+  id          Int     @id @default(autoincrement())
+  name String
+  professors  User[] // Implicit many to many with User (Professor)
+  students    Student[] // Implicit many to many with Student
+}
+
+model FailedLoginAttempt {
+  id        Int     @id @default(autoincrement())
+  // Each login attempt can only be associated with a single student one to many
+  student   Student @relation(fields: [student_id], references: [id])
+  student_id Int
+}
+
+model FailedAcquisitionAttempt {
+  id            Int       @id @default(autoincrement())
+  start_time     DateTime
+  finished_time  DateTime
+  status        String
+  file_name      String?
+  file_ext       String?
+  Url           String?
+  http_code      String?
 }
