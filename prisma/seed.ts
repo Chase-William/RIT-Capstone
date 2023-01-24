@@ -3,6 +3,7 @@
  */
 
 import { PrismaClient } from "@prisma/client"
+import { PROF_ROLE } from "../pages/api/user"
 const prisma = new PrismaClient()
 
 async function main() {
@@ -23,13 +24,13 @@ async function main() {
         {
           username: "Ben O. Verbich",
           password: "Please",
-          role: "prof",
+          role: PROF_ROLE,
           email: "bigben@hotmail.com"
         },
         {
           username: "Adolf Oliver Nipple",
           password: "Both",
-          role: "prof",
+          role: PROF_ROLE,
           email: "olfnip@gmail.com"
         },
         {
@@ -41,31 +42,31 @@ async function main() {
         {
           username: "Long Henry",
           password: "4.53 Inches",
-          role: "prof",
+          role: PROF_ROLE,
           email: "longerthanu@hotmail.com"
         },
         {
           username: "Craven Moorehead",
           password: "ravenhead",
-          role: "prof",
+          role: PROF_ROLE,
           email: "moorehead@hotmail.com"
         },
         {
           username: "Dang Lin-Wang",
           password: "airtimer",
-          role: "prof",
+          role: PROF_ROLE,
           email: "airtime@hotmail.com"
         },
         {
           username: "E. Norma Scock",
           password: "kcocs",
-          role: "prof",
+          role: PROF_ROLE,
           email: "scock@hotmail.com"
         },
         {
           username: "Ben N. Syder",
           password: "justhetip",
-          role: "prof",
+          role: PROF_ROLE,
           email: "nsyder@hotmail.com"
         }
       ]

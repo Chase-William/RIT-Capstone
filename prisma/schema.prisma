@@ -17,6 +17,7 @@ model User {
   role      String
   email     String  @unique // Added mod
   courses   Course[] // Implicit many to many with Course
+//  auth      Auth[]
 }
 
 model Student {
@@ -53,3 +54,10 @@ model FailedAcquisitionAttempt {
   Url           String?
   http_code      String?
 }
+
+// model Auth {
+//   id      Int     @id @default(autoincrement())
+//   token   String  @db.VarChar(500) @unique
+//   user    User    @relation(fields: [user_id], references: [id])
+//   user_id Int
+// }

@@ -5,3 +5,18 @@
 export function makeSerializable<T extends any> (o: T): T {
   return JSON.parse(JSON.stringify(o))
 }                                                                       
+
+export type Cookie = {
+  auth: string
+}
+
+export function parseCookie(str): Cookie {
+  return str
+    .split(';')
+    .map(v => v.split('='))
+    .reduce((acc, v) => {
+      acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+      return acc;
+    }, {});
+}
+  

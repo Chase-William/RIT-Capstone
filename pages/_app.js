@@ -3,7 +3,6 @@ import '../styles/globals.css';
 import { NextUIProvider } from '@nextui-org/react';
 import { SWRConfig } from 'swr'
 
-// const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 export default function App({ Component, pageProps }) {
   return (

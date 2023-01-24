@@ -8,7 +8,9 @@
   "dependencies": {
     "@nextui-org/react": "^1.0.0-beta.12",
     "@prisma/client": "^4.9.0",
-    "iron-session": "^6.3.1",
+    "axios": "^1.2.3",
+    "bcrypt": "^5.1.0",
+    "jsonwebtoken": "^9.0.0",
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0",
