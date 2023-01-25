@@ -14,8 +14,9 @@ export const USER_ID_HEADER_NAME = 'user-id'
 
 export async function middleware(request: NextRequest) {
   const AUTH_HEADER = 'Authorization'
-  console.log('asdasdasdasdasdasd')
-  // // console.log(request.headers.has(AUTH_HEADER))
+  console.log('middleware')
+  console.log(request.headers)
+  
   if (!request.headers.has(AUTH_HEADER))
     return NextResponse.next({
       status: 400,
@@ -28,17 +29,6 @@ export async function middleware(request: NextRequest) {
     console.log('-------------------------------------------------')
     const token = await verify(authHeader.split(' ')[1], process.env.JWT_PRIVATE_KEY);
     request.headers.set(USER_ID_HEADER_NAME, token.id)    
-    // const user = await prisma.user.findUnique({
-    //   where: {
-    //     id: id
-    //   }
-    // })
-
-  //   // console.log('id: ' + id)
-
-    // const res = NextResponse.next()
-    // res.headers.set(USER_ID_HEADER_NAME, token.id)
-    // return res
   }
 }
 
@@ -47,6 +37,6 @@ export async function middleware(request: NextRequest) {
  */
 export const config = {
   matcher: [
-    '/courses'
+    '/api/course'
   ]
 }

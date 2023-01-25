@@ -2,10 +2,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr'
 import prisma from '../lib/prisma';
-import { getUserIdFromRequest } from '../lib/util';
+import { getToken, getUserIdFromRequest } from '../lib/util';
 import { NextRequest, NextResponse } from 'next/server';
 import { Course } from '@prisma/client';
 import { post } from '../lib/fetch-wrapper';
+import { userInfo } from '../lib/useLogin';
 
 // Display list of posts (in /pages/index.tsx)
 
@@ -47,10 +48,17 @@ export default function Courses() {
   // const { data: courses, error } = useSWR('/api/course', fetcher)
 
   useEffect(() => {
-    (async () => {
-      setCourses(await getCourses())
-    })()
-  }, [])
+    console.log('get info for courses')
+    console.log('token: ' + getToken())
+    axios({
+      url: '/api/course',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': getToken() },
+      withCredentials: true
+    })
+    .then(res => res.data)
+    .then(data => setCourses(data))
+  })
 
   // if (isLoading) return <p>Loading</p>
   // if (!courses) return <p>No course data available.</p>

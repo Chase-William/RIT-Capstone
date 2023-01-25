@@ -21,7 +21,6 @@ export type User = {
   username: string
   role: string  
   isLoggedIn: boolean
-  token: string
 }
 
 async function userRoute(req: NextApiRequest, res: NextApiResponse<User>) {

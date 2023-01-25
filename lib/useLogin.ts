@@ -10,8 +10,7 @@ export default function useLogin(
   password: string,
   setIsLoading: (v: boolean) => void,
   setError: (v: Error) => void,
-  setUser: (user: User) => void,
-  setApiKey: (key: string) => void
+  setUser: (user: User) => void
   ) {
   const { data, error, isLoading } = useSWR<{ user: User, apiKey: string }>('/api/user')
   const { user } = data

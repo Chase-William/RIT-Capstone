@@ -3,7 +3,7 @@ import utilStyles from '../../styles/utils.module.css';
 import { FormEvent, useState } from "react";
 import axios from "axios";
 import { ADMIN_ROLE, PROF_ROLE, User } from "../../pages/api/user";
-import { onLoggedIn } from "../../lib/util";
+import { onLoggedIn, setToken } from "../../lib/util";
 
 export type LoginRequest = {
   user: User
@@ -36,6 +36,7 @@ export default function Login({
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const result = await login(username, password)
+    setToken(result.apiKey)
     setUser(result.user)
     onLoggedIn(result.user)
   }  

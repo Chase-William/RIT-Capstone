@@ -5,7 +5,7 @@ import { ADMIN_ROLE, PROF_ROLE, User } from "../../pages/api/user";
 import axios from "axios";
 import { LoginRequest } from "./login";
 import Router from "next/router";
-import { onLoggedIn } from "../../lib/util";
+import { onLoggedIn, setToken } from "../../lib/util";
 
 async function register(
   username: string, 
@@ -55,6 +55,7 @@ export default function Register({
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const result = await register(username, password, email, getRole)
+    setToken(result.apiKey)
     setUser(result.user)
     onLoggedIn(result.user)
   }

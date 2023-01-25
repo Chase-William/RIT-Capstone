@@ -41,9 +41,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       user: {
        username: userModel.username,
        role: userModel.role,
-       isLoggedIn: true,
-       token: apiKey
-      } as User
+       isLoggedIn: true
+      } as User,
+      apiKey: apiKey
     })
 
     // const user = { 

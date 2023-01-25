@@ -41,6 +41,9 @@ export function onLoggedIn(user: User) {
     Router.push('/accounts')
 }
 
+export const getToken = () => localStorage.getItem('rawrs-token')
+export const setToken = (value: string) => localStorage.setItem('rawrs-token', value)
+
 /**
  * Utility function to get the user id from the request header.
  * @param req 
