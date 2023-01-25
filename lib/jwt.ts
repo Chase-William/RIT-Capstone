@@ -1,11 +1,11 @@
 import { SignJWT, jwtVerify, type JWTPayload } from 'jose';
 
 export type Token = {
-  id: string
+  id: number
 }
 
 /**
- * Must use Jose for jwt because it can run in the Node Edge runtime.
+ * Must use Jose for jwt because it can run in the Node Edge runtime required by Next.js middleware.ts.
  * @param payload 
  * @param secret 
  * @returns 
@@ -22,10 +22,10 @@ export async function sign(payload: Token, secret: string): Promise<string> {
         .sign(new TextEncoder().encode(secret));
 }
 
-export async function verify(token: string, secret: string): Promise<Token> {
+export async function verify(token: string, secret: string): Promise<any> {
     const { payload } = await jwtVerify(token, new TextEncoder().encode(secret));
     // run some checks on the returned payload, perhaps you expect some specific values    
 
     // if its all good, return it, or perhaps just return a boolean
-    return { id: payload.sub };
+    return payload;
 }

@@ -24,7 +24,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
     // TODO: This the logic below is identical to the api/login jwt creation and response section
 
-    const apiKey = await sign({ id: `${userModel.id}` }, process.env.JWT_PRIVATE_KEY)
+    const apiKey = await sign({ id: userModel.id }, process.env.JWT_PRIVATE_KEY)
 
     // const token = jwt.sign({
     //   id: userModel.id

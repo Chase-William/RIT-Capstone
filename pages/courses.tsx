@@ -5,8 +5,8 @@ import prisma from '../lib/prisma';
 import { getToken, getUserIdFromRequest } from '../lib/util';
 import { NextRequest, NextResponse } from 'next/server';
 import { Course } from '@prisma/client';
-import { post } from '../lib/fetch-wrapper';
 import { userInfo } from '../lib/useLogin';
+import { post } from '../lib/fetch-wrapper';
 
 // Display list of posts (in /pages/index.tsx)
 
@@ -18,7 +18,7 @@ import { userInfo } from '../lib/useLogin';
 
 //   const id = getUserIdFromRequest(req)
 
-  
+
 
 //   // Get all courses where the course's professor mapping contains this professor via the id
 //   const courses = prisma.course.findMany({
@@ -38,8 +38,8 @@ import { userInfo } from '../lib/useLogin';
 //   }
 // }
 
-async function getCourses(): Promise<Course[]> {  
-  return await post('/api/course', {})
+async function getCourses(): Promise<Course[]> {
+  return await post('/api/course', {}).then(data => data.courses)
 }
 
 export default function Courses() {
@@ -48,22 +48,18 @@ export default function Courses() {
   // const { data: courses, error } = useSWR('/api/course', fetcher)
 
   useEffect(() => {
-    console.log('get info for courses')
-    console.log('token: ' + getToken())
-    axios({
-      url: '/api/course',
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': getToken() },
-      withCredentials: true
-    })
-    .then(res => res.data)
-    .then(data => setCourses(data))
-  })
+    //console.log('get info for courses')
+    //console.log('token: ' + getToken())
+
+    (async () => { 
+      setCourses(await getCourses()) }
+    )()
+  }, [])
 
   // if (isLoading) return <p>Loading</p>
   // if (!courses) return <p>No course data available.</p>
 
-
+  console.log(courses)
 
   return (
     <ul>

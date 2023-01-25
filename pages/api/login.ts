@@ -29,8 +29,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!bcrypt.compare(hash, userModel.password))
       return res.status(400).end()
 
-    const apiKey = await sign({ id: `${userModel.id}` }, process.env.JWT_PRIVATE_KEY)
-
+    console.log(userModel.id)
+    const apiKey = await sign({ id: userModel.id }, process.env.JWT_PRIVATE_KEY)
+    
     // const token = jwt.sign({
     //   id: userModel.id
     // }, // Provide private key

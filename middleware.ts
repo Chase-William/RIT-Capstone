@@ -13,23 +13,42 @@ import { verify } from './lib/jwt'
 export const USER_ID_HEADER_NAME = 'user-id'
 
 export async function middleware(request: NextRequest) {
-  const AUTH_HEADER = 'Authorization'
-  console.log('middleware')
-  console.log(request.headers)
+  /*
   
-  if (!request.headers.has(AUTH_HEADER))
+  Information about this approach for setting headers: https://github.com/vercel/next.js/pull/41380
+  
+  */
+  
+  const AUTH_HEADER = 'authorization'
+  
+  // Clone request headers
+  const headers = new Headers(request.headers);
+
+  if (!headers.has(AUTH_HEADER))
     return NextResponse.next({
       status: 400,
       statusText: 'Missing <Authorization> token in request header.'
     })
 
   const authHeader = request.headers.get(AUTH_HEADER);
-  console.log('authheader: ' + authHeader)
+  // console.log('Middleware - authheader: ' + authHeader)
   if (authHeader) {
     console.log('-------------------------------------------------')
     const token = await verify(authHeader.split(' ')[1], process.env.JWT_PRIVATE_KEY);
-    request.headers.set(USER_ID_HEADER_NAME, token.id)    
+    // Add a new request header
+    headers.append(USER_ID_HEADER_NAME, token.id)   
+    console.log(request.headers.get(USER_ID_HEADER_NAME)) 
   }
+
+  const res = NextResponse.next({
+    // New option `request.headers` which accepts a Headers object
+    // overrides request headers with the specified new ones.
+    request: {
+      headers
+    }
+  });
+
+  return res
 }
 
 /**
