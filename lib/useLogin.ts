@@ -1,6 +1,9 @@
 import useSWR from 'swr'
-import { User } from '../pages/api/user'
+import { ADMIN_ROLE, PROF_ROLE, User } from '../pages/api/user'
 import { useEffect } from 'react'
+import Router from 'next/router'
+
+export let userInfo: User
 
 export default function useLogin(
   username: string, 
@@ -11,7 +14,7 @@ export default function useLogin(
   setApiKey: (key: string) => void
   ) {
   const { data, error, isLoading } = useSWR<{ user: User, apiKey: string }>('/api/user')
-  const { user, apiKey } = data
+  const { user } = data
 
   useEffect(() => {
     if (isLoading)
@@ -19,8 +22,8 @@ export default function useLogin(
     else if (error)
       setError(error)
     else {
-      setUser(user)
-      setApiKey(apiKey)
+      userInfo = user
+      setUser(user)   
     }
   }, [data, error, isLoading])
 }

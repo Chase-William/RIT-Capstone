@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
-import jwt from 'jsonwebtoken'
 import { User } from "./user";
+import { sign } from "../../lib/jwt";
 const bcrypt = require('bcrypt');
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
@@ -20,22 +20,24 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
       }
     })
 
-    console.log(userModel)
+    // console.log(userModel)
 
     // TODO: This the logic below is identical to the api/login jwt creation and response section
 
-    const token = jwt.sign({
-      id: userModel.id
-    }, // Provide private key
-      process.env.JWT_PRIVATE_KEY
-    )
+    const apiKey = await sign({ id: `${userModel.id}` }, process.env.JWT_PRIVATE_KEY)
+
+    // const token = jwt.sign({
+    //   id: userModel.id
+    // }, // Provide private key
+    //   process.env.JWT_PRIVATE_KEY
+    // )
 
     return res.json({
       user: {
        username: userModel.username,
        role: userModel.role 
       } as User,
-      apiKey: token
+      apiKey: apiKey
     })
   }
   catch (error) {

@@ -2,7 +2,8 @@ import { Button, Input, Text } from "@nextui-org/react";
 import utilStyles from '../../styles/utils.module.css';
 import { FormEvent, useState } from "react";
 import axios from "axios";
-import { User } from "../../pages/api/user";
+import { ADMIN_ROLE, PROF_ROLE, User } from "../../pages/api/user";
+import { onLoggedIn } from "../../lib/util";
 
 export type LoginRequest = {
   user: User
@@ -25,11 +26,9 @@ async function login(username: string, password: string): Promise<LoginRequest> 
 }
 
 export default function Login({
-  setUser,
-  setApiKey
+  setUser
 }: {
-  setUser: (user: User) => void,
-  setApiKey: (apiKey: string) => void
+  setUser: (user: User) => void
 }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -38,7 +37,7 @@ export default function Login({
     e.preventDefault()
     const result = await login(username, password)
     setUser(result.user)
-    setApiKey(result.apiKey)
+    onLoggedIn(result.user)
   }  
 
   return (

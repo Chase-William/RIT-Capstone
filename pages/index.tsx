@@ -5,9 +5,8 @@ import Register from '../components/auth/register';
 import indexStyles from './index.module.css'
 import { useState } from 'react';
 import axios from 'axios';
+import Router from 'next/router';
 import { User } from './api/user';
-
-const fetcher = url => axios.get(url).then(res => res.data)
 
 export default function Home() {
   // here we just check if user is already logged in and redirect to profile
@@ -16,11 +15,11 @@ export default function Home() {
   // })
   // useLogin()
 
+  // https://stackoverflow.com/questions/72221255/how-to-pass-data-from-one-page-to-another-page-in-next-js
+
   const [ user, setUser ] = useState<User>()
-  const [ apiKey, setApiKey ] = useState('')
 
   console.log(user)
-  console.log(apiKey)
 
   const [loginErrorMsg, setLoginErrorMsg] = useState('')
   const [regErrorMsg, setRegErrorMsg] = useState('')
@@ -28,8 +27,8 @@ export default function Home() {
   return (
     <Layout>
       <div className={`${utilStyles.horizontal} ${indexStyles.evenly}`}>
-        <Login setUser={setUser} setApiKey={setApiKey}/>
-        <Register setUser={setUser} setApiKey={setApiKey}/>
+        <Login setUser={setUser}/>
+        <Register setUser={setUser}/>
       </div>
     </Layout>
     // <Layout home>

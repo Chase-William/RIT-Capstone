@@ -4,7 +4,13 @@
 
 import { PrismaClient } from "@prisma/client"
 import { PROF_ROLE } from "../pages/api/user"
+const bcrypt = require('bcrypt');
 const prisma = new PrismaClient()
+
+function hashPass(password: string): string {
+  const salt = bcrypt.genSaltSync(10);
+  return bcrypt.hashSync(password, salt);
+}
 
 async function main() {
   // const test = await prisma.user.create(
@@ -23,49 +29,49 @@ async function main() {
       data: [
         {
           username: "Ben O. Verbich",
-          password: "Please",
+          password: hashPass('123'),
           role: PROF_ROLE,
           email: "bigben@hotmail.com"
         },
         {
           username: "Adolf Oliver Nipple",
-          password: "Both",
+          password: hashPass('123'),
           role: PROF_ROLE,
           email: "olfnip@gmail.com"
         },
         {
           username: "Phil Mahoochie",
-          password: "Please",
+          password: hashPass('123'),
           role: "admin",
           email: "philmaplease@bullhornmail.com"
         },
         {
           username: "Long Henry",
-          password: "4.53 Inches",
+          password: hashPass('123'),
           role: PROF_ROLE,
           email: "longerthanu@hotmail.com"
         },
         {
           username: "Craven Moorehead",
-          password: "ravenhead",
+          password: hashPass('123'),
           role: PROF_ROLE,
           email: "moorehead@hotmail.com"
         },
         {
           username: "Dang Lin-Wang",
-          password: "airtimer",
+          password: hashPass('123'),
           role: PROF_ROLE,
           email: "airtime@hotmail.com"
         },
         {
           username: "E. Norma Scock",
-          password: "kcocs",
+          password: hashPass('123'),
           role: PROF_ROLE,
           email: "scock@hotmail.com"
         },
         {
           username: "Ben N. Syder",
-          password: "justhetip",
+          password: hashPass('123'),
           role: PROF_ROLE,
           email: "nsyder@hotmail.com"
         }

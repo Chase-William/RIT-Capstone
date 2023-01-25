@@ -14,12 +14,14 @@ import { NextApiRequest, NextApiResponse } from "next"
 //   id: number
 // }
 
-// export const PROF_ROLE = 'prof'
-// export const ADMIN_ROLE = 'admin'
+export const PROF_ROLE = 'professor'
+export const ADMIN_ROLE = 'admin'
 
 export type User = {
   username: string
   role: string  
+  isLoggedIn: boolean
+  token: string
 }
 
 async function userRoute(req: NextApiRequest, res: NextApiResponse<User>) {

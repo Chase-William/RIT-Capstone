@@ -1,8 +1,8 @@
 // import { withIronSessionApiRoute } from 'iron-session/next'
 import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../lib/prisma'
-import jwt from 'jsonwebtoken'
 import { User } from './user'
+import { sign } from '../../lib/jwt';
 const bcrypt = require('bcrypt');
 
 /**
@@ -29,18 +29,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!bcrypt.compare(hash, userModel.password))
       return res.status(400).end()
 
-    const token = jwt.sign({
-      id: userModel.id
-    }, // Provide private key
-      process.env.JWT_PRIVATE_KEY
-    )
+    const apiKey = await sign({ id: `${userModel.id}` }, process.env.JWT_PRIVATE_KEY)
+
+    // const token = jwt.sign({
+    //   id: userModel.id
+    // }, // Provide private key
+    //   process.env.JWT_PRIVATE_KEY
+    // )
 
     return res.json({
       user: {
        username: userModel.username,
-       role: userModel.role 
-      } as User,
-      apiKey: token
+       role: userModel.role,
+       isLoggedIn: true,
+       token: apiKey
+      } as User
     })
 
     // const user = { 

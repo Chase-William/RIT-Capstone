@@ -1,9 +1,11 @@
 import React, { FormEvent, useState } from "react";
 import { Input, Dropdown, Button, Text } from "@nextui-org/react";
 import utilStyles from '../../styles/utils.module.css';
-import { User } from "../../pages/api/user";
+import { ADMIN_ROLE, PROF_ROLE, User } from "../../pages/api/user";
 import axios from "axios";
 import { LoginRequest } from "./login";
+import Router from "next/router";
+import { onLoggedIn } from "../../lib/util";
 
 async function register(
   username: string, 
@@ -33,11 +35,9 @@ async function register(
 }
 
 export default function Register({
-  setUser,
-  setApiKey
+  setUser
 }: {
-  setUser: (user: User) => void,
-  setApiKey: (apiKey: string) => void
+  setUser: (user: User) => void
 }) {
   const [selected, setSelected] = useState(new Set(["student"]));
   const [username, setUsername] = useState('')
@@ -56,7 +56,7 @@ export default function Register({
     e.preventDefault()
     const result = await register(username, password, email, getRole)
     setUser(result.user)
-    setApiKey(result.apiKey)
+    onLoggedIn(result.user)
   }
 
   return (
