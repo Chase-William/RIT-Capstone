@@ -19,11 +19,6 @@ export default function Home() {
 
   const [ user, setUser ] = useState<User>()
 
-  console.log(user)
-
-  const [loginErrorMsg, setLoginErrorMsg] = useState('')
-  const [regErrorMsg, setRegErrorMsg] = useState('')
-
   return (
     <Layout>
       <div className={`${utilStyles.horizontal} ${indexStyles.evenly}`}>

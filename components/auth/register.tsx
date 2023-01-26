@@ -6,6 +6,7 @@ import axios from "axios";
 import { LoginRequest } from "./login";
 import Router from "next/router";
 import { onLoggedIn, setToken } from "../../lib/util";
+import { post } from "../../lib/fetch-wrapper";
 
 async function register(
   username: string, 
@@ -13,25 +14,13 @@ async function register(
   email: string,
   role: string
   ): Promise<LoginRequest> {
-  try {
-    return axios({
-      method: 'POST',
-      url: '/api/register',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: {
-        username: username,
-        password: password,
-        email: email,
-        role: role
-      }
-    })
-    .then(res => res.data)
-  }
-  catch (error) {
-    console.log(error.response.data)
-  }  
+  return await post('api/register', 
+  {
+    username: username,
+    password: password,
+    email: email,
+    role: role
+  })
 }
 
 export default function Register({

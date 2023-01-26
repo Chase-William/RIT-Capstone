@@ -50,9 +50,6 @@ export const setToken = (value: string) => localStorage.setItem('rawrs-token', v
  * @returns 
  */
 export function getUserIdFromRequest(req: NextApiRequest): number {
-
-  console.log(req.headers)
-
   const id = req.headers[USER_ID_HEADER_NAME]
 
   if (id) // Value is not fasly

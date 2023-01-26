@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import axios from "axios";
 import { ADMIN_ROLE, PROF_ROLE, User } from "../../pages/api/user";
 import { onLoggedIn, setToken } from "../../lib/util";
+import { post } from "../../lib/fetch-wrapper";
 
 export type LoginRequest = {
   user: User
@@ -11,18 +12,10 @@ export type LoginRequest = {
 }
 
 async function login(username: string, password: string): Promise<LoginRequest> {  
-  return axios({
-    method: 'POST',
-    url: '/api/login',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    data: {
-      username: username,
-      password: password
-    }
+  return await post('/api/login', {    
+    username: username,
+    password: password    
   })
-  .then(res => res.data)  
 }
 
 export default function Login({

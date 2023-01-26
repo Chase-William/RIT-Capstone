@@ -12,6 +12,33 @@ function hashPass(password: string): string {
   return bcrypt.hashSync(password, salt);
 }
 
+function getRandomInt(max: number): number {
+  return Math.floor(Math.random() * max);
+}
+
+async function newFailedAcquisition(studentId: number, courseId: number) {
+  await prisma.failedAcquisitionAttempt.create({
+    data: {
+      url: 'https://....',
+      start_time: new Date(Date.now() - getRandomInt(50000)),
+      finished_time: new Date(),
+      course: {
+        connect: {
+          id: courseId
+        }
+      },
+      file_name: 'brah',
+      file_ext: '.jpg',
+      http_code: '500',
+      student: {
+        connect: {
+          id: studentId
+        }
+      }
+    }
+  })
+}
+
 async function main() {
   // const test = await prisma.user.create(
   //   {
@@ -112,6 +139,59 @@ async function main() {
       }
     }
   })
+
+  await prisma.student.create({
+    data: {      
+      first_name: 'Jimmy',
+      last_name: 'Hoffa',
+      email: 'jxm4975@rit.edu',
+      courses: {
+        connect: [{ id: 1 }, { id: 2 }, { id: 3 }]
+      }
+    }
+  })
+
+  await prisma.student.create({
+    data: {      
+      first_name: 'John',
+      last_name: 'William',
+      email: 'jxw4623@rit.edu',
+      courses: {
+        connect: [{ id: 1 }, { id: 2 }, { id: 3 }]
+      }
+    }
+  })
+
+  await prisma.student.create({
+    data: {      
+      first_name: 'Piper',
+      last_name: 'Perri',
+      email: 'pxp7690@rit.edu',
+      courses: {
+        connect: [{ id: 1 }, { id: 2 }, { id: 3 }]
+      }
+    }
+  })
+
+  // New failure where student 1 tried to get resources from course 1, on three seperate occasions
+  await newFailedAcquisition(1, 1)
+  await newFailedAcquisition(1, 1)
+  await newFailedAcquisition(1, 1)
+  // course 2
+  await newFailedAcquisition(1, 2)
+  await newFailedAcquisition(1, 2)
+  // course 3
+  await newFailedAcquisition(1, 3)
+
+  // Student 2, same idea
+  await newFailedAcquisition(2, 1)
+  await newFailedAcquisition(2, 1)
+  await newFailedAcquisition(2, 1)
+  // course 2
+  await newFailedAcquisition(2, 2)
+  await newFailedAcquisition(2, 2)
+  // course 3
+  await newFailedAcquisition(2, 3)
 
   // const introToDatabaseCourse = prisma.course.findFirst({
   //   where: {

@@ -33,11 +33,10 @@ export async function middleware(request: NextRequest) {
   const authHeader = request.headers.get(AUTH_HEADER);
   // console.log('Middleware - authheader: ' + authHeader)
   if (authHeader) {
-    console.log('-------------------------------------------------')
     const token = await verify(authHeader.split(' ')[1], process.env.JWT_PRIVATE_KEY);
     // Add a new request header
     headers.append(USER_ID_HEADER_NAME, token.id)   
-    console.log(request.headers.get(USER_ID_HEADER_NAME)) 
+    // console.log(request.headers.get(USER_ID_HEADER_NAME)) 
   }
 
   const res = NextResponse.next({
