@@ -22,7 +22,6 @@ export function get(url: string) {
 
 export async function post(url, data) {
   // console.log('authHeader: ' + authHeader())
-  console.log('from post function')
   const res = await axios({
     url: url,
     method: 'POST',

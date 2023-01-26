@@ -15,6 +15,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             id: id
           }
         }
+      },
+      select: {
+        id: true,
+        name: true,
+        failed_acquisitions: {
+          select: {
+            id: true
+          }
+        }
       }
     })
 

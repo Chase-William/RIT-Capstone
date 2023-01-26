@@ -1,34 +1,47 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import useSWR from 'swr'
-import prisma from '../lib/prisma';
-import { getToken, getUserIdFromRequest } from '../lib/util';
-import { NextRequest, NextResponse } from 'next/server';
-import { Course } from '@prisma/client';
-import { userInfo } from '../lib/useLogin';
+import { Course, FailedAcquisitionAttempt } from '@prisma/client';
 import { post } from '../lib/fetch-wrapper';
 import CoursesComponent from '../components/courses'
 import StandardLayout from '../components/standard-layout'
 import Layout from '../components/layout';
+import Acquisitions from '../components/acqusitions';
 
-async function getCourses(): Promise<Course[]> {
+type CourseWithAcquisitionIds = {
+  id: number;
+  name: string;
+  failed_acquisitions: {
+      id: number;
+  }[];
+}
+
+async function getCourses(): Promise<CourseWithAcquisitionIds[]> {
   return await post('/api/course', {}).then(data => data.courses)
 }
 
 export default function Courses() {
-  const [courses, setCourses] = useState([])
+  const [courses, setCourses] = useState<CourseWithAcquisitionIds[]>();
+  const [acqusitionIds, setAcquisitionIds] = useState<number[]>()
 
   useEffect(() => {
     (async () => {
       setCourses(await getCourses())
-    }
-    )()
+    })()
   }, [])
+
+  useEffect(() => {
+    if (courses)
+      setAcquisitionIds(courses.flatMap(course => course.failed_acquisitions.map(acq => acq.id)))
+  }, [courses])
+
+// <Acquisitions acquisitions={courses.map(value => value.failed_acquisitions.map(v => v.id))}/>
+
+  if (!courses || !acqusitionIds)
+    return <p>Loading...</p>
 
   return (
     <Layout>
       <StandardLayout
-        topLeft={<p>Top Left</p>}
+        topLeft={<Acquisitions acquisitionIds={acqusitionIds}/>}
         topRight={<p>Top Right</p>}
         bottom={
           <CoursesComponent courses={courses} />

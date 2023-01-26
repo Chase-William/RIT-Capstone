@@ -31,9 +31,17 @@ export async function middleware(request: NextRequest) {
     })
 
   const authHeader = request.headers.get(AUTH_HEADER);
+
   // console.log('Middleware - authheader: ' + authHeader)
   if (authHeader) {
     const token = await verify(authHeader.split(' ')[1], process.env.JWT_PRIVATE_KEY);
+
+    if (!token)
+      return NextResponse.next({
+        status: 403,
+        statusText: 'Bearer token invalid.'
+      })
+
     // Add a new request header
     headers.append(USER_ID_HEADER_NAME, token.id)   
     // console.log(request.headers.get(USER_ID_HEADER_NAME)) 
