@@ -16,6 +16,17 @@ function getRandomInt(max: number): number {
   return Math.floor(Math.random() * max);
 }
 
+async function newFailedLogin(studentId: number) {
+  await prisma.failedLoginAttempt.create({
+    data: {
+      login_timestamp: new Date(Date.now() - getRandomInt(50000)),
+      student: {
+        connect: { id: studentId }
+      } 
+    }
+  })
+}
+
 async function newFailedAcquisition(studentId: number, courseId: number) {
   await prisma.failedAcquisitionAttempt.create({
     data: {
@@ -192,6 +203,18 @@ async function main() {
   await newFailedAcquisition(2, 2)
   // course 3
   await newFailedAcquisition(2, 3)
+
+  // Create new fail login attempts connected to a student with a randomized time of failure
+  await newFailedLogin(1);
+  await newFailedLogin(1);
+  await newFailedLogin(1);
+
+  await newFailedLogin(2);
+  await newFailedLogin(2);
+  await newFailedLogin(2);
+
+  await newFailedLogin(3);
+  await newFailedLogin(3);
 
   // const introToDatabaseCourse = prisma.course.findFirst({
   //   where: {

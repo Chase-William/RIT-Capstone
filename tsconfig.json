@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/_app.js", "components/auth/register.tsx", "middleware.ts", "components/standard-layout.tsx"  ],
+, "pages/_app.js", "components/auth/register.tsx", "middleware.ts", "components/standard-layout.tsx", "pages/api"  ],
   "exclude": [
     "node_modules"
   ]

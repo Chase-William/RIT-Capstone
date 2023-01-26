@@ -11,13 +11,14 @@ function authHeader() {
   return { Authorization: `Bearer ${token}` };
 }
 
-export function get(url: string) {
-  return axios({
+export async function get(url: string) {
+  const res = await axios({
     url: url,
     method: 'GET',
-    headers: authHeader()
+    headers: authHeader(),
+    withCredentials: true
   })
-    .then(res => res.data)
+  return res.data;
 }
 
 export async function post(url, data) {

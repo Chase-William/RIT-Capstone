@@ -14,13 +14,13 @@ type AcquisitionWithCourseAndStudentId = {
 }
 
 async function getAcquisitions(ids: number[]): Promise<AcquisitionWithCourseAndStudentId[]> {
-  return await post('/api/acquisition', {
+  return await post('/api/failed-acquisition', {
     ids: ids
   })
     .then(res => res.acquisitions)
 }
 
-export default function Acquisitions(
+export default function FailedAcquisitions(
   {
     acquisitionIds
   }: {
@@ -32,7 +32,6 @@ export default function Acquisitions(
   useEffect(() => {
     (async () => {
       const t = await getAcquisitions(acquisitionIds)
-      console.log('results: ' + t)
       setAcquisitions(t)
     })()
   }, [])

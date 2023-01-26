@@ -4,7 +4,7 @@ import prisma from "../../lib/prisma"
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const ids: number[] = req.body.ids
-    // Get all courses where the course's professor mapping contains this professor via the id
+    
     const acquisitions = await prisma.failedAcquisitionAttempt.findMany({
       where: {
         id: {
