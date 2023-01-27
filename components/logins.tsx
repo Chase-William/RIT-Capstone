@@ -2,7 +2,7 @@ import { Container, Table } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { get, post } from "../lib/fetch-wrapper";
 
-type LoginWithStudentEmail = {
+export type LoginWithStudentEmail = {
   id: number;
   student: {
     email: string;
@@ -10,38 +10,12 @@ type LoginWithStudentEmail = {
   login_timestamp: string;
 }
 
-async function getRecentStudentLoginFailures(): Promise<LoginWithStudentEmail[]> {
-  return await get('/api/failed-login')
-    .then(res => res.logins)
-}
-
-async function getLogins(ids: number[]): Promise<LoginWithStudentEmail[]> {
-  return await post('/api/failed-login', {
-    ids: ids
-  })
-    .then(res => res.logins)
-}
-
 export default function FailedLogins(
   {
-    studentIds
+    logins
   }: {
-    studentIds: number[] | null | undefined
-  }) {
-
-  const [logins, setLogins] = useState<LoginWithStudentEmail[]>()
-
-  useEffect(() => {
-    if (studentIds) {
-      (async () => {
-        setLogins(await getLogins(studentIds))
-      })() 
-    } else {
-      (async () => {
-        setLogins(await getRecentStudentLoginFailures())
-      })
-    }
-  }, [])
+    logins: LoginWithStudentEmail[]
+  }) {  
 
   if (!logins)
     return <p>Loading...</p>

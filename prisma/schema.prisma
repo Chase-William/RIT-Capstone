@@ -33,7 +33,7 @@ model Student {
 
 model Course {
   id          Int     @id @default(autoincrement())
-  name String
+  name        String
   professors  User[] // Implicit many to many with User (Professor)
   students    Student[] // Implicit many to many with Student
 
@@ -50,6 +50,7 @@ model FailedLoginAttempt {
   student_id      Int
 }
 
+// TODO: Refactor to house both successful/unsuccesful
 model FailedAcquisitionAttempt {
   id              Int     @id @default(autoincrement())
   start_time      DateTime
@@ -66,8 +67,8 @@ model FailedAcquisitionAttempt {
   // ADDED BELOW ------
 
   // Each acquisition attempt occurs when a student is accessing a course's materials
-  course         Course @relation(fields: [course_id], references: [id])
-  course_id      Int
+  course          Course @relation(fields: [course_id], references: [id])
+  course_id       Int
 }
 
 // model Auth {

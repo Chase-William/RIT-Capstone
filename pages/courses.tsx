@@ -5,16 +5,16 @@ import CoursesComponent from '../components/courses'
 import StandardLayout from '../components/standard-layout'
 import Layout from '../components/layout';
 import FailedAcquisitions from '../components/acqusitions';
-import FailedLogins from '../components/logins';
+import FailedLogins, { LoginWithStudentEmail } from '../components/logins';
 
 type CourseWithStudentAndAcquisitionIds = {
   id: number;
   name: string;
   failed_acquisitions: {
-      id: number;
+    id: number;
   }[];
   students: {
-      id: number;
+    id: number;
   }[];
 }
 
@@ -22,10 +22,18 @@ async function getCourses(): Promise<CourseWithStudentAndAcquisitionIds[]> {
   return await post('/api/course', {}).then(data => data.courses)
 }
 
+async function getLogins(ids: number[]): Promise<LoginWithStudentEmail[]> {
+  return await post('/api/failed-login', {
+    ids: ids
+  })
+    .then(res => res.logins)
+}
+
 export default function Courses() {
   const [courses, setCourses] = useState<CourseWithStudentAndAcquisitionIds[]>();
   const [acqusitionIds, setAcquisitionIds] = useState<number[]>()
-  const [studentIds, setStudentIds] = useState<number[]>()
+  // const [studentIds, setStudentIds] = useState<number[]>()
+  const [logins, setLogins] = useState<LoginWithStudentEmail[]>()
 
   useEffect(() => {
     (async () => {
@@ -36,20 +44,23 @@ export default function Courses() {
   useEffect(() => {
     if (courses) {
       setAcquisitionIds(courses.flatMap(course => course.failed_acquisitions.map(acq => acq.id)))
-      setStudentIds(courses.flatMap(course => course.students.map(stud => stud.id)))
-    }
+      const ids = courses.flatMap(course => course.students.map(stud => stud.id))
+      // setStudentIds(courses.flatMap(course => course.students.map(stud => stud.id)))
+      {}
+      (async () => {
+        setLogins(await getLogins(ids))
+      })()  
+    }    
   }, [courses])
 
-// <Acquisitions acquisitions={courses.map(value => value.failed_acquisitions.map(v => v.id))}/>
-
-  if (!courses || !acqusitionIds || !studentIds)
+  if (!courses || !acqusitionIds)
     return <p>Loading...</p>
 
   return (
     <Layout>
       <StandardLayout
         topLeft={<FailedAcquisitions acquisitionIds={acqusitionIds}/>}
-        topRight={<FailedLogins studentIds={studentIds}/>}
+        topRight={<FailedLogins logins={logins}/>}
         bottom={
           <CoursesComponent courses={courses} />
         }

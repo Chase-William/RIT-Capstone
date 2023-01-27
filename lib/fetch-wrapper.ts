@@ -15,14 +15,13 @@ export async function get(url: string) {
   const res = await axios({
     url: url,
     method: 'GET',
-    headers: authHeader(),
+    headers: { 'Content-Type': 'application/json', ...authHeader() },
     withCredentials: true
   })
   return res.data;
 }
 
-export async function post(url, data) {
-  // console.log('authHeader: ' + authHeader())
+export async function post(url: string, data: any) {
   const res = await axios({
     url: url,
     method: 'POST',

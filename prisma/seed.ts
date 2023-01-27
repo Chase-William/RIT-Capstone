@@ -184,6 +184,28 @@ async function main() {
     }
   })
 
+  await prisma.student.create({
+    data: {      
+      first_name: 'Will',
+      last_name: 'Jock',
+      email: 'wxk4582@rit.edu',
+      courses: {
+        connect: [{ id: 3 }, { id: 4 }, { id: 5 }]
+      }
+    }
+  })
+
+  await prisma.student.create({
+    data: {      
+      first_name: 'Role',
+      last_name: 'Tide',
+      email: 'txr3812@rit.edu',
+      courses: {
+        connect: [{ id: 3 }, { id: 4 }, { id: 5 }]
+      }
+    }
+  })
+
   // New failure where student 1 tried to get resources from course 1, on three seperate occasions
   await newFailedAcquisition(1, 1)
   await newFailedAcquisition(1, 1)
@@ -215,6 +237,11 @@ async function main() {
 
   await newFailedLogin(3);
   await newFailedLogin(3);
+
+  await newFailedLogin(4);
+  await newFailedLogin(4);
+  await newFailedLogin(5);
+  await newFailedLogin(5);
 
   // const introToDatabaseCourse = prisma.course.findFirst({
   //   where: {
