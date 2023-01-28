@@ -3,10 +3,10 @@
 // Useful to convert an object which may contain non-serializeable data such as
 
 import { NextRequest, NextResponse } from "next/server";
-import { ADMIN_ROLE, PROF_ROLE, User } from "../pages/api/user";
 import Router from "next/router";
 import { USER_ID_HEADER_NAME } from "../middleware";
 import { NextApiRequest } from "next";
+import { User } from "../pages/api/user";
 
 // Dates to an object that doesn't
 export function makeSerializable<T extends any> (o: T): T {
@@ -56,3 +56,6 @@ export function getUserIdFromRequest(req: NextApiRequest): number {
     return parseInt(id[0])
   throw Error(`Request to ${req.url} does not have the key ${USER_ID_HEADER_NAME} present in header.`)
 }
+
+export const PROF_ROLE = 'professor'
+export const ADMIN_ROLE = 'admin'

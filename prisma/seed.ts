@@ -3,7 +3,7 @@
  */
 
 import { PrismaClient } from "@prisma/client"
-import { PROF_ROLE } from "../pages/api/user"
+import { PROF_ROLE } from "../lib/util"
 const bcrypt = require('bcrypt');
 const prisma = new PrismaClient()
 

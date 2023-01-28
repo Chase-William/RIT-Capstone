@@ -1,30 +1,27 @@
-// import { withIronSessionApiRoute } from 'iron-session/next'
-// import { sessionOptions } from '../../lib/session'
-// import { NextApiRequest, NextApiResponse } from 'next'
-
+import prisma from "../../lib/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
-
-// /*
-//   Used as the generic user object omitting fields like password.
-// */
-// export type User = {
-//   isLoggedIn: boolean
-//   username: string
-//   role: string
-//   id: number
-// }
-
-export const PROF_ROLE = 'professor'
-export const ADMIN_ROLE = 'admin'
 
 export type User = {
   username: string
-  role: string  
+  role: string
   isLoggedIn: boolean
 }
 
-async function userRoute(req: NextApiRequest, res: NextApiResponse<User>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'GET') {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        role: true
+      }
+    })
 
+    return res.status(200).json({
+      users: users
+    })
+  }
 }
 
 // async function userRoute(req: NextApiRequest, res: NextApiResponse<User>) {
