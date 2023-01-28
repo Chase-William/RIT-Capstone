@@ -27,8 +27,8 @@ model Student {
   email               String  @unique
   courses             Course[] // Implicit many to many with Course
   // Student can have many login failed login attempts
-  failed_logins       FailedLoginAttempt[] 
-  failed_acquisitions FailedAcquisitionAttempt[]
+  logins       LoginAttempt[] 
+  acquisitions AcquisitionAttempt[]
 }
 
 model Course {
@@ -39,23 +39,24 @@ model Course {
 
   // ADDED BELOW ------
 
-  failed_acquisitions FailedAcquisitionAttempt[]
+  acquisitions AcquisitionAttempt[]
 }
 
-model FailedLoginAttempt {
+model LoginAttempt {
   id              Int     @id @default(autoincrement())
   login_timestamp DateTime
+  status          Boolean // True: Success, False: Failure
   // Each login attempt can only be associated with a single student one to many
   student         Student @relation(fields: [student_id], references: [id])
   student_id      Int
 }
 
 // TODO: Refactor to house both successful/unsuccesful
-model FailedAcquisitionAttempt {
+model AcquisitionAttempt {
   id              Int     @id @default(autoincrement())
   start_time      DateTime
   finished_time   DateTime
-  // status         String ?? DO WE NEED THIS?
+  status          Boolean // True: Success, False: Failure
   file_name       String?
   file_ext        String?
   url             String?
@@ -70,10 +71,3 @@ model FailedAcquisitionAttempt {
   course          Course @relation(fields: [course_id], references: [id])
   course_id       Int
 }
-
-// model Auth {
-//   id      Int     @id @default(autoincrement())
-//   token   String  @db.VarChar(500) @unique
-//   user    User    @relation(fields: [user_id], references: [id])
-//   user_id Int
-// }

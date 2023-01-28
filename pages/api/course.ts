@@ -19,9 +19,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       select: {
         id: true,
         name: true,
-        failed_acquisitions: {
+        acquisitions: {
           select: {
-            id: true
+            id: true,
+            student: {
+              select: {
+                id: true,
+                email: true
+              }
+            },
+            course: {
+              select: {
+                id: true,
+                name: true
+              }
+            }
           }
         },
         students: {

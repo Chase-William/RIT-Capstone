@@ -12,7 +12,7 @@ export type LoginRequest = {
 }
 
 async function login(username: string, password: string): Promise<LoginRequest> {  
-  return await post('/api/login', {    
+  return await post('/api/auth/login', {    
     username: username,
     password: password    
   })

@@ -5,7 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'POST') {
     const ids: number[] = req.body.ids
     
-    const acquisitions = await prisma.failedAcquisitionAttempt.findMany({
+    const acquisitions = await prisma.acquisitionAttempt.findMany({
       where: {
         id: {
           in: ids

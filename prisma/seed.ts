@@ -16,10 +16,11 @@ function getRandomInt(max: number): number {
   return Math.floor(Math.random() * max);
 }
 
-async function newFailedLogin(studentId: number) {
-  await prisma.failedLoginAttempt.create({
+async function newLogin(studentId: number, success: boolean) {
+  await prisma.loginAttempt.create({
     data: {
       login_timestamp: new Date(Date.now() - getRandomInt(50000)),
+      status: success,
       student: {
         connect: { id: studentId }
       } 
@@ -27,12 +28,13 @@ async function newFailedLogin(studentId: number) {
   })
 }
 
-async function newFailedAcquisition(studentId: number, courseId: number) {
-  await prisma.failedAcquisitionAttempt.create({
+async function newAcquisition(studentId: number, courseId: number, success: boolean) {
+  await prisma.acquisitionAttempt.create({
     data: {
       url: 'https://....',
       start_time: new Date(Date.now() - getRandomInt(50000)),
       finished_time: new Date(),
+      status: success,
       course: {
         connect: {
           id: courseId
@@ -206,42 +208,42 @@ async function main() {
     }
   })
 
-  // New failure where student 1 tried to get resources from course 1, on three seperate occasions
-  await newFailedAcquisition(1, 1)
-  await newFailedAcquisition(1, 1)
-  await newFailedAcquisition(1, 1)
+  // Student 1 tried to get resources from course 1, on three seperate occasions
+  await newAcquisition(1, 1, false)
+  await newAcquisition(1, 1, false)
+  await newAcquisition(1, 1, true)
   // course 2
-  await newFailedAcquisition(1, 2)
-  await newFailedAcquisition(1, 2)
+  await newAcquisition(1, 2, false)
+  await newAcquisition(1, 2, true)
   // course 3
-  await newFailedAcquisition(1, 3)
+  await newAcquisition(1, 3, false)
 
   // Student 2, same idea
-  await newFailedAcquisition(2, 1)
-  await newFailedAcquisition(2, 1)
-  await newFailedAcquisition(2, 1)
+  await newAcquisition(2, 1, true)
+  await newAcquisition(2, 1, false)
+  await newAcquisition(2, 1, true)
   // course 2
-  await newFailedAcquisition(2, 2)
-  await newFailedAcquisition(2, 2)
+  await newAcquisition(2, 2, false)
+  await newAcquisition(2, 2, true)
   // course 3
-  await newFailedAcquisition(2, 3)
+  await newAcquisition(2, 3, true)
 
-  // Create new fail login attempts connected to a student with a randomized time of failure
-  await newFailedLogin(1);
-  await newFailedLogin(1);
-  await newFailedLogin(1);
+  // Create new login attempts connected to a student with a randomized time of occurrance
+  await newLogin(1, false);
+  await newLogin(1, false);
+  await newLogin(1, true);
 
-  await newFailedLogin(2);
-  await newFailedLogin(2);
-  await newFailedLogin(2);
+  await newLogin(2, false);
+  await newLogin(2, false);
+  await newLogin(2, true);
 
-  await newFailedLogin(3);
-  await newFailedLogin(3);
+  await newLogin(3, false);
+  await newLogin(3, true);
 
-  await newFailedLogin(4);
-  await newFailedLogin(4);
-  await newFailedLogin(5);
-  await newFailedLogin(5);
+  await newLogin(4, false);
+  await newLogin(4, false);
+  await newLogin(5, true);
+  await newLogin(5, true);
 
   // const introToDatabaseCourse = prisma.course.findFirst({
   //   where: {

@@ -1,6 +1,5 @@
 import { Button, Card, Container, Row, Table } from "@nextui-org/react";
 import { Course } from "@prisma/client";
-import utilStyles from '../styles/utils.module.css'
 
 export default function Courses({ courses }: { courses: Course[] }) {
   return (

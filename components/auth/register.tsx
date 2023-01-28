@@ -14,7 +14,7 @@ async function register(
   email: string,
   role: string
   ): Promise<LoginRequest> {
-  return await post('api/register', 
+  return await post('api/auth/register', 
   {
     username: username,
     password: password,

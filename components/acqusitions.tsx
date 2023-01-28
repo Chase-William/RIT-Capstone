@@ -1,51 +1,34 @@
 import { Container, Table } from "@nextui-org/react";
-import { FailedAcquisitionAttempt } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { post } from "../lib/fetch-wrapper";
 
-type AcquisitionWithCourseAndStudentId = {
+export type AugmentedAcquisition = {
   id: number;
-  course: {
-    name: string;
-  };
   student: {
+    id: number,
     email: string;
   };
+  course: {
+    id: number,
+    name: string;
+  };
 }
 
-async function getAcquisitions(ids: number[]): Promise<AcquisitionWithCourseAndStudentId[]> {
-  return await post('/api/failed-acquisition', {
-    ids: ids
-  })
-    .then(res => res.acquisitions)
-}
-
-export default function FailedAcquisitions(
+export default function Acquisitions(
   {
-    acquisitionIds
+    acquisitions,
+    title
   }: {
-    acquisitionIds: number[]
+    acquisitions: AugmentedAcquisition[],
+    title: string
   }) {
-
-  const [acquisitions, setAcquisitions] = useState<AcquisitionWithCourseAndStudentId[]>()
-
-  useEffect(() => {
-    (async () => {
-      const t = await getAcquisitions(acquisitionIds)
-      setAcquisitions(t)
-    })()
-  }, [])
-
-  // console.log(acquisitions)
 
   if (!acquisitions)
     return <p>Loading...</p>
 
-  // console.log(acquisitions)
-
   return (
     <Container>
-      <h6>Failed Resource Acquisitions</h6>
+      <h6>{title}</h6>
       <Table>
         <Table.Header>
           <Table.Column>Id</Table.Column>

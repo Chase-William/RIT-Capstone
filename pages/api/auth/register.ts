@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "../../lib/prisma";
-import { User } from "./user";
-import { sign } from "../../lib/jwt";
+import prisma from "../../../lib/prisma";
+import { User } from "../user";
+import { sign } from "../../../lib/jwt";
 const bcrypt = require('bcrypt');
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {

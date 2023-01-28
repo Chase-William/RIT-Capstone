@@ -1,39 +1,37 @@
 import { useEffect, useState } from 'react';
-import { Course, FailedAcquisitionAttempt } from '@prisma/client';
+import { Course, AcquisitionAttempt } from '@prisma/client';
 import { post } from '../lib/fetch-wrapper';
 import CoursesComponent from '../components/courses'
 import StandardLayout from '../components/standard-layout'
 import Layout from '../components/layout';
-import FailedAcquisitions from '../components/acqusitions';
-import FailedLogins, { LoginWithStudentEmail } from '../components/logins';
+import Acquisitions from '../components/acqusitions';
+import Logins, { LoginWithStudentEmail } from '../components/logins';
+import { AugmentedAcquisition } from '../components/acqusitions';
 
-type CourseWithStudentAndAcquisitionIds = {
+type AugmentedCourse = {
   id: number;
   name: string;
-  failed_acquisitions: {
-    id: number;
-  }[];
+  acquisitions: AugmentedAcquisition[];
   students: {
     id: number;
   }[];
 }
 
-async function getCourses(): Promise<CourseWithStudentAndAcquisitionIds[]> {
+async function getCourses(): Promise<AugmentedCourse[]> {
   return await post('/api/course', {}).then(data => data.courses)
 }
 
 async function getLogins(ids: number[]): Promise<LoginWithStudentEmail[]> {
-  return await post('/api/failed-login', {
+  return await post('/api/login', {
     ids: ids
   })
     .then(res => res.logins)
 }
 
 export default function Courses() {
-  const [courses, setCourses] = useState<CourseWithStudentAndAcquisitionIds[]>();
-  const [acqusitionIds, setAcquisitionIds] = useState<number[]>()
-  // const [studentIds, setStudentIds] = useState<number[]>()
+  const [courses, setCourses] = useState<AugmentedCourse[]>();
   const [logins, setLogins] = useState<LoginWithStudentEmail[]>()
+  const [acquisition, setAcquisitions] = useState<AugmentedAcquisition[]>()
 
   useEffect(() => {
     (async () => {
@@ -43,24 +41,23 @@ export default function Courses() {
 
   useEffect(() => {
     if (courses) {
-      setAcquisitionIds(courses.flatMap(course => course.failed_acquisitions.map(acq => acq.id)))
-      const ids = courses.flatMap(course => course.students.map(stud => stud.id))
-      // setStudentIds(courses.flatMap(course => course.students.map(stud => stud.id)))
-      {}
+      setAcquisitions(courses.flatMap(course => course.acquisitions.map(acq => acq)))
+      const ids = courses.flatMap(course => course.students.map(stud => stud.id));
+      
       (async () => {
         setLogins(await getLogins(ids))
-      })()  
-    }    
+      })()
+    }
   }, [courses])
 
-  if (!courses || !acqusitionIds)
+  if (!courses || !acquisition)
     return <p>Loading...</p>
 
   return (
     <Layout>
       <StandardLayout
-        topLeft={<FailedAcquisitions acquisitionIds={acqusitionIds}/>}
-        topRight={<FailedLogins logins={logins}/>}
+        topLeft={<Acquisitions title={'Failed Resource Acquisitions'} acquisitions={acquisition} />}
+        topRight={<Logins title={'Failed Logins'} logins={logins} />}
         bottom={
           <CoursesComponent courses={courses} />
         }

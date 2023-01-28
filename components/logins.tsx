@@ -10,11 +10,13 @@ export type LoginWithStudentEmail = {
   login_timestamp: string;
 }
 
-export default function FailedLogins(
+export default function Logins(
   {
-    logins
+    logins,
+    title
   }: {
-    logins: LoginWithStudentEmail[]
+    logins: LoginWithStudentEmail[],
+    title: string
   }) {  
 
   if (!logins)
@@ -24,7 +26,7 @@ export default function FailedLogins(
 
   return (
     <Container>
-      <h6>Failed Logins</h6>
+      <h6>{title}</h6>
       <Table>
         <Table.Header>
           <Table.Column>Id</Table.Column>
