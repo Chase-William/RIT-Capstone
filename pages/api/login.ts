@@ -3,18 +3,41 @@ import prisma from "../../lib/prisma"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    console.log('GET Logins')
-    const logins = await prisma.loginAttempt.findMany({
-      select: {
-        id: true,
-        login_timestamp: true,
-        student: {
+    let success = false
+    let logins
+    console.log(req.query.success)
+    if (req.query.success) { // if defined in url params
+      if (req.query.success === 'true') // set if true
+        success = true
+        // query using `success` variable
+        logins = await prisma.loginAttempt.findMany({
+          where: {
+            status: success
+          },
           select: {
-            email: true
+            id: true,
+            login_timestamp: true,
+            student: {
+              select: {
+                email: true
+              }
+            }
+          }
+        })
+    } else {
+      // No success query provided, get all
+      logins = await prisma.loginAttempt.findMany({
+        select: {
+          id: true,
+          login_timestamp: true,
+          student: {
+            select: {
+              email: true
+            }
           }
         }
-      }
-    })
+      })
+    }
 
     console.log('Logins: ' + logins)
 
