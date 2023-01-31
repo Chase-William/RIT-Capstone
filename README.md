@@ -42,17 +42,7 @@ Seeding a database will insert default data into the database. Our default data 
 
 
 
-
-
-
-
-
-
-
-
-
-
-## Docker Steps
+## Docker Steps *(what I had started.. kinda deprecated)*
 
 Create a volume which can be loaded into a container.
 
