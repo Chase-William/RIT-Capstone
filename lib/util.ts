@@ -59,3 +59,4 @@ export function getUserIdFromRequest(req: NextApiRequest): number {
 
 export const PROF_ROLE = 'professor'
 export const ADMIN_ROLE = 'admin'
+export const USER_COOKIE_NAME = 'user'

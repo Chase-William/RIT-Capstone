@@ -22,7 +22,7 @@ export async function sign(payload: Token, secret: string): Promise<string> {
         .sign(new TextEncoder().encode(secret));
 }
 
-export async function verify(token: string, secret: string): Promise<any> {
+export async function verify(token: string, secret: string): Promise<JWTPayload | null | undefined> {
     const { payload } = await jwtVerify(token, new TextEncoder().encode(secret));
     // run some checks on the returned payload, perhaps you expect some specific values    
 

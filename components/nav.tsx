@@ -9,13 +9,9 @@ export default function Nav() {
         </Button>
       </Navbar.Brand>
       <Navbar.Content hideIn="xs" variant="underline">
-        <Navbar.Link href="#">Features</Navbar.Link>
-        <Navbar.Link isActive href="#">Customers</Navbar.Link>
+        <Navbar.Link isActive href="#">Example</Navbar.Link>
       </Navbar.Content>
       <Navbar.Content>
-        <Navbar.Link color="inherit" href="#">
-          ...
-        </Navbar.Link>
         <Navbar.Item>
           <Button auto flat as={Link} href="/student-help-form">
             Student Help Form

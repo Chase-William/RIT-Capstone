@@ -6,6 +6,7 @@ import Logins, { LoginWithStudentEmail } from "../components/logins";
 import StandardLayout from "../components/standard-layout";
 import { get } from "../lib/fetch-wrapper";
 import Users, { AugmentedUser } from "../components/users";
+import { useUser } from "../lib/userUser";
 
 async function getRecentStudentLoginFailures(): Promise<LoginWithStudentEmail[]> {
   return await get('/api/login', { success: false })
@@ -18,17 +19,23 @@ async function getUsers(): Promise<AugmentedUser[]> {
 }
 
 export default function Accounts() {
+  const user = useUser()
   const [logins, setLogins] = useState<LoginWithStudentEmail[]>()
   const [users, setUsers] = useState<AugmentedUser[]>()
 
   useEffect(() => {
-    (async () => {
-      setLogins(await getRecentStudentLoginFailures())
-    })();
-    (async () => {
-      setUsers(await getUsers())
-    })()
-  }, [])
+    if (user?.isLoggedIn) {
+      (async () => {
+        setLogins(await getRecentStudentLoginFailures())
+      })();
+      (async () => {
+        setUsers(await getUsers())
+      })()
+    }    
+  }, [user])
+
+  if (!user)
+  return <p>Please login first.</p>
 
   if (!logins || !users)
     return <p>Loading...</p>

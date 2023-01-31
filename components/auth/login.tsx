@@ -1,37 +1,27 @@
 import { Button, Input, Text } from "@nextui-org/react";
 import utilStyles from '../../styles/utils.module.css';
 import { FormEvent, useState } from "react";
-import axios from "axios";
-import { ADMIN_ROLE, PROF_ROLE, User } from "../../pages/api/user";
-import { onLoggedIn, setToken } from "../../lib/util";
-import { post } from "../../lib/fetch-wrapper";
+import { onLoggedIn } from "../../lib/util";
+import { useLogin } from "../../lib/useLogin";
 
-export type LoginRequest = {
-  user: User
-  apiKey: string
-}
+// async function login(username: string, password: string): Promise<User> {  
+//   return await post('/api/auth/login', {    
+//     username: username,
+//     password: password    
+//   })
+// }
 
-async function login(username: string, password: string): Promise<LoginRequest> {  
-  return await post('/api/auth/login', {    
-    username: username,
-    password: password    
-  })
-}
-
-export default function Login({
-  setUser
-}: {
-  setUser: (user: User) => void
-}) {
+export default function Login() {
+  const { login } = useLogin()
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const result = await login(username, password)
-    setToken(result.apiKey)
-    setUser(result.user)
-    onLoggedIn(result.user)
+    e.preventDefault()   
+    // Use our login functional expression from useLogin()
+    const user = await login(username, password)  
+    onLoggedIn(user)
   }  
 
   return (

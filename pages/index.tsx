@@ -17,13 +17,11 @@ export default function Home() {
 
   // https://stackoverflow.com/questions/72221255/how-to-pass-data-from-one-page-to-another-page-in-next-js
 
-  const [ user, setUser ] = useState<User>()
-
   return (
     <Layout>
       <div className={`${utilStyles.horizontal} ${indexStyles.evenly}`}>
-        <Login setUser={setUser}/>
-        <Register setUser={setUser}/>
+        <Login/>
+        <Register/>
       </div>
     </Layout>
     // <Layout home>

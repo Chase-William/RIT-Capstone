@@ -1,7 +1,14 @@
 import { Button, Card, Container, Row, Table } from "@nextui-org/react";
 import { Course } from "@prisma/client";
+import Link from "next/link";
+import Router, { withRouter } from "next/router";
 
 export default function Courses({ courses }: { courses: Course[] }) {
+  // Handle click and navigate to course
+  const handleSelected = (e: { currentKey: string }) => {
+    Router.push(`./course/${e.currentKey}`)
+  }
+
   return (
     <Container>
       <Row>
@@ -25,10 +32,12 @@ export default function Courses({ courses }: { courses: Course[] }) {
         css={{
           marginTop: 20,
           display: 'block',
-          minWidth: '100%'                    
+          minWidth: '100%'
         }}
         fluid>
-        <Table>
+        <Table
+          selectionMode="single"
+          onSelectionChange={handleSelected}>
           <Table.Header>
             <Table.Column>Id</Table.Column>
             <Table.Column>Name</Table.Column>

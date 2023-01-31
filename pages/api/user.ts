@@ -4,7 +4,8 @@ import { NextApiRequest, NextApiResponse } from "next"
 export type User = {
   username: string
   role: string
-  isLoggedIn: boolean
+  isLoggedIn: boolean,
+  apiKey: string
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

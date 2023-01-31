@@ -1,5 +1,4 @@
 import axios from "axios";
-import { userInfo } from "./useLogin";
 import { getToken } from "./util";
 
 
@@ -15,8 +14,8 @@ export async function get(url: string, params: any) {
   const res = await axios({
     url: url,
     method: 'GET',
-    headers: { 'Content-Type': 'application/json', ...authHeader() },
-    withCredentials: true,
+    headers: { 'Content-Type': 'application/json' }, //, ...authHeader() },
+    // withCredentials: true,
     params: params
   })
   return res.data;
@@ -26,8 +25,8 @@ export async function post(url: string, data: any) {
   const res = await axios({
     url: url,
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...authHeader() },
-    withCredentials: true,
+    headers: { 'Content-Type': 'application/json' },// ...authHeader() },
+    // withCredentials: true,
     data: JSON.stringify(data)
   });
   return res.data;

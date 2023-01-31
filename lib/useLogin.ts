@@ -1,28 +1,31 @@
-import useSWR from 'swr'
-import { ADMIN_ROLE, PROF_ROLE, User } from '../pages/api/user'
-import { useEffect } from 'react'
-import Router from 'next/router'
+import Cookies from 'js-cookie'
+import { post } from './fetch-wrapper'
+import { User } from '../pages/api/user'
+import { USER_COOKIE_NAME } from './util'
 
-export let userInfo: User
+async function loginRequest(username: string, password: string): Promise<User> {
+  return await post('/api/auth/login', {
+    username: username,
+    password: password
+  })
+  .then(data => data.user)
+}
 
-export default function useLogin(
-  username: string, 
-  password: string,
-  setIsLoading: (v: boolean) => void,
-  setError: (v: Error) => void,
-  setUser: (user: User) => void
-  ) {
-  const { data, error, isLoading } = useSWR<{ user: User, apiKey: string }>('/api/user')
-  const { user } = data
+/**
+ * Login the user.
+ * @returns A functional expression that can be used to log the user in.
+ */
+export const useLogin = (): { 
+  login: { 
+    (username: string, password: string): Promise<User | undefined> 
+  } 
+} => {
+  const login = async (username: string, password: string): Promise<User | undefined> => {
+    const user = await loginRequest(username, password) as User
+    if (user)
+      Cookies.set(USER_COOKIE_NAME, JSON.stringify(user))
+    return user
+  }
 
-  useEffect(() => {
-    if (isLoading)
-      setIsLoading(true)
-    else if (error)
-      setError(error)
-    else {
-      userInfo = user
-      setUser(user)   
-    }
-  }, [data, error, isLoading])
+  return { login }
 }

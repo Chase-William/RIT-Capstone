@@ -1,33 +1,11 @@
 import React, { FormEvent, useState } from "react";
 import { Input, Dropdown, Button, Text } from "@nextui-org/react";
 import utilStyles from '../../styles/utils.module.css';
-import { ADMIN_ROLE, PROF_ROLE, User } from "../../pages/api/user";
-import axios from "axios";
-import { LoginRequest } from "./login";
-import Router from "next/router";
-import { onLoggedIn, setToken } from "../../lib/util";
-import { post } from "../../lib/fetch-wrapper";
+import { onLoggedIn } from "../../lib/util";
+import { useRegister } from "../../lib/useRegister";
 
-async function register(
-  username: string, 
-  password: string,
-  email: string,
-  role: string
-  ): Promise<LoginRequest> {
-  return await post('api/auth/register', 
-  {
-    username: username,
-    password: password,
-    email: email,
-    role: role
-  })
-}
-
-export default function Register({
-  setUser
-}: {
-  setUser: (user: User) => void
-}) {
+export default function Register() {
+  const { register } = useRegister()
   const [selected, setSelected] = useState(new Set(["student"]));
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -43,10 +21,8 @@ export default function Register({
    */
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const result = await register(username, password, email, getRole)
-    setToken(result.apiKey)
-    setUser(result.user)
-    onLoggedIn(result.user)
+    const user = await register(username, password, email, getRole)    
+    onLoggedIn(user)
   }
 
   return (

@@ -30,20 +30,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).end()
 
     const apiKey = await sign({ id: userModel.id }, process.env.JWT_PRIVATE_KEY)
-    
-    // const token = jwt.sign({
-    //   id: userModel.id
-    // }, // Provide private key
-    //   process.env.JWT_PRIVATE_KEY
-    // )
 
     return res.json({
       user: {
        username: userModel.username,
        role: userModel.role,
-       isLoggedIn: true
-      } as User,
-      apiKey: apiKey
+       isLoggedIn: true,
+       apiKey: apiKey
+      }      
     })
 
     // const user = { 

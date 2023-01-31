@@ -26,18 +26,13 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
     const apiKey = await sign({ id: userModel.id }, process.env.JWT_PRIVATE_KEY)
 
-    // const token = jwt.sign({
-    //   id: userModel.id
-    // }, // Provide private key
-    //   process.env.JWT_PRIVATE_KEY
-    // )
-
     return res.json({
       user: {
        username: userModel.username,
-       role: userModel.role 
-      } as User,
-      apiKey: apiKey
+       role: userModel.role,
+       isLoggedIn: true,
+       apiKey: apiKey
+      } as User      
     })
   }
   catch (error) {
