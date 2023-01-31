@@ -42,6 +42,17 @@ Once that is installed, we need to setup Prisma. In the project root dir, run th
 - `npx prisma generate`, generates the client-side library to match the schema in your node project
 - `npx prisma db seed`, populates the database with default records
 
+To check the validity of the last commands, open a MySQL CommandLine.
+
+- SHOW DATABASE;
+- USE RAWRS:
+- SHOW TABLES;
+- SELECT * FROM rawrs;
+
+Last command to start the server locally:
+
+- npm run dev
+
 #### What Generation Does
 
 After modifying the Prisma schema, run `npx prisma generate` to keep the generated Prisma library in sync. [read here](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases/install-prisma-client-typescript-postgres)
