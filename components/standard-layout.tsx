@@ -1,6 +1,5 @@
 import { Card, Col, Container, Row } from '@nextui-org/react'
 import utilStyles from '../styles/utils.module.css'
-import bottomStyles from './standard-layout.module.css'
 
 export default function StandardLayout(
   {
