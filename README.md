@@ -1,5 +1,17 @@
 # RAWRS
 
+## Login Example Users
+
+```
+Professor:
+  Username: Long Henry
+  Password: 123
+
+Admin:
+  Username: Phil Mahoochie
+  Password: 123
+```
+
 ## Dependency Setup
 
 Our project requires the installation of:
@@ -39,8 +51,6 @@ After modifying the Prisma schema, run `npx prisma generate` to keep the generat
 #### Seeding The Database
 
 Seeding a database will insert default data into the database. Our default data is housed within `prisma/seed.ts` and can be used by running `npx prisma db seed`. If you run this and get a *Unique constraint failed on the constraint*, the database already contains seeded records.
-
-
 
 ## Docker Steps *(what I had started.. kinda deprecated)*
 
