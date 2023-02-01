@@ -53,6 +53,23 @@ Last command to start the server locally:
 
 - npm run dev
 
+### Project Structure
+
+| Directory | Description |
+| --- | --- |
+| components | Contains re-usable components that can be used throughout the site. |
+| compoentns/auth | Contains re-usable components specifically for authentification purposes. |
+| lib | Contains general utilties used throughout the site. |
+| pages | Contains all nevigatable endpoints a user can navigate to. |
+| pages/api | Contains all RESTapi endpoints. |
+| pages/api/auth | Contains all RESTapi endpoints involved with user login & registration. |
+| pages/course | Contains the course page which is dynamically routed using the course id. |
+| prisma | Contains the prisma schema and script for seeding the database. |
+| public | Contains public assets used by the site. |
+| styles | Contains all `.css` files. |
+| styles/components | Contains styles for components. |
+| stlyes/pages | Contains styles for pages. |
+
 #### What Generation Does
 
 After modifying the Prisma schema, run `npx prisma generate` to keep the generated Prisma library in sync. [read here](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases/install-prisma-client-typescript-postgres)
