@@ -3,7 +3,7 @@
  */
 
 import { PrismaClient } from "@prisma/client"
-import { PROF_ROLE } from "../lib/util"
+import { PROF_ROLE, ADMIN_ROLE, STUDENT_ROLE } from "../lib/util"
 const bcrypt = require('bcrypt');
 const prisma = new PrismaClient()
 
@@ -82,7 +82,7 @@ async function main() {
         {
           username: "Phil Mahoochie",
           password: hashPass('123'),
-          role: "admin",
+          role: ADMIN_ROLE,
           email: "philmaplease@bullhornmail.com"
         },
         {
@@ -114,6 +114,12 @@ async function main() {
           password: hashPass('123'),
           role: PROF_ROLE,
           email: "nsyder@hotmail.com"
+        },
+        {
+          username: "Student",
+          password: hashPass('123'),
+          role: STUDENT_ROLE,
+          email: "std6666@rit.edu"
         }
       ]
     }

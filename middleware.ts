@@ -9,7 +9,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { verify } from './lib/jwt'
-import { USER_COOKIE_NAME } from './lib/util'
+import { ADMIN_ROLE, USER_COOKIE_NAME } from './lib/util'
 import { User } from './pages/api/user'
 
 export const USER_ID_HEADER_NAME = 'user-id'
@@ -25,21 +25,6 @@ export async function middleware(request: NextRequest) {
     - https://levelup.gitconnected.com/how-to-add-jwt-authentication-to-nextjs-apps-a0dc83bd257d
     
   */
-  
-  // console.log(request.cookies)
-
-  // const AUTH_HEADER = 'authorization'
-  
-  // // Clone request headers
-  // const headers = new Headers(request.headers);
-
-  // if (!headers.has(AUTH_HEADER))
-  //   return NextResponse.next({
-  //     status: 400,
-  //     statusText: 'Missing <Authorization> token in request header.'
-  //   })
-
-  // const authHeader = request.headers.get(AUTH_HEADER);
 
   // Ensure cookie is present
   if (!request.cookies.has(USER_COOKIE_NAME)) {
@@ -59,6 +44,12 @@ export async function middleware(request: NextRequest) {
     })
   }
 
+  if (user.role !== ADMIN_ROLE && request.url.includes('accounts')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/'
+    return NextResponse.rewrite(url)
+  }
+
   // Parse the api key using our server's secret
   const token = await verify(user.apiKey, process.env.JWT_PRIVATE_KEY) as { id: number, exp: number }
 
@@ -69,18 +60,6 @@ export async function middleware(request: NextRequest) {
       statusText: 'Bearer token parse failed.'
     })
   }
-
-  // console.log(token)
-
-  // console.log('Middleware - authheader: ' + authHeader)
-  // if (authHeader) {
-  //   const token = await verify(authHeader.split(' ')[1], process.env.JWT_PRIVATE_KEY);
-
-  //   if (!token)
-  //     return NextResponse.next({
-  //       status: 403,
-  //       statusText: 'Bearer token invalid.'
-  //     })
 
   // Clone request headers
   const headers = new Headers(request.headers);
@@ -105,6 +84,10 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/api/course',
-    '/api/courses'
+    '/api/acquisition',
+    '/api/login',
+    '/api/user',
+    '/courses',
+    '/accounts'
   ]
 }
