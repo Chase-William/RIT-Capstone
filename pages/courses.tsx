@@ -9,6 +9,7 @@ import Logins, { LoginWithStudentEmail } from '../components/logins';
 import { AugmentedAcquisition } from '../components/acqusitions';
 import { useRouter } from 'next/router';
 import { useUser } from '../lib/userUser';
+import { Table } from '@nextui-org/react';
 
 type AugmentedCourse = {
   id: number;
@@ -42,14 +43,14 @@ export default function Courses() {
       (async () => {
         setCourses(await getCourses())
       })()
-    }    
+    }
   }, [user])
 
   useEffect(() => {
     if (courses) {
       setAcquisitions(courses.flatMap(course => course.acquisitions.map(acq => acq)))
       const ids = courses.flatMap(course => course.students.map(stud => stud.id));
-      
+
       (async () => {
         setLogins(await getLogins(ids))
       })()
@@ -57,7 +58,7 @@ export default function Courses() {
   }, [courses])
 
   if (!user)
-  return <p>Please login first.</p>
+    return <p>Please login first.</p>
 
   if (!courses || !acquisition)
     return <p>Loading...</p>
@@ -65,7 +66,29 @@ export default function Courses() {
   return (
     <Layout>
       <StandardLayout
-        topLeft={<Acquisitions title={'Failed Resource Acquisitions'} acquisitions={acquisition} />}
+        topLeft={
+          <Acquisitions
+            title='Failed Resource Acquisitions'
+            acquisitions={acquisition}
+            headerAdapter={() => {
+              return (
+                <Table.Header>
+                  <Table.Column>Id</Table.Column>
+                  <Table.Column>Student</Table.Column>
+                  <Table.Column>Course</Table.Column>
+                </Table.Header>
+              )
+            }}
+            rowAdapter={(v: AugmentedAcquisition) => {
+              return (
+                <Table.Row key={v.id}>
+                  <Table.Cell>{v.id}</Table.Cell>
+                  <Table.Cell>{v.student.email}</Table.Cell>
+                  <Table.Cell>{v.course.name}</Table.Cell>
+                </Table.Row>
+              )
+            }}
+          />}
         topRight={<Logins title={'Failed Logins'} logins={logins} />}
         bottom={
           <CoursesComponent courses={courses} />

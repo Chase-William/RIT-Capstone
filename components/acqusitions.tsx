@@ -1,6 +1,7 @@
 import { Container, Table } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { post } from "../lib/fetch-wrapper";
+import { AcquisitionAttempt } from "@prisma/client";
 
 export type AugmentedAcquisition = {
   id: number;
@@ -17,10 +18,14 @@ export type AugmentedAcquisition = {
 export default function Acquisitions(
   {
     acquisitions,
-    title
+    title,
+    headerAdapter,
+    rowAdapter
   }: {
-    acquisitions: AugmentedAcquisition[],
-    title: string
+    acquisitions: any,
+    title: string,
+    headerAdapter: () => JSX.Element,
+    rowAdapter: (acqusition: any) => JSX.Element
   }) {
 
   if (!acquisitions)
@@ -30,18 +35,10 @@ export default function Acquisitions(
     <Container>
       <h6>{title}</h6>
       <Table>
-        <Table.Header>
-          <Table.Column>Id</Table.Column>
-          <Table.Column>Student</Table.Column>
-          <Table.Column>Course</Table.Column>
-        </Table.Header>
+        { headerAdapter() }
         <Table.Body>
-          {acquisitions.map((acquisition) =>
-            <Table.Row key={acquisition.id}>
-              <Table.Cell>{acquisition.id}</Table.Cell>
-              <Table.Cell>{acquisition.student.email}</Table.Cell>
-              <Table.Cell>{acquisition.course.name}</Table.Cell>
-            </Table.Row>
+          {acquisitions.map(acq =>
+            rowAdapter(acq)
           )}
         </Table.Body>
       </Table>

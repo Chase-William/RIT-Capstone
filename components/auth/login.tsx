@@ -4,13 +4,6 @@ import { FormEvent, useState } from "react";
 import { onLoggedIn } from "../../lib/util";
 import { useLogin } from "../../lib/useLogin";
 
-// async function login(username: string, password: string): Promise<User> {  
-//   return await post('/api/auth/login', {    
-//     username: username,
-//     password: password    
-//   })
-// }
-
 export default function Login() {
   const { login } = useLogin()
   const [username, setUsername] = useState('');
