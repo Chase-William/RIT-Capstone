@@ -32,7 +32,11 @@ export default function Login() {
         </Text>
         <Input placeholder="Username" onChange={e => setUsername(e.target.value)} />
         <Input placeholder="Password" onChange={e => setPassword(e.target.value)}/>
-        <Button type="submit">Login</Button>
+        <Button 
+          
+          type="submit">
+          Login
+        </Button>
       </div>
     </form >
   )

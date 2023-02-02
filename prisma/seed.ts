@@ -3,9 +3,13 @@
  */
 
 import { PrismaClient } from "@prisma/client"
-import { PROF_ROLE, ADMIN_ROLE, STUDENT_ROLE } from "../lib/util"
 const bcrypt = require('bcrypt');
 const prisma = new PrismaClient()
+
+// Must becareful with imports as this is preprocessed by node-ts and including deps leads to errors
+const PROF_ROLE = 'professor'
+const ADMIN_ROLE = 'admin'
+const STUDENT_ROLE = 'student'
 
 function hashPass(password: string): string {
   const salt = bcrypt.genSaltSync(10);
@@ -115,12 +119,12 @@ async function main() {
           role: PROF_ROLE,
           email: "nsyder@hotmail.com"
         },
-        {
-          username: "Student",
-          password: hashPass('123'),
-          role: STUDENT_ROLE,
-          email: "std6666@rit.edu"
-        }
+        // {
+        //   username: "Student",
+        //   password: hashPass('123'),
+        //   role: STUDENT_ROLE,
+        //   email: "std6666@rit.edu"
+        // }
       ]
     }
   )

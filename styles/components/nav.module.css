@@ -1,0 +1,14 @@
+.rit {
+  font-size: xx-large;
+  vertical-align: middle;
+  font-family: sans-serif;
+}
+
+.divider {
+  vertical-align: middle;
+}
+
+.expanded {
+  font-size: large;
+  vertical-align: middle;
+}

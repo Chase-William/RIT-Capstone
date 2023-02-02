@@ -51,7 +51,6 @@ model LoginAttempt {
   student_id      Int
 }
 
-// TODO: Refactor to house both successful/unsuccesful
 model AcquisitionAttempt {
   id              Int     @id @default(autoincrement())
   start_time      DateTime

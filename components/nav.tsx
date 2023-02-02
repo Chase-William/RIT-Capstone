@@ -1,8 +1,11 @@
-import { Navbar, Button, Link, Text } from "@nextui-org/react";
+import { Navbar, Button, Link, Text, Container, Table, Row, Image } from "@nextui-org/react";
 import { useUser } from "../lib/userUser";
 import { User } from "../pages/api/user";
 import { ADMIN_ROLE, PROF_ROLE, STUDENT_ROLE } from "../lib/util";
 import { NextRouter, useRouter } from "next/router";
+import utilStyles from '../styles/utils.module.css'
+import navStyles from '../styles/components/nav.module.css'
+import RITLogo from './rit-logo'
 
 const INDEX_PATHNAME = '/'
 
@@ -29,16 +32,18 @@ function renderGeneralLinks(router: NextRouter, user: User | null) {
   // User is not logged in
   if (!user || user?.isLoggedIn === false) {
     return (
-      <Button auto flat as={Link} href="/student-help-form">
+      <Link
+        href="/student-help-form"
+        color={"text"}
+        css={{
+          fontSize: '$xl',
+          fontWeight: '$bold',
+          marginRight: '5px',
+          textDecoration: 'underline'
+        }}>
         Student Help Form
-      </Button>
+      </Link>
     )
-  }
-
-  if (user.role === STUDENT_ROLE) {
-    <Button auto flat as={Link} href="/student-help-form">
-      Student Help Form
-    </Button>
   }
 
   return <></>
@@ -49,20 +54,54 @@ export default function Nav() {
   const router = useRouter()
 
   return (
-    <Navbar isCompact isBordered variant="sticky">
-      <Navbar.Brand>
-        <Button auto flat as={Link} color="inherit" hideIn="xs" href="/">
-          RAWRS
-        </Button>
-      </Navbar.Brand>
-      <Navbar.Content hideIn="xs" variant="underline">
-        {renderUserLinks(router, user)}
-      </Navbar.Content>
-      <Navbar.Content>
-        <Navbar.Item>
-          {renderGeneralLinks(router, user)}
-        </Navbar.Item>
-      </Navbar.Content>
-    </Navbar>
+    <>
+      <Navbar
+        disableShadow
+        isCompact>
+        <Image
+          width={200}
+          src='/rit-logo.png'
+          containerCss={{
+            margin: 0
+          }}
+        />
+        {/* <Text>
+          <span className={navStyles.rit}>RIT</span>
+          <span className={navStyles.divider}> | </span>
+          <span className={navStyles.expanded}>Rochester Institute of Technology</span>
+        </Text> */}
+      </Navbar>
+      <Navbar isCompact variant="sticky">
+
+        <Navbar.Brand>
+          <Link
+            href={INDEX_PATHNAME}
+            underline
+            color={"text"}
+            css={{
+              fontSize: '$2xl',
+              fontWeight: '$bold',
+              marginRight: '5px',
+              marginLeft: '6px'
+            }}>
+            RAWRS
+          </Link>
+          <Text
+            css={{
+              fontStyle: 'italic'
+            }}>
+            (Recent Acquisition Web Resources)
+          </Text>
+        </Navbar.Brand>
+        <Navbar.Content hideIn="xs" variant="underline">
+          {renderUserLinks(router, user)}
+        </Navbar.Content>
+        <Navbar.Content>
+          <Navbar.Item>
+            {renderGeneralLinks(router, user)}
+          </Navbar.Item>
+        </Navbar.Content>
+      </Navbar>
+    </>
   )
 }
