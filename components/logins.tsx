@@ -27,7 +27,8 @@ export default function Logins(
   return (
     <Container>
       <h6>{title}</h6>
-      <Table>
+      <Table
+        shadow={false}>
         <Table.Header>
           <Table.Column>Id</Table.Column>
           <Table.Column>Student</Table.Column>
@@ -42,6 +43,12 @@ export default function Logins(
             </Table.Row>
           )}
         </Table.Body>
+        <Table.Pagination
+          shadow
+          noMargin
+          align="center"
+          rowsPerPage={5}
+        />
       </Table>
     </Container>
   )

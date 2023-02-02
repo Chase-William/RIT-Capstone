@@ -37,6 +37,8 @@ export default function Courses({ courses }: { courses: Course[] }) {
         fluid>
         <Table
           selectionMode="single"
+          shadow={false}
+          //@ts-ignore
           onSelectionChange={handleSelected}>
           <Table.Header>
             <Table.Column>Id</Table.Column>

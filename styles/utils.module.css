@@ -74,3 +74,9 @@
 .fill {
   width: 100%;
 }
+
+.flex {
+  width: inherit;
+  display: flex;
+  justify-content: center;
+}

@@ -6,6 +6,7 @@ import { NextRouter, useRouter } from "next/router";
 import utilStyles from '../styles/utils.module.css'
 import navStyles from '../styles/components/nav.module.css'
 import RITLogo from './rit-logo'
+import LogoutButton from "./logout-btn";
 
 const INDEX_PATHNAME = '/'
 
@@ -39,14 +40,19 @@ function renderGeneralLinks(router: NextRouter, user: User | null) {
           fontSize: '$xl',
           fontWeight: '$bold',
           marginRight: '5px',
-          textDecoration: 'underline'
+          textDecoration: 'underline',
+          '@xsMax': {
+            color: 'Blue' // Example using Media query to alternate styles
+          }
         }}>
         Student Help Form
       </Link>
     )
   }
 
-  return <></>
+  return (
+    <></>
+  )
 }
 
 export default function Nav() {
@@ -65,6 +71,9 @@ export default function Nav() {
             margin: 0
           }}
         />
+        { user && user.isLoggedIn && 
+          <LogoutButton/>      
+        }
         {/* <Text>
           <span className={navStyles.rit}>RIT</span>
           <span className={navStyles.divider}> | </span>

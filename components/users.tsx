@@ -9,7 +9,8 @@ export type AugmentedUser = {
 
 export default function Users({ users }: { users: AugmentedUser[] }) {
   return (
-    <Table>
+    <Table
+      shadow={false}>
       <Table.Header>
         <Table.Column>Id</Table.Column>
         <Table.Column>Username</Table.Column>
@@ -26,6 +27,12 @@ export default function Users({ users }: { users: AugmentedUser[] }) {
           </Table.Row>
         )}
       </Table.Body>
+      <Table.Pagination
+          shadow
+          noMargin
+          align="center"
+          rowsPerPage={5}
+        />
     </Table>
   )
 }

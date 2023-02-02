@@ -34,13 +34,20 @@ export default function Acquisitions(
   return (
     <Container>
       <h6>{title}</h6>
-      <Table>
-        { headerAdapter() }
+      <Table
+        shadow={false}>
+        {headerAdapter()}
         <Table.Body>
           {acquisitions.map(acq =>
             rowAdapter(acq)
           )}
         </Table.Body>
+        <Table.Pagination
+          shadow
+          noMargin
+          align="center"
+          rowsPerPage={5}
+        />
       </Table>
     </Container>
   )

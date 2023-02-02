@@ -17,25 +17,38 @@ export default function StandardLayout(
   return (
     <>
       <Container fluid>
-        <Row css={{ columnGap: 20 }}>
-          <Col
-            css={{ textAlign: 'center' }}>
-            <Card>
-              <Card.Body>
-                {topLeft}
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col
-            css={{ textAlign: 'center' }}>
-            <Card>
-              <Card.Body>
-                {topRight}
-              </Card.Body>
-            </Card>
-          </Col>
+        <Row css={{
+          '@smMax': {
+            display: 'flex',
+            flexDirection: 'column'
+          }
+        }}>
+          <Card css={{
+            maxWidth: '50%',
+            '@smMax': {
+              maxWidth: '100%'
+            },
+            '@smMin': {
+              marginRight: '20px'
+            }
+          }}>
+            <Card.Body>
+              {topLeft}
+            </Card.Body>
+          </Card>
+          <Card css={{
+            maxWidth: '50%',
+            '@smMax': {
+              marginTop: '20px',
+              maxWidth: '100%'
+            }
+          }}>
+            <Card.Body>
+              {topRight}
+            </Card.Body>
+          </Card>
         </Row>
-        <Row css={{marginTop: 20}}>
+        <Row css={{ marginTop: 20 }}>
           <Card>
             <Card.Body>
               {bottom}

@@ -28,13 +28,8 @@ export default function Register() {
   return (
     <form onSubmit={submitHandler}>
       <div className={utilStyles.vertical}>
-        <Text
-          h1
+        <Text          
           size={60}
-          css={{
-            textGradient: "45deg, $blue600 -20%, $pink600 50%",
-          }}
-          weight="bold"
         >
           Register
         </Text>
