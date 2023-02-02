@@ -20,13 +20,17 @@ export default function Login() {
   return (
     <form onSubmit={handleSubmit}>
       <div className={utilStyles.vertical}>
-        <Text
-          size={60}
-        >
+        <Text size={60}>
           Login
         </Text>
-        <Input placeholder="Username" onChange={e => setUsername(e.target.value)} />
-        <Input placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+        <Input 
+          placeholder="Username" 
+          onChange={e => setUsername(e.target.value)} 
+        />
+        <Input.Password 
+          placeholder="Password" 
+          onChange={e => setPassword(e.target.value)}
+        />
         <Button 
           type="submit">
           Login

@@ -33,9 +33,18 @@ export default function Register() {
         >
           Register
         </Text>
-        <Input placeholder="Username" onChange={e => setUsername(e.target.value)} />
-        <Input placeholder="Password" onChange={e => setPassword(e.target.value)}/>
-        <Input placeholder="Email" onChange={e => setEmail(e.target.value)}/>
+        <Input 
+          placeholder="Username" 
+          onChange={e => setUsername(e.target.value)} 
+        />
+        <Input.Password
+          placeholder="Password" 
+          onChange={e => setPassword(e.target.value)}
+        />
+        <Input 
+          placeholder="Email"
+          onChange={e => setEmail(e.target.value)}
+        />
         <Dropdown>
           <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
             {getRole}
@@ -49,9 +58,8 @@ export default function Register() {
             // @ts-ignore
             onSelectionChange={setSelected}
           >
-            <Dropdown.Item key="student">Student</Dropdown.Item>
             <Dropdown.Item key="professor">Professor</Dropdown.Item>
-            <Dropdown.Item key="admin">Admin</Dropdown.Item>
+            <Dropdown.Item key="admin">IT Analyst</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         <Button type="submit">Register</Button>

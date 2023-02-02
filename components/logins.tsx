@@ -1,6 +1,5 @@
 import { Container, Table } from "@nextui-org/react";
-import { useEffect, useState } from "react";
-import { get, post } from "../lib/fetch-wrapper";
+import MyTable from "./my-table";
 
 export type LoginWithStudentEmail = {
   id: number;
@@ -17,39 +16,37 @@ export default function Logins(
   }: {
     logins: LoginWithStudentEmail[],
     title: string
-  }) {  
+  }) {
 
   if (!logins)
     return <p>Loading...</p>
 
-  console.log(logins)
+  // console.log(logins.length)
 
   return (
     <Container>
       <h6>{title}</h6>
-      <Table
-        shadow={false}>
-        <Table.Header>
-          <Table.Column>Id</Table.Column>
-          <Table.Column>Student</Table.Column>
-          <Table.Column>Timestamp</Table.Column>
-        </Table.Header>
-        <Table.Body>
-          {logins.map((login) =>
+      <MyTable
+        col={logins}
+        headerAdapter={() => {
+          return (
+            <Table.Header>
+              <Table.Column>Id</Table.Column>
+              <Table.Column>Student</Table.Column>
+              <Table.Column>Timestamp</Table.Column>
+            </Table.Header>
+          )
+        }}
+        rowAdapter={(login: LoginWithStudentEmail) => {
+          return (
             <Table.Row key={login.id}>
               <Table.Cell>{login.id}</Table.Cell>
               <Table.Cell>{login.student.email}</Table.Cell>
               <Table.Cell>{login.login_timestamp}</Table.Cell>
             </Table.Row>
-          )}
-        </Table.Body>
-        <Table.Pagination
-          shadow
-          noMargin
-          align="center"
-          rowsPerPage={5}
-        />
-      </Table>
+          )
+        }}
+      />
     </Container>
   )
 }

@@ -2,6 +2,7 @@ import { Container, Table } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { post } from "../lib/fetch-wrapper";
 import { AcquisitionAttempt } from "@prisma/client";
+import MyTable from "./my-table";
 
 export type AugmentedAcquisition = {
   id: number;
@@ -22,7 +23,7 @@ export default function Acquisitions(
     headerAdapter,
     rowAdapter
   }: {
-    acquisitions: any,
+    acquisitions: Array<any>,
     title: string,
     headerAdapter: () => JSX.Element,
     rowAdapter: (acqusition: any) => JSX.Element
@@ -34,21 +35,11 @@ export default function Acquisitions(
   return (
     <Container>
       <h6>{title}</h6>
-      <Table
-        shadow={false}>
-        {headerAdapter()}
-        <Table.Body>
-          {acquisitions.map(acq =>
-            rowAdapter(acq)
-          )}
-        </Table.Body>
-        <Table.Pagination
-          shadow
-          noMargin
-          align="center"
-          rowsPerPage={5}
-        />
-      </Table>
+      <MyTable
+        col={acquisitions}
+        headerAdapter={headerAdapter}
+        rowAdapter={rowAdapter}
+      />
     </Container>
   )
 }

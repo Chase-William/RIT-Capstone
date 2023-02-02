@@ -3,9 +3,6 @@ import { useUser } from "../lib/userUser";
 import { User } from "../pages/api/user";
 import { ADMIN_ROLE, PROF_ROLE, STUDENT_ROLE } from "../lib/util";
 import { NextRouter, useRouter } from "next/router";
-import utilStyles from '../styles/utils.module.css'
-import navStyles from '../styles/components/nav.module.css'
-import RITLogo from './rit-logo'
 import LogoutButton from "./logout-btn";
 
 const INDEX_PATHNAME = '/'
