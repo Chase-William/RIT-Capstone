@@ -7,6 +7,7 @@ import StandardLayout from "../components/standard-layout";
 import { get } from "../lib/fetch-wrapper";
 import Users, { AugmentedUser } from "../components/users";
 import { useUser } from "../lib/userUser";
+import NotLoggedIn from "../components/error/not-logged-in";
 
 async function getRecentStudentLoginFailures(): Promise<LoginWithStudentEmail[]> {
   return await get('/api/login', { success: false })
@@ -35,7 +36,7 @@ export default function Accounts() {
   }, [user])
 
   if (!user)
-  return <p>Please login first.</p>
+  return <NotLoggedIn/>
 
   if (!logins || !users)
     return <p>Loading...</p>

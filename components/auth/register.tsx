@@ -6,7 +6,7 @@ import { useRegister } from "../../lib/useRegister";
 
 export default function Register() {
   const { register } = useRegister()
-  const [selected, setSelected] = useState(new Set(["student"]));
+  const [selected, setSelected] = useState(new Set(["professor"]));
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')

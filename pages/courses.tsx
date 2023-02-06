@@ -10,6 +10,7 @@ import { AugmentedAcquisition } from '../components/acqusitions';
 import { useRouter } from 'next/router';
 import { useUser } from '../lib/userUser';
 import { Table } from '@nextui-org/react';
+import NotLoggedIn from '../components/error/not-logged-in';
 
 type AugmentedCourse = {
   id: number;
@@ -58,7 +59,7 @@ export default function Courses() {
   }, [courses])
 
   if (!user)
-    return <p>Please login first.</p>
+    return <NotLoggedIn/>
 
   if (!courses || !acquisition)
     return <p>Loading...</p>

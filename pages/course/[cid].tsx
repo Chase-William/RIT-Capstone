@@ -12,6 +12,8 @@ import { Table } from "@nextui-org/react";
 import superjson from 'superjson';
 import { SuperJSONResult } from "superjson/dist/types";
 import Students from "../../components/students";
+import { useUser } from "../../lib/userUser";
+import NotLoggedIn from "../../components/error/not-logged-in";
 
 // TODO: Change any return 
 // async function getCourse(id: number): Promise<any[]> {
@@ -46,6 +48,11 @@ export async function getServerSideProps({ params }: { params: { cid: string } }
 }
 
 export default function Course({ data }) {
+
+  const user = useUser()
+
+  if (!user?.isLoggedIn)
+    return <NotLoggedIn/>
 
   /**
    * Using https://github.com/blitz-js/superjson#using-with-nextjs because serialization of the `Date` type 
