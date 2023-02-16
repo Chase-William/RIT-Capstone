@@ -6,12 +6,14 @@ export default function Students(
     students,
     title,
     headerAdapter,
-    rowAdapter
+    rowAdapter,
+    handleSelection
   }: {
     students: Array<any>,
     title: string,
     headerAdapter: () => JSX.Element,
-    rowAdapter: (item: any) => JSX.Element
+    rowAdapter: (item: any) => JSX.Element,
+    handleSelection: (key: string) => void
   }) {
 
   if (!students)
@@ -21,6 +23,7 @@ export default function Students(
     <Container>
       <h6>{title}</h6>
       <MyTable
+        handleSelection={handleSelection}
         col={students}
         headerAdapter={headerAdapter}
         rowAdapter={rowAdapter}

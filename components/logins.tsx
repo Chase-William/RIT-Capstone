@@ -1,5 +1,6 @@
 import { Container, Table } from "@nextui-org/react";
 import MyTable from "./my-table";
+import { LoginAttempt } from "@prisma/client";
 
 export type LoginWithStudentEmail = {
   id: number;
@@ -12,10 +13,16 @@ export type LoginWithStudentEmail = {
 export default function Logins(
   {
     logins,
-    title
+    title,
+    headerAdapter,
+    rowAdapter,
+    handleSelection
   }: {
-    logins: LoginWithStudentEmail[],
-    title: string
+    logins: Array<any>,
+    title: string,
+    headerAdapter: () => JSX.Element,
+    rowAdapter: (acqusition: any) => JSX.Element,
+    handleSelection: (key: string) => void
   }) {
 
   if (!logins)
@@ -27,26 +34,29 @@ export default function Logins(
     <Container>
       <h6>{title}</h6>
       <MyTable
+        handleSelection={handleSelection}
         col={logins}
-        headerAdapter={() => {
-          return (
-            <Table.Header>
-              <Table.Column>Id</Table.Column>
-              <Table.Column>Student</Table.Column>
-              <Table.Column>Timestamp</Table.Column>
-            </Table.Header>
-          )
-        }}
-        rowAdapter={(login: LoginWithStudentEmail) => {
-          return (
-            <Table.Row key={login.id}>
-              <Table.Cell>{login.id}</Table.Cell>
-              <Table.Cell>{login.student.email}</Table.Cell>
-              <Table.Cell>{login.login_timestamp}</Table.Cell>
-            </Table.Row>
-          )
-        }}
+        headerAdapter={headerAdapter}
+        rowAdapter={rowAdapter}
       />
     </Container>
+  )
+}
+
+export const defaultLoginHeaderAdapter = () => {
+  return (
+    <Table.Header>
+      <Table.Column>Id</Table.Column>
+      <Table.Column>Timestamp</Table.Column>
+    </Table.Header>
+  )
+}
+
+export const defaultLoginRowAdapter = (v: LoginAttempt) => {
+  return (
+    <Table.Row>
+      <Table.Cell>{v.id}</Table.Cell>
+      <Table.Cell>{v.login_timestamp.toUTCString()}</Table.Cell>
+    </Table.Row>
   )
 }

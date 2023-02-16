@@ -1,16 +1,29 @@
 import { Table } from "@nextui-org/react";
+import Router from "next/router";
 
 export default function MyTable({
   col,
   headerAdapter,
-  rowAdapter
+  rowAdapter,
+  handleSelection
 }: {
   col: Array<any>,
   headerAdapter: () => JSX.Element,
-  rowAdapter: (acqusition: any) => JSX.Element
+  rowAdapter: (acqusition: any) => JSX.Element,
+  handleSelection: (key: string) => void
 }) {
+
+
+  const handleSelected = (e: { currentKey: string }) => {
+    if (handleSelection)
+      handleSelection(e.currentKey)
+  }
+
   return (
     <Table
+      selectionMode='single'
+      // @ts-ignore
+      onSelectionChange={handleSelected}
       shadow={false}>
       {headerAdapter()}
       <Table.Body>

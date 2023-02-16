@@ -36,6 +36,7 @@ export default function Acquisitions(
     <Container>
       <h6>{title}</h6>
       <MyTable
+        handleSelection={null}
         col={acquisitions}
         headerAdapter={headerAdapter}
         rowAdapter={rowAdapter}

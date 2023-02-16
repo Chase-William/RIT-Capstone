@@ -3,29 +3,18 @@ import Acquisitions from "../../components/acqusitions";
 import Layout from "../../components/layout";
 import StandardLayout from "../../components/standard-layout";
 import { get } from "../../lib/fetch-wrapper";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../lib/prisma";
 import { AcquisitionAttempt, Student } from "@prisma/client";
 import { Course as CourseModel } from "@prisma/client";
 import { Table } from "@nextui-org/react";
 import superjson from 'superjson';
-import { SuperJSONResult } from "superjson/dist/types";
 import Students from "../../components/students";
 import { useUser } from "../../lib/userUser";
 import NotLoggedIn from "../../components/error/not-logged-in";
 
-// TODO: Change any return 
-// async function getCourse(id: number): Promise<any[]> {
-//   return await get('/api/course', {
-//     id: id
-//   })
-//     .then(res => res.course)
-// }
-
 export async function getServerSideProps({ params }: { params: { cid: string } }) {
-  // console.log(params.cid)
-
   const result = await prisma.course.findUnique({
     where: {
       id: parseInt(params.cid)
@@ -48,7 +37,6 @@ export async function getServerSideProps({ params }: { params: { cid: string } }
 }
 
 export default function Course({ data }) {
-
   const user = useUser()
 
   if (!user?.isLoggedIn)
@@ -94,7 +82,10 @@ export default function Course({ data }) {
         topRight={<p>Export Component</p>}
         bottom={
           <Students
-            title="Students"
+            handleSelection={(key: string) => {
+              Router.push(`../student/${key}`)
+            }}
+            title="Students"            
             students={course.students}
             headerAdapter={() => {
               return (
@@ -107,7 +98,7 @@ export default function Course({ data }) {
             }}
             rowAdapter={(v: Student) => {
               return (
-                <Table.Row>
+                <Table.Row key={v.id}>
                   <Table.Cell>{v.id}</Table.Cell>
                   <Table.Cell>{v.email}</Table.Cell>
                   <Table.Cell>{`${v.first_name}, ${v.last_name}`}</Table.Cell>

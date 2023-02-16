@@ -1,4 +1,4 @@
-import { Container } from "@nextui-org/react";
+import { Container, Table } from "@nextui-org/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Layout from "../components/layout";
@@ -32,11 +32,11 @@ export default function Accounts() {
       (async () => {
         setUsers(await getUsers())
       })()
-    }    
+    }
   }, [user])
 
   if (!user)
-  return <NotLoggedIn/>
+    return <NotLoggedIn />
 
   if (!logins || !users)
     return <p>Loading...</p>
@@ -44,10 +44,27 @@ export default function Accounts() {
   return (
     <Layout>
       <StandardLayout
-        topLeft={<Logins title={'Failed Logins'} logins={logins}/>}
+        topLeft={
+          // <Logins
+          //   title={'Failed Logins'}
+          //   logins={logins}
+          //   headerAdapter={() => {
+          //     return (
+          //       <Table.Header>
+          //         <Table.Column>{v.id}</Table.Column>
+          //         <Table.Column>{v.login_timestamp.toUTCString()}</Table.Column>
+          //       </Table.Header>
+          //     )
+          //   }}
+          //   rowAdapter={() => {
+          //     return (
+
+          //     )
+          //   }} />
+        }
         topRight={<p>Export Component</p>}
         bottom={
-          <Users users={users}/>
+          <Users users={users} />
         }
       />
     </Layout>

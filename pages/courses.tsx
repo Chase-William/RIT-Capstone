@@ -59,7 +59,7 @@ export default function Courses() {
   }, [courses])
 
   if (!user)
-    return <NotLoggedIn/>
+    return <NotLoggedIn />
 
   if (!courses || !acquisition)
     return <p>Loading...</p>
@@ -69,8 +69,7 @@ export default function Courses() {
       <StandardLayout
         topLeft={
           <Acquisitions
-            title='Failed Resource Acquisitions'
-            acquisitions={acquisition}
+            title='Failed Resource Acquisitions' acquisitions={acquisition}
             headerAdapter={() => {
               return (
                 <Table.Header>
@@ -90,7 +89,30 @@ export default function Courses() {
               )
             }}
           />}
-        topRight={<Logins title={'Failed Logins'} logins={logins} />}
+        topRight={
+          <Logins
+            handleSelection={null}
+            title={'Failed Logins'}
+            logins={logins}
+            headerAdapter={() => {
+              return (
+                <Table.Header>
+                  <Table.Column>Id</Table.Column>
+                  <Table.Column>Student</Table.Column>
+                  <Table.Column>Timestamp</Table.Column>
+                </Table.Header>
+              )
+            }}
+            rowAdapter={(v: LoginWithStudentEmail) => {
+              return (
+                <Table.Row key={v.id}>
+                  <Table.Cell>{v.id}</Table.Cell>
+                  <Table.Cell>{v.student.email}</Table.Cell>
+                  <Table.Cell>{v.login_timestamp}</Table.Cell>
+                </Table.Row>
+              )
+            }} />
+        }
         bottom={
           <CoursesComponent courses={courses} />
         }

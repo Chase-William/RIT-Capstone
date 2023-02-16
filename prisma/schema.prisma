@@ -71,7 +71,10 @@ model AcquisitionAttempt {
   course_id       Int
 }
 
-// model StudentHelpRequest {
-//   id Int @id @default(autoincrement())
-
-// }
+model StudentHelpRequest {
+  id         Int @id @default(autoincrement())
+  first_name String
+  last_name  String
+  email      String
+  course     String
+}
