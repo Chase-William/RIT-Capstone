@@ -17,6 +17,7 @@ export default function Home() {
     <Layout>
       <div className={`${utilStyles.horizontal} ${indexStyles.evenly}`}>
         <Login/>
+        <div className={indexStyles.vertical_line}></div>
         <Register/>
       </div>
     </Layout>
