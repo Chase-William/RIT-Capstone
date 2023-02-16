@@ -7,7 +7,7 @@ import StandardLayout from "../../components/standard-layout";
 import Acquisitions from "../../components/acqusitions";
 import Logins, { defaultLoginHeaderAdapter, defaultLoginRowAdapter } from "../../components/logins";
 import { AcquisitionAttempt, LoginAttempt, Student as StudentModel } from "@prisma/client";
-import { Table } from "@nextui-org/react";
+import { Container, Table, Text } from "@nextui-org/react";
 
 export async function getServerSideProps({ params }: { params: { sid: string } }) {
   const result = await prisma.student.findUnique({
@@ -84,7 +84,10 @@ export default function Student({ data }) {
             rowAdapter={defaultLoginRowAdapter} />
         }
         bottom={
-          <p>Display student table specific info here</p>
+          <Container fluid>
+            <Text h4>Name:</Text><Text>{`${student.last_name}, ${student.first_name}`}</Text>
+            <Text h4>Email:</Text><Text>{student.email}</Text>
+          </Container>
         }
       />
     </Layout>

@@ -3,10 +3,6 @@ import utilStyles from '../styles/utils.module.css';
 import Login from '../components/auth/login';
 import Register from '../components/auth/register';
 import indexStyles from './index.module.css'
-import { useState } from 'react';
-import axios from 'axios';
-import Router from 'next/router';
-import { User } from './api/user';
 
 export default function Home() {
   // here we just check if user is already logged in and redirect to profile

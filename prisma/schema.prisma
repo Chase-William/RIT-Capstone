@@ -72,9 +72,10 @@ model AcquisitionAttempt {
 }
 
 model StudentHelpRequest {
-  id         Int @id @default(autoincrement())
-  first_name String
-  last_name  String
-  email      String
-  course     String
+  id          Int    @id @default(autoincrement())
+  first_name  String
+  last_name   String
+  email       String
+  course      String
+  description String @db.VarChar(2048)
 }
