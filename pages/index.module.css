@@ -5,3 +5,12 @@
   border: 1px solid black;
   height: 500px;
 }
+.pawLogo img {
+  width: 10%;
+  position: absolute; 
+  margin-top: 15%;
+}
+.pawLogo {
+  display: flex;
+  justify-content: center;
+}
