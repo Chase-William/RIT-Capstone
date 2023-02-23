@@ -7,6 +7,7 @@ import LogoutButton from "./logout-btn";
 
 const INDEX_PATHNAME = '/'
 
+
 function renderUserLinks(router: NextRouter, user: User | null) {
   if (!user || router.pathname === INDEX_PATHNAME)
     return <></>
@@ -58,12 +59,13 @@ export default function Nav() {
 
   return (
     <>
-      <Navbar
+      <Navbar className="header"
         disableShadow
-        isCompact>
+        isCompact
+        >
         <Image
           width={200}
-          src='/rit-logo.png'
+          src='/RIT_hor_k.png'
           containerCss={{
             margin: 0
           }}

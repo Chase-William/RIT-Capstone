@@ -8,8 +8,15 @@ body {
 }
 
 body {
-  max-width: 1000px;
   margin: auto;
+}
+.content{
+  max-width:1000px;
+  margin: auto;
+}
+.header{
+  background-color: #F76902;
+  --nextui--navbarBlurBackgroundColor: 'transparent';
 }
 
 * {
