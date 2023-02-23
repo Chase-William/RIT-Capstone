@@ -17,6 +17,11 @@ export default function Home() {
     <Layout>
       <div className={`${utilStyles.horizontal} ${indexStyles.evenly}`}>
         <Login/>
+        <div className={indexStyles.vertical_line}>
+          <div className={indexStyles.pawLogo}>
+            <img src="/rit_paw.png"/>
+          </div>
+        </div>
         <Register/>
       </div>
     </Layout>
