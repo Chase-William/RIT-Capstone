@@ -14,16 +14,19 @@ export default function Home() {
   // https://stackoverflow.com/questions/72221255/how-to-pass-data-from-one-page-to-another-page-in-next-js
 
   return (
-    
-      <Layout>
-        <div className='content'>
-        <div className={`${utilStyles.horizontal} ${indexStyles.evenly}`}>
-          <Login/>
-          <Register/>
+    <Layout>
+      <div className='content'>
+      <div className={`${utilStyles.horizontal} ${indexStyles.evenly}`}>
+        <Login/>
+        <div className={indexStyles.vertical_line}>
+          <div className={indexStyles.pawLogo}>
+            <img src="/rit_paw.png"/>
+          </div>
         </div>
-        </div>
-      </Layout>
-    
+        <Register/>
+      </div>
+      </div>
+    </Layout>
     // <Layout home>
     //   {/* Keep the existing code here */}
 
