@@ -1,16 +1,26 @@
 .evenly {
   justify-content: space-evenly;
 }
-.vertical_line {
+.line {
   border: 1px solid black;
-  height: 500px;
+  height: 200px;
+  width: 1px;
 }
-.pawLogo img {
-  width: 10%;
-  position: absolute; 
-  margin-top: 15%;
-}
-.pawLogo {
+
+.vertical_line {
+  align-items: center;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 600px) {
+  .vertical_line {
+    flex-direction: row;
+    margin: 30px;
+  }
+  .line {
+    border: 1px solid black;
+    height: 1px;
+    width: 150px;
+  }
 }

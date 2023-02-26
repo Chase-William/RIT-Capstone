@@ -3,6 +3,7 @@ import utilStyles from '../styles/utils.module.css';
 import Login from '../components/auth/login';
 import Register from '../components/auth/register';
 import indexStyles from './index.module.css'
+import Vertical_Line from '../components/vertical_line';
 
 export default function Home() {
   // here we just check if user is already logged in and redirect to profile
@@ -18,11 +19,7 @@ export default function Home() {
       <div className='content'>
       <div className={`${utilStyles.horizontal} ${indexStyles.evenly}`}>
         <Login/>
-        <div className={indexStyles.vertical_line}>
-          <div className={indexStyles.pawLogo}>
-            <img src="/rit_paw.png"/>
-          </div>
-        </div>
+        <Vertical_Line/>
         <Register/>
       </div>
       </div>
