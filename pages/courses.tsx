@@ -79,13 +79,11 @@ export default function Courses() {
                 </Table.Header>
               )
             }}
-            //<a href={"mailto:" + v.student.email + "&subject=Trouble Accessing Resources"> 
-            //Maybe use mailto for apps instead of gmail
             rowAdapter={(v: AugmentedAcquisition) => {
               return (
                 <Table.Row key={v.id}>
                   <Table.Cell>{v.id}</Table.Cell>
-                  <Table.Cell><a href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
+                  <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
                   <Table.Cell>{v.course.name}</Table.Cell>
                 </Table.Row>
               )
@@ -109,7 +107,7 @@ export default function Courses() {
               return (
                 <Table.Row key={v.id}>
                   <Table.Cell>{v.id}</Table.Cell>
-                  <Table.Cell><a href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Logging In"}>{v.student.email}</a></Table.Cell>
+                  <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Logging In"}>{v.student.email}</a></Table.Cell>
                   <Table.Cell>{v.login_timestamp}</Table.Cell>
                 </Table.Row>
               )
