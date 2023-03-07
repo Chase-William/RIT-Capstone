@@ -222,8 +222,19 @@ async function main() {
   await newAcquisition(1, 1, false)
   await newAcquisition(1, 1, false)
   await newAcquisition(1, 1, true)
+  await newAcquisition(1, 1, true)
+  await newAcquisition(1, 1, true)
+  await newAcquisition(1, 1, true)
+  await newAcquisition(1, 1, true)
+  await newAcquisition(1, 1, true)
   // course 2
   await newAcquisition(1, 2, false)
+  await newAcquisition(1, 2, true)
+  await newAcquisition(1, 2, true)
+  await newAcquisition(1, 2, true)
+  await newAcquisition(1, 2, true)
+  await newAcquisition(1, 2, true)
+  await newAcquisition(1, 2, true)
   await newAcquisition(1, 2, true)
   // course 3
   await newAcquisition(1, 3, false)
@@ -232,26 +243,56 @@ async function main() {
   await newAcquisition(2, 1, true)
   await newAcquisition(2, 1, false)
   await newAcquisition(2, 1, true)
+  await newAcquisition(2, 1, true)
+  await newAcquisition(2, 1, true)
+  await newAcquisition(2, 1, true)
   // course 2
   await newAcquisition(2, 2, false)
   await newAcquisition(2, 2, true)
   // course 3
+  await newAcquisition(2, 3, true)
+  await newAcquisition(2, 3, true)
+  await newAcquisition(2, 3, true)
+  await newAcquisition(2, 3, true)
   await newAcquisition(2, 3, true)
 
   // Create new login attempts connected to a student with a randomized time of occurrance
   await newLogin(1, false);
   await newLogin(1, false);
   await newLogin(1, true);
+  await newLogin(1, true);
+  await newLogin(1, true);
+  await newLogin(1, true);
+  await newLogin(1, true);
+  await newLogin(1, true);
+  await newLogin(1, true);
 
   await newLogin(2, false);
   await newLogin(2, false);
   await newLogin(2, true);
+  await newLogin(2, true);
+  await newLogin(2, true);
+  await newLogin(2, true);
+  await newLogin(2, true);
+  await newLogin(2, true);
+  await newLogin(2, true);
+  await newLogin(2, true);
+  await newLogin(2, true);
 
   await newLogin(3, false);
+  await newLogin(3, true);
+  await newLogin(3, true);
+  await newLogin(3, true);
+  await newLogin(3, true);
+  await newLogin(3, true);
+  await newLogin(3, true);
   await newLogin(3, true);
 
   await newLogin(4, false);
   await newLogin(4, false);
+  await newLogin(5, true);
+  await newLogin(5, true);
+  await newLogin(5, true);
   await newLogin(5, true);
   await newLogin(5, true);
 

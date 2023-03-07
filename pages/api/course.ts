@@ -22,6 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         acquisitions: {
           select: {
             id: true,
+            status: true,
             student: {
               select: {
                 id: true,

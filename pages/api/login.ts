@@ -17,6 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           select: {
             id: true,
             login_timestamp: true,
+            status: true,
             student: {
               select: {
                 email: true
