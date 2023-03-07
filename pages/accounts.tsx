@@ -8,6 +8,7 @@ import { get } from "../lib/fetch-wrapper";
 import Users, { AugmentedUser } from "../components/users";
 import { useUser } from "../lib/userUser";
 import NotLoggedIn from "../components/error/not-logged-in";
+import Router from "next/router";
 
 async function getRecentStudentLoginFailures(): Promise<LoginWithStudentEmail[]> {
   return await get('/api/login', { success: false })
@@ -43,30 +44,9 @@ export default function Accounts() {
 
   return (
     <Layout>
-      <StandardLayout
-        topLeft={
-          // <Logins
-          //   title={'Failed Logins'}
-          //   logins={logins}
-          //   headerAdapter={() => {
-          //     return (
-          //       <Table.Header>
-          //         <Table.Column>{v.id}</Table.Column>
-          //         <Table.Column>{v.login_timestamp.toUTCString()}</Table.Column>
-          //       </Table.Header>
-          //     )
-          //   }}
-          //   rowAdapter={() => {
-          //     return (
-
-          //     )
-          //   }} />
-        }
-        topRight={<p>Export Component</p>}
-        bottom={
-          <Users users={users} />
-        }
-      />
+      <Users users={users} handleSelection={(key: string) => {       
+        Router.push(`user/${key}`)
+      }} />
     </Layout>
   )
 }

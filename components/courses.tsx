@@ -6,7 +6,7 @@ import Router, { withRouter } from "next/router";
 export default function Courses({ courses }: { courses: Course[] }) {
   // Handle click and navigate to course
   const handleSelected = (e: { currentKey: string }) => {
-    Router.push(`./course/${e.currentKey}`)
+    Router.push(`/course/${e.currentKey}`)
   }
 
   return (
