@@ -10,6 +10,7 @@ const prisma = new PrismaClient()
 const PROF_ROLE = 'professor'
 const ADMIN_ROLE = 'admin'
 const STUDENT_ROLE = 'student'
+const IT_ANALYST_ROLE='itanalyst'
 
 function hashPass(password: string): string {
   const salt = bcrypt.genSaltSync(10);
@@ -119,6 +120,12 @@ async function main() {
           role: PROF_ROLE,
           email: "nsyder@hotmail.com"
         },
+        {
+          username: "Joe Ma",
+          password: hashPass('123'),
+          role: IT_ANALYST_ROLE,
+          email: "joema@hotmail.com"
+        }
         // {
         //   username: "Student",
         //   password: hashPass('123'),

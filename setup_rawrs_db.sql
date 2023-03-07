@@ -65,6 +65,8 @@ INSERT INTO user VALUES(5, "Craven Moorehead", "ravenhead", "prof", "moorehead@h
 INSERT INTO user VALUES(6, "Dang Lin-Wang", "airtimer", "prof", "airtime@hotmail.com");
 INSERT INTO user VALUES(7, "E. Norma Scock", "scock", "prof", "scock@hotmail.com");
 INSERT INTO user VALUES(8, "Ben N. Syder", "mhm", "prof", "nsyder@hotmail.com");
+INSERT INTO user VALUES(9, "Joe Ma", "joem", "itanalyst", "joema@hotmail.com");
+
 
 INSERT INTO course VALUES(1, "Introduction to Database Modeling");
 INSERT INTO course VALUES(2, "Personality Psychology");
