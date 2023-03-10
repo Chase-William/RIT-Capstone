@@ -1,4 +1,4 @@
-import { Table } from "@nextui-org/react";
+import { Table, Dropdown } from "@nextui-org/react";
 
 export type AugmentedUser = {
   id: number
@@ -31,6 +31,14 @@ export default function Users({
         <Table.Column>Email</Table.Column>
         <Table.Column>Role</Table.Column>
       </Table.Header>
+      {/* <Dropdown>
+          <Dropdown.Button flat></Dropdown.Button>
+            <Dropdown.Menu aria-label="Static Actions">
+            <Dropdown.Item key="student">Student</Dropdown.Item>
+            <Dropdown.Item key="itanalyst">IT Analyst</Dropdown.Item>
+            <Dropdown.Item key="professor">Professor</Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown> */}
       <Table.Body>
         {users.map(user =>
           <Table.Row key={user.id}>

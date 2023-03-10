@@ -39,6 +39,8 @@ export function onLoggedIn(user: User) {
     Router.push('/courses')
   else if (user.role === ADMIN_ROLE)
     Router.push('/accounts')
+  else if (user.role === IT_ANALYST_ROLE)
+    Router.push('/metrics')
 }
 
 export const getToken = () => localStorage.getItem('rawrs-token')
@@ -60,4 +62,5 @@ export function getUserIdFromRequest(req: NextApiRequest): number {
 export const PROF_ROLE = 'professor'
 export const ADMIN_ROLE = 'admin'
 export const STUDENT_ROLE = 'student'
+export const IT_ANALYST_ROLE = "itanalyst"
 export const USER_COOKIE_NAME = 'user'
