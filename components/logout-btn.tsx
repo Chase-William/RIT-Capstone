@@ -6,7 +6,7 @@ export default function LogoutButton() {
   return (
     <Button 
       onClick={() => Cookies.remove(USER_COOKIE_NAME)}
-      ghost 
+      
       size='xs'>Logout</Button>
   )
 }
