@@ -4,6 +4,7 @@ import { LoginAttempt } from "@prisma/client";
 
 export type LoginWithStudentEmail = {
   id: number;
+  status: boolean;
   student: {
     email: string;
   };

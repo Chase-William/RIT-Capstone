@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { Input, Dropdown, Button, Text } from "@nextui-org/react";
 import utilStyles from '../../styles/utils.module.css';
-import { onLoggedIn } from "../../lib/util";
+import { IT_ANALYST_ROLE, onLoggedIn, PROF_ROLE } from "../../lib/util";
 import { useRegister } from "../../lib/useRegister";
 
 export default function Register() {
@@ -58,8 +58,8 @@ export default function Register() {
             // @ts-ignore
             onSelectionChange={setSelected}
           >
-            <Dropdown.Item key="professor">Professor</Dropdown.Item>
-            <Dropdown.Item key="admin">IT Analyst</Dropdown.Item>
+            <Dropdown.Item key={PROF_ROLE}>Professor</Dropdown.Item>
+            <Dropdown.Item key={IT_ANALYST_ROLE}>IT Analyst</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         <Button type="submit">Register</Button>

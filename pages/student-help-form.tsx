@@ -4,6 +4,7 @@ import utilStyles from '../styles/utils.module.css'
 import StandardLayout from "../components/standard-layout"
 import studentHelpFormStyles from './student-help-form.module.css'
 import { ChangeEvent, useState } from "react"
+import { post } from "../lib/fetch-wrapper"
 
 export default function StudentHelpForm() {
   const [email, setEmail] = useState('')
@@ -12,6 +13,10 @@ export default function StudentHelpForm() {
   const handleSubmit = () => {
     console.log(email)
     console.log(description)
+    post('/api/student-help-form', {
+      email: email,
+      description: description
+    })
   }
 
   return (

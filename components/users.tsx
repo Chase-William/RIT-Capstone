@@ -7,9 +7,23 @@ export type AugmentedUser = {
   role: string
 }
 
-export default function Users({ users }: { users: AugmentedUser[] }) {
+export default function Users({ 
+  users, 
+  handleSelection 
+} : { 
+  users: AugmentedUser[],
+  handleSelection: (key: string) => void
+}) {
+
+  const handleSelectionChanged = (e: { currentKey: string }) => {
+    handleSelection(e.currentKey)
+  }
+
   return (
     <Table
+      selectionMode="single"
+      // @ts-ignore
+      onSelectionChange={handleSelectionChanged}
       shadow={false}>
       <Table.Header>
         <Table.Column>Id</Table.Column>

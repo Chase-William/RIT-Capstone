@@ -1,5 +1,6 @@
 import prisma from "../../lib/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
+import { UserWithoutPassword } from "../user/[uid]"
 
 export type User = {
   username: string
@@ -11,17 +12,38 @@ export type User = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     const users = await prisma.user.findMany({
-      select: {
-        id: true,
+      select: {        
         username: true,
         email: true,
-        role: true
+        role: true,
+        id: true,
       }
     })
 
     return res.status(200).json({
       users: users
     })
+  }
+  else if (req.method === 'POST') {
+    const account: { 
+      username: string
+      email: string
+      role: string
+      id: number
+    } = req.body.account
+    console.log(account)
+    const r = await prisma.user.update({
+      where: {
+        id: account.id
+      },
+      data: {
+        email: account.email,
+        username: account.username,
+        role: account.role
+      }
+    })
+    console.log(`Information updated for user: ${r.username}, Role: ${r.role}, Email: ${r.email}}`)
+    return res.status(200)
   }
 }
 
