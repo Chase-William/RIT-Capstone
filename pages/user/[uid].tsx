@@ -94,7 +94,7 @@ export default function User({ data }) {
           <Text h5>Username</Text>
           <Input value={username} onChange={(e => setUsername(e.target.value))} />
           <Text h5 css={{ marginTop: '20px' }}>Email</Text>
-          <Input value={email} onChange={(e => setUsername(e.target.value))} />
+          <Input value={email} onChange={(e => setEmail(e.target.value))} />
           <Text h5 css={{ marginTop: '20px' }}>Role</Text>
           <Dropdown>
             <Dropdown.Button flat color="secondary" css={{ tt: "capitalize" }}>
