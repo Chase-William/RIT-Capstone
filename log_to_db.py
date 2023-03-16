@@ -11,7 +11,7 @@ json_obj = json.loads(json_data)
 
 #Acquisition Attempt log file directory
 script_dir2 = os.path.dirname(__file__)
-rel_path2 = "../../logs/acquisitionattempt.log"
+rel_path2 = "logs/acquisitionattempt.log"
 file2 = os.path.join(script_dir2, rel_path2)
 print(file2)
 
