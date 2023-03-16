@@ -172,7 +172,7 @@ export default function Courses() {
                   <Table.Row key={v.id}>
                     <Table.Cell>{v.id}</Table.Cell>
                     <Table.Cell>{v.student.email}</Table.Cell>
-                    <Table.Cell>{v.login_timestamp}</Table.Cell>
+                    <Table.Cell>{v.login_timestamp.replace(/T/, ' ').replace(/\..+/, '')}</Table.Cell>
                   </Table.Row>
                 )
               }} />
