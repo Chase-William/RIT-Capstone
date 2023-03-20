@@ -47,16 +47,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })
   }
   else if (req.method === 'POST') {
-    console.log('POST Logins')
+    // console.log('POST Logins')
     const ids: number[] = req.body.ids
+    console.log(ids)
     const logins = await prisma.loginAttempt.findMany({
       where: {
-        id: {
+        student_id: {
           in: ids
         }
       },
       select: {
         id: true,
+        status: true,
         login_timestamp: true,
         student: {
           select: {
@@ -65,7 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
       }
     })
-
+    // console.log(logins)
     return res.status(200).json({
       logins: logins
     })

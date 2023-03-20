@@ -84,13 +84,13 @@ async function main() {
           email: "olfnip@gmail.com"
         },
         {
-          username: "Phil Mahoochie",
+          username: "admin",
           password: hashPass('123'),
           role: ADMIN_ROLE,
           email: "philmaplease@bullhornmail.com"
         },
         {
-          username: "Long Henry",
+          username: "prof",
           password: hashPass('123'),
           role: PROF_ROLE,
           email: "longerthanu@hotmail.com"
@@ -154,7 +154,7 @@ async function main() {
 
   const longHenry = await prisma.user.update({
     where: {
-      username: 'Long Henry'
+      username: 'prof'
     },
     data: {
       courses: {
@@ -295,6 +295,9 @@ async function main() {
   await newLogin(5, true);
   await newLogin(5, true);
   await newLogin(5, true);
+  await newLogin(5, true);
+  await newLogin(5, false);
+  await newLogin(5, false);
 
   // const introToDatabaseCourse = prisma.course.findFirst({
   //   where: {
