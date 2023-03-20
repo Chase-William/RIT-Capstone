@@ -96,10 +96,10 @@ async function main() {
           email: "longerthanu@hotmail.com"
         },
         {
-          username: "Craven Moorehead",
+          username: "Joe Shmo",
           password: hashPass('123'),
           role: PROF_ROLE,
-          email: "moorehead@hotmail.com"
+          email: "joeshmo@hotmail.com"
         },
         {
           username: "Dang Lin-Wang",
