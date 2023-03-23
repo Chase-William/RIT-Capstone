@@ -12,6 +12,7 @@ import { Card, Container, Spacer, Table, Text } from '@nextui-org/react';
 import NotLoggedIn from '../components/error/not-logged-in';
 import Chart from 'react-google-charts';
 import RAWRSpacer from '../components/spacer';
+import { useAsyncList, useCollator } from "@nextui-org/react";
 
 type AugmentedCourse = {
   id: number;
@@ -120,7 +121,7 @@ export default function Courses() {
               headerAdapter={() => {
                 return (
                   <Table.Header>
-                    <Table.Column>Id</Table.Column>
+                    <Table.Column>Id</Table.Column> 
                     <Table.Column>Student</Table.Column>
                     <Table.Column>Course</Table.Column>
                   </Table.Header>
@@ -133,6 +134,8 @@ export default function Courses() {
                     <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
                     <Table.Cell>{v.course.name}</Table.Cell>
                   </Table.Row>
+
+                 
                 )
               }}
             />

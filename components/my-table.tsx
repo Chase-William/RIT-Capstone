@@ -5,12 +5,17 @@ export default function MyTable({
   col,
   headerAdapter,
   rowAdapter,
-  handleSelection
+  handleSelection,
+  sortDescriptor,
+  onSortChange
+
 }: {
   col: Array<any>,
   headerAdapter: () => JSX.Element,
   rowAdapter: (acqusition: any) => JSX.Element,
-  handleSelection: (key: string) => void
+  handleSelection: (key: string) => void,
+  sortDescriptor: any,
+  onSortChange: any
 }) {
 
 
@@ -22,6 +27,10 @@ export default function MyTable({
   return (
     <Table
       selectionMode='single'
+      
+      sortDescriptor={sortDescriptor}
+      onSortChange={onSortChange}
+      
       // @ts-ignore
       onSelectionChange={handleSelected}
       shadow={false}>

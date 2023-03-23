@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { post } from "../lib/fetch-wrapper";
 import { AcquisitionAttempt } from "@prisma/client";
 import MyTable from "./my-table";
+import { useAsyncList, useCollator } from "@nextui-org/react";
 
 export type AugmentedAcquisition = {
   id: number;
@@ -16,6 +17,11 @@ export type AugmentedAcquisition = {
     name: string;
   };
 }
+
+
+
+
+
 
 export default function Acquisitions(
   {
@@ -33,6 +39,33 @@ export default function Acquisitions(
   if (!acquisitions)
     return <p>Loading...</p>
 
+  //added
+  const collator = useCollator({ numeric: true });
+ /* async function load({ signal }) {
+    const res = await fetch("https://swapi.py4e.com/api/people/?search", {
+      signal,
+    });
+    const json = await res.json();
+    return {
+      items: json.results,
+    };
+  }*/
+  async function sort({ items, sortDescriptor }) {
+    return {
+      items: items.sort((a, b) => {
+        let first = a[sortDescriptor.column];
+        let second = b[sortDescriptor.column];
+        let cmp = collator.compare(first, second);
+        if (sortDescriptor.direction === "descending") {
+          cmp *= -1;
+        }
+        return cmp;
+      }),
+    };
+  }
+  const list = useAsyncList({ acquisitions, sort });
+
+
   return (
     <Container>
       <h6>{title}</h6>
@@ -41,6 +74,10 @@ export default function Acquisitions(
         col={acquisitions}
         headerAdapter={headerAdapter}
         rowAdapter={rowAdapter}
+      
+        sortDescriptor={list.sortDescriptor}
+        onSortChange={list.sort}
+            
       />
     </Container>
   )
