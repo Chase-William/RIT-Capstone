@@ -1,0 +1,18 @@
+.align_this {
+    padding-left: 3rem;
+}
+.user_info_container {
+    width: fit-content;
+    background-color: #D0D3D4;
+    padding: 1em;
+    border-radius: 5px;
+    margin-left: -25px;
+}
+.courses_info_container {
+    background-color: #D0D3D4;
+    padding: 1em;
+    border-radius: 5px;
+}
+.bold_this {
+    font-weight: bold;
+}

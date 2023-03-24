@@ -12,7 +12,7 @@ export default function Courses({ courses }: { courses: Course[] }) {
   return (
     <Container>
       <Row>
-        <h6>Courses:</h6>
+        <h3>Courses:</h3>
       </Row>
       <Row fluid css={{
         alignItems: 'center',
@@ -38,6 +38,9 @@ export default function Courses({ courses }: { courses: Course[] }) {
         <Table
           selectionMode="single"
           shadow={false}
+          css={{
+            padding: 0
+          }}
           //@ts-ignore
           onSelectionChange={handleSelected}>
           <Table.Header>

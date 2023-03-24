@@ -10,6 +10,8 @@ import Courses from "../../components/courses";
 import React from "react";
 import { post } from "../../lib/fetch-wrapper";
 import { ADMIN_ROLE, IT_ANALYST_ROLE, PROF_ROLE } from "../../lib/util";
+import uidStyles from '../[uid].module.css';
+
 
 export type UserWithoutPassword = {
   username: string
@@ -191,19 +193,30 @@ export default function User({ data }) {
 
   return (
     <Layout>
-      <Container
-        css={{
+      <div className={`${uidStyles.align_this}`}>
+        <Container
+        /*css={{
           maxWidth: '800px'
-        }}
-      >
-        <Text>Username: {username}</Text>
-        <Text>Email: {email}</Text>
-        <Text>Role: {selected}</Text>
-        <Button onClick={() => setIsEditing(!isEditing)}>Edit</Button>
+        }}*/
+        >
+        <div className={`${uidStyles.user_info_container}`}>
+          <h3>User:</h3>
+          <Text >Username: {username}</Text>
+          <Text>Email: {email}</Text>
+          <Text>Role: {selected}</Text>
+          <Button onClick={() => setIsEditing(!isEditing)}>Edit</Button>
+        </div>
       </Container>
+      </div>
+
+      <br />
+
       <Container>
-        <Courses courses={professorCourses} />
+        <div className={`${uidStyles.courses_info_container}`}>
+          <Courses courses={professorCourses} />
+        </div>
       </Container>
+      
     </Layout>
   )
 }
