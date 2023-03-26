@@ -32,6 +32,7 @@ export default function StandardLayout(
               marginRight: '20px'
             }
           }}>
+            <Card.Header style={{ backgroundColor:'#009CBD', maxHeight: '5px'}}/>
             <Card.Body>
               {topLeft}
             </Card.Body>
@@ -43,6 +44,7 @@ export default function StandardLayout(
               maxWidth: '100%'
             }
           }}>
+            <Card.Header style={{ backgroundColor:'#84BD00', maxHeight: '5px'}}/>
             <Card.Body>
               {topRight}
             </Card.Body>
@@ -50,6 +52,7 @@ export default function StandardLayout(
         </Row>
         <Row css={{ marginTop: 20 }}>
           <Card>
+          <Card.Header style={{ backgroundColor:'#F6BE00', maxHeight: '5px'}}/>
             <Card.Body>
               {bottom}
             </Card.Body>

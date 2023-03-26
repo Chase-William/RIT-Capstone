@@ -65,8 +65,8 @@ export default function Courses() {
       // Set States
       setAquisAggre([
         ["Type", "Quantity"],
-        ["Failed", failed.length],
-        ["Successful", success.length] // Subtract failed from total to get success count
+        ["Successful", success.length],
+        ["Failed", failed.length]// Subtract failed from total to get success count
       ]);
       setFailedAcqs(failed)
       setSuccessAcqs(success)
@@ -81,8 +81,8 @@ export default function Courses() {
           // Set States
           setLoginAggre([
             ["Type", "Quantity"],
-            ["Failed", failed.length],
-            ["Successful", success.length] // Subtract failed from total to get success count
+            ["Successful", success.length], // Subtract failed from total to get success count
+            ["Failed", failed.length]
           ]);
           setFailedLogins(failed)
           setSuccessLogins(success)
@@ -98,7 +98,8 @@ export default function Courses() {
 
   return (
     <Layout>
-      <StandardLayout
+      <Container xl>
+      <StandardLayout 
         topLeft={
           <>
             <h4>Acqusition Info</h4>
@@ -182,6 +183,7 @@ export default function Courses() {
           <CoursesComponent courses={courses} />
         }
       />
+      </Container>
     </Layout>
   );
 }
