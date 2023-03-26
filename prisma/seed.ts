@@ -72,28 +72,34 @@ async function main() {
     {
       data: [
         {
-          username: "Ben O. Verbich",
+          username: "Long Henry",
           password: hashPass('123'),
           role: PROF_ROLE,
-          email: "bigben@hotmail.com"
+          email: "longhenry@gmail.com"
         },
         {
-          username: "Adolf Oliver Nipple",
+          username: "Phil Mahoochie",
           password: hashPass('123'),
           role: PROF_ROLE,
-          email: "olfnip@gmail.com"
+          email: "pmahoochie@gmail.com"
+        },
+        {
+          username: "Jim Habermas",
+          password: hashPass('123'),
+          role: PROF_ROLE,
+          email: "jhabermas@gmail.com"
         },
         {
           username: "admin",
           password: hashPass('123'),
           role: ADMIN_ROLE,
-          email: "philmaplease@bullhornmail.com"
+          email: "admin@adminmail.com"
         },
         {
           username: "prof",
           password: hashPass('123'),
           role: PROF_ROLE,
-          email: "longerthanu@hotmail.com"
+          email: "iamtheprof@hotmail.com"
         },
         {
           username: "Joe Shmo",
@@ -102,22 +108,22 @@ async function main() {
           email: "joeshmo@hotmail.com"
         },
         {
-          username: "Dang Lin-Wang",
+          username: "John Smith",
           password: hashPass('123'),
           role: PROF_ROLE,
-          email: "airtime@hotmail.com"
+          email: "jsmith@hotmail.com"
         },
         {
-          username: "E. Norma Scock",
+          username: "Steve Zilora",
           password: hashPass('123'),
           role: PROF_ROLE,
-          email: "scock@hotmail.com"
+          email: "szilora@gmail.com"
         },
         {
-          username: "Ben N. Syder",
+          username: "Bryan French",
           password: hashPass('123'),
           role: PROF_ROLE,
-          email: "nsyder@hotmail.com"
+          email: "bfrench@gmail.com"
         },
         // {
         //   username: "Student",
