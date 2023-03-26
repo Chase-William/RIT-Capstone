@@ -85,8 +85,8 @@ export default function Course({ data }) {
                   <Table.Row key={v.id}>
                     <Table.Cell>{v.id}</Table.Cell>
                     <Table.Cell>{v.http_code}</Table.Cell>
-                    <Table.Cell>{v.start_time.toUTCString()}</Table.Cell>
-                    <Table.Cell>{v.finished_time.toUTCString()}</Table.Cell>
+                    <Table.Cell>{v.start_time.toUTCString().replace(/GMT/, ' ').replace(/\..+/, '')}</Table.Cell>
+                    <Table.Cell>{v.finished_time.toUTCString().replace(/GMT/, ' ').replace(/\..+/, '')}</Table.Cell>
                   </Table.Row>
                 )
               }}
