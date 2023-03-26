@@ -8,6 +8,8 @@ import Acquisitions from "../../components/acqusitions";
 import Logins, { defaultLoginHeaderAdapter, defaultLoginRowAdapter } from "../../components/logins";
 import { AcquisitionAttempt, LoginAttempt, Student as StudentModel } from "@prisma/client";
 import { Container, Table, Text } from "@nextui-org/react";
+import { Button, Card, Row} from "@nextui-org/react";
+import { CSVLink, CSVDownload } from "react-csv";
 
 export async function getServerSideProps({ params }: { params: { sid: string } }) {
   const result = await prisma.student.findUnique({
@@ -48,40 +50,60 @@ export default function Student({ data }) {
 
   return (
     <Layout>
+      <Container xl>
+      <h2>
+        {student.last_name +', '+ student.first_name}
+      </h2>
       <StandardLayout
         topLeft={
-          <Acquisitions
-            acquisitions={student.acquisitions}
-            headerAdapter={() => {
-              return (
-                <Table.Header>
-                  <Table.Column>Id</Table.Column>
-                  <Table.Column>Http Code</Table.Column>
-                  <Table.Column>Start</Table.Column>
-                  <Table.Column>Finish</Table.Column>
-                </Table.Header>
-              )
-            }}
-            rowAdapter={(v: AcquisitionAttempt) => {
-              return (
-                <Table.Row key={v.id}>
-                  <Table.Cell>{v.id}</Table.Cell>
-                  <Table.Cell>{v.http_code}</Table.Cell>
-                  <Table.Cell>{v.start_time.toUTCString()}</Table.Cell>
-                  <Table.Cell>{v.finished_time.toUTCString()}</Table.Cell>
-                </Table.Row>
-              )
-            }}
-            title="Failed Resource Acquisitions"
-          />
+          <Container>
+            <Acquisitions
+              acquisitions={student.acquisitions}
+              headerAdapter={() => {
+                return (
+                  <Table.Header>
+                    <Table.Column>Id</Table.Column>
+                    <Table.Column>Http Code</Table.Column>
+                    <Table.Column>Start</Table.Column>
+                    <Table.Column>Finish</Table.Column>
+                  </Table.Header>
+                )
+              }}
+              rowAdapter={(v: AcquisitionAttempt) => {
+                return (
+                  <Table.Row key={v.id}>
+                    <Table.Cell>{v.id}</Table.Cell>
+                    <Table.Cell>{v.http_code}</Table.Cell>
+                    <Table.Cell>{v.start_time.toUTCString()}</Table.Cell>
+                    <Table.Cell>{v.finished_time.toUTCString()}</Table.Cell>
+                  </Table.Row>
+                )
+              }}
+              title="Failed Resource Acquisitions"
+            />
+            <br></br>
+            <CSVLink data={student.acquisitions}>
+              <Button>
+                Download Students Failed Resource Acquisition Attempts
+              </Button>
+            </CSVLink>
+          </Container>
         }
         topRight={
+          <Container>
           <Logins
             handleSelection={null}
             title="Failed Logins"
             logins={student.logins}
             headerAdapter={defaultLoginHeaderAdapter}
             rowAdapter={defaultLoginRowAdapter} />
+          <CSVLink data={student.logins}>
+            <Button>
+              Download Students Failed Login Attempts
+            </Button>
+          </CSVLink>
+        </Container>
+
         }
         bottom={
           <Container fluid>
@@ -90,6 +112,7 @@ export default function Student({ data }) {
           </Container>
         }
       />
+      </Container>
     </Layout>
   )
 }

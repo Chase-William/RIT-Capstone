@@ -18,15 +18,6 @@ export default function Courses({ courses }: { courses: Course[] }) {
         alignItems: 'center',
         justifyContent: 'space-between'
       }}>
-        <Button>Export</Button>
-        <Card
-          variant="flat"
-          css={{ padding: 0, maxWidth: 200 }}>
-          <Card.Body
-            css={{ padding: 5, textAlign: 'center' }}>
-            ?????????????????????
-          </Card.Body>
-        </Card>
       </Row>
       <Row
         css={{
