@@ -119,20 +119,26 @@ export default function Courses() {
             <Acquisitions
               title='Failed Resource Acquisitions' acquisitions={failedAcqs}
               headerAdapter={() => {
+                
                 return (
                   <Table.Header>
                     <Table.Column>Id</Table.Column>
                     <Table.Column>Student</Table.Column>
                     <Table.Column>Course</Table.Column>
+                    <Table.Column>Timestamp</Table.Column>
+                    <Table.Column>Url</Table.Column>
                   </Table.Header>
                 )
               }}
               rowAdapter={(v: AugmentedAcquisition) => {
+                
                 return (
                   <Table.Row key={v.id}>
                     <Table.Cell>{v.id}</Table.Cell>
                     <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
                     <Table.Cell>{v.course.name}</Table.Cell>
+                    <Table.Cell>{v.start_time.replace(/T/, ' ').replace(/\..+/, '')}</Table.Cell>
+                    <Table.Cell>{v.url}</Table.Cell>
                   </Table.Row>
                 )
               }}
