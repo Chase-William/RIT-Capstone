@@ -21,9 +21,18 @@ function renderUserLinks(router: NextRouter, user: User | null) {
 
   // Custom Prof Routing
   if (user.role == PROF_ROLE) {
-    return (
-      <Navbar.Link isActive href="courses">Dashboard</Navbar.Link>
-    )
+    if(window.location.pathname == "/courses"){
+      return (
+        [<Navbar.Link isActive href="courses">Dashboard</Navbar.Link>,
+        <Navbar.Link href="alerts">Alerts</Navbar.Link>  ]  
+      )
+    }else{
+      return (
+        [<Navbar.Link href="courses">Dashboard</Navbar.Link>,
+        <Navbar.Link isActive href="alerts">Alerts</Navbar.Link>  ]  
+      )
+    }
+    
   }
 }
 
@@ -101,7 +110,7 @@ export default function Nav() {
             (Recent Acquisition Web Resources)
           </Text>
         </Navbar.Brand>
-        <Navbar.Content hideIn="xs" variant="underline">
+        <Navbar.Content  hideIn="xs" variant="underline">
           {renderUserLinks(router, user)}
         </Navbar.Content>
         <Navbar.Content>
