@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { post } from '../lib/fetch-wrapper';
+import { get, post } from '../lib/fetch-wrapper';
 import CoursesComponent from '../components/courses'
 import StandardLayout from '../components/standard-layout'
 import Layout from '../components/layout';
@@ -12,6 +12,8 @@ import { Card, Container, Spacer, Table, Text } from '@nextui-org/react';
 import NotLoggedIn from '../components/error/not-logged-in';
 import Chart from 'react-google-charts';
 import RAWRSpacer from '../components/spacer';
+import HelpRequestTable from '../components/help-request-table';
+import { StudentHelpRequest } from '@prisma/client';
 
 type AugmentedCourse = {
   id: number;
@@ -20,6 +22,11 @@ type AugmentedCourse = {
   students: {
     id: number;
   }[];
+}
+
+async function getStudentHelpRequest(): Promise<Array<StudentHelpRequest>> {
+  return await get('/api/student-help-form', {})
+    .then(data => data.requests)
 }
 
 async function getCourses(): Promise<AugmentedCourse[]> {
@@ -44,6 +51,14 @@ export default function Courses() {
   const [successLogins, setSuccessLogins] = useState<LoginWithStudentEmail[]>()
   const [failedLogins, setFailedLogins] = useState<LoginWithStudentEmail[]>()
   const [loginAggre, setLoginAggre] = useState<(string | number)[][]>()
+
+  const [requests, setRequests] = useState<Array<StudentHelpRequest>>([])
+
+  useEffect(() => {
+    (async () => {
+      setRequests(await getStudentHelpRequest())
+    })()
+  }, [])
 
   useEffect(() => {
     // Only fetch course information if user has a cookie (logged in)
@@ -93,102 +108,116 @@ export default function Courses() {
   if (!user)
     return <NotLoggedIn />
 
-  if (!courses || !successAcqs || !failedAcqs || !successLogins || !failedLogins)
+  if (!courses || !successAcqs || !failedAcqs || !successLogins || !failedLogins || !requests)
     return <p>Loading...</p>
 
   return (
     <Layout>
       <Container xl>
-      <StandardLayout 
-        topLeft={
-          <>
-            <h4>Acqusition Info</h4>
-            <Chart
-              chartType="PieChart"
-              data={aquisAggre}
-              options={{ title: 'Acquisition Distribution' }}
-              width={"100%"}
-              height={"230px"}
-            />
+        <StandardLayout
+          topLeft={
+            <>
+              <h4>Acqusition Info</h4>
+              <Chart
+                chartType="PieChart"
+                data={aquisAggre}
+                options={{ title: 'Acquisition Distribution' }}
+                width={"100%"}
+                height={"230px"}
+              />
 
-            <Text>Total Failed Acquisitions: {failedAcqs.length}</Text>
-            <Text>Total Successful Acquisitions: {successAcqs.length}</Text>
+              <Text>Total Failed Acquisitions: {failedAcqs.length}</Text>
+              <Text>Total Successful Acquisitions: {successAcqs.length}</Text>
 
-            <RAWRSpacer/>
+              <RAWRSpacer />
 
-            <Acquisitions
-              title='Failed Resource Acquisitions' acquisitions={failedAcqs}
-              headerAdapter={() => {
-                
-                return (
-                  <Table.Header>
-                    <Table.Column>Id</Table.Column>
-                    <Table.Column>Student</Table.Column>
-                    <Table.Column>Course</Table.Column>
-                    <Table.Column>Timestamp</Table.Column>
-                    <Table.Column>Url</Table.Column>
-                  </Table.Header>
-                )
-              }}
-              rowAdapter={(v: AugmentedAcquisition) => {
-                
-                return (
-                  <Table.Row key={v.id}>
-                    <Table.Cell>{v.id}</Table.Cell>
-                    <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
-                    <Table.Cell>{v.course.name}</Table.Cell>
-                    <Table.Cell>{v.start_time.replace(/T/, ' ').replace(/\..+/, '')}</Table.Cell>
-                    <Table.Cell>{v.url}</Table.Cell>
-                  </Table.Row>
-                )
-              }}
-            />
-          </>
-        }
-        topRight={
-          <>
-            <h4>Login Info</h4>
-            <Chart
-              chartType="PieChart"
-              data={loginAggre}
-              options={{ title: 'Login Distribution' }}
-              width={"100%"}
-              height={"230px"}
-            />
+              <Acquisitions
+                title='Failed Resource Acquisitions' acquisitions={failedAcqs}
+                headerAdapter={() => {
 
-            <Text>Total Failed Logins: {failedLogins.length}</Text>
-            <Text>Total Successful Logins: {successLogins.length}</Text>
+                  return (
+                    <Table.Header>
+                      <Table.Column>Id</Table.Column>
+                      <Table.Column>Student</Table.Column>
+                      <Table.Column>Course</Table.Column>
+                      <Table.Column>Timestamp</Table.Column>
+                      <Table.Column>Url</Table.Column>
+                    </Table.Header>
+                  )
+                }}
+                rowAdapter={(v: AugmentedAcquisition) => {
 
-            <RAWRSpacer/>
+                  return (
+                    <Table.Row key={v.id}>
+                      <Table.Cell>{v.id}</Table.Cell>
+                      <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
+                      <Table.Cell>{v.course.name}</Table.Cell>
+                      <Table.Cell>{v.start_time.replace(/T/, ' ').replace(/\..+/, '')}</Table.Cell>
+                      <Table.Cell>{v.url}</Table.Cell>
+                    </Table.Row>
+                  )
+                }}
+              />
+            </>
+          }
+          topRight={
+            <>
+              <h4>Login Info</h4>
+              <Chart
+                chartType="PieChart"
+                data={loginAggre}
+                options={{ title: 'Login Distribution' }}
+                width={"100%"}
+                height={"230px"}
+              />
 
-            <Logins
-              handleSelection={null}
-              title={'Failed Logins'}
-              logins={failedLogins}
-              headerAdapter={() => {
-                return (
-                  <Table.Header>
-                    <Table.Column>Id</Table.Column>
-                    <Table.Column>Student</Table.Column>
-                    <Table.Column>Timestamp</Table.Column>
-                  </Table.Header>
-                )
-              }}
-              rowAdapter={(v: LoginWithStudentEmail) => {
-                return (
-                  <Table.Row key={v.id}>
-                    <Table.Cell>{v.id}</Table.Cell>
-                    <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
-                    <Table.Cell>{v.login_timestamp.replace(/T/, ' ').replace(/\..+/, '')}</Table.Cell>
-                  </Table.Row>
-                )
-              }} />
-          </>
-        }
-        bottom={
-          <CoursesComponent courses={courses} />
-        }
-      />
+              <Text>Total Failed Logins: {failedLogins.length}</Text>
+              <Text>Total Successful Logins: {successLogins.length}</Text>
+
+              <RAWRSpacer />
+
+              <Logins
+                handleSelection={null}
+                title={'Failed Logins'}
+                logins={failedLogins}
+                headerAdapter={() => {
+                  return (
+                    <Table.Header>
+                      <Table.Column>Id</Table.Column>
+                      <Table.Column>Student</Table.Column>
+                      <Table.Column>Timestamp</Table.Column>
+                    </Table.Header>
+                  )
+                }}
+                rowAdapter={(v: LoginWithStudentEmail) => {
+                  return (
+                    <Table.Row key={v.id}>
+                      <Table.Cell>{v.id}</Table.Cell>
+                      <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
+                      <Table.Cell>{v.login_timestamp.replace(/T/, ' ').replace(/\..+/, '')}</Table.Cell>
+                    </Table.Row>
+                  )
+                }} />
+            </>
+          }
+          bottom={
+            <CoursesComponent courses={courses} />
+          }
+        />
+
+        <Container css={{
+          marginTop: '20px'
+        }}>          
+          <Card>
+            <Card.Header style={{ backgroundColor: '#009CBD', maxHeight: '5px' }} />
+            <Card.Body>
+              <Text h3 css={{
+                marginLeft: '40px'
+              }}>Student Help Requests:</Text>
+              <HelpRequestTable requests={requests} />
+            </Card.Body>
+          </Card>
+        </Container>
       </Container>
     </Layout>
   );
