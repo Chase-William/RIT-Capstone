@@ -20,8 +20,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // console.log(`Username ${username}`)
   // console.log(`Password ${password}`)
 
+  if (!username || !password)
+    return res.status(400).end('Invalid username or password provided.')
+
   try {
     const userModel = await prisma.user.findUnique({ where: { username } })
+
+    if (!userModel)
+      return res.status(404).end(`Cannot find a user with username: ${username}.`)
 
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);

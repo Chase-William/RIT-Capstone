@@ -39,6 +39,8 @@ export function onLoggedIn(user: User) {
     Router.push('/courses')
   else if (user.role === ADMIN_ROLE)
     Router.push('/accounts')
+  else if (user.role === IT_ANALYST_ROLE)
+    Router.push('/stats')
 }
 
 export const getToken = () => localStorage.getItem('rawrs-token')

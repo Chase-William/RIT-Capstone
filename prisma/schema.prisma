@@ -72,7 +72,8 @@ model AcquisitionAttempt {
 }
 
 model StudentHelpRequest {
-  id          Int    @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   email       String
-  description String @db.VarChar(2048)
+  description String    @db.VarChar(2048)
+  created     DateTime  @default(now()) // creation time
 }
