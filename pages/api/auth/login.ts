@@ -23,6 +23,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const userModel = await prisma.user.findUnique({ where: { username } })
 
+    if (!userModel)
+      return res.status(404).end('Unable to find account with matching username.')
+
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
