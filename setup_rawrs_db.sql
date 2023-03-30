@@ -57,14 +57,14 @@ CREATE TABLE acquisition(
     resource_http_code INT
 );
 
-INSERT INTO user VALUES(1, "Ben O. Verbich", "Please", "prof", "bigben@hotmail.com");
-INSERT INTO user VALUES(2, "Adolf Oliver Nipple", "Both", "prof", "olfnip@gmail.com");
-INSERT INTO user VALUES(3, "Phil Mahoochie", "Please", "admin", "philmaplease@bullhornmail.com");
-INSERT INTO user VALUES(4, "Long Henry", "4.53 Inches", "prof", "longerthanu@hotmail.com");
-INSERT INTO user VALUES(5, "Craven Moorehead", "ravenhead", "prof", "moorehead@hotmail.com");
-INSERT INTO user VALUES(6, "Dang Lin-Wang", "airtimer", "prof", "airtime@hotmail.com");
-INSERT INTO user VALUES(7, "E. Norma Scock", "scock", "prof", "scock@hotmail.com");
-INSERT INTO user VALUES(8, "Ben N. Syder", "mhm", "prof", "nsyder@hotmail.com");
+INSERT INTO user VALUES(1, "Ben Overton", "Please", "prof", "bigben@hotmail.com");
+INSERT INTO user VALUES(2, "Oliver Napel", "Both", "prof", "olnp@gmail.com");
+INSERT INTO user VALUES(3, "Phil Mahoochie", "Please", "admin", "philmahoochie@bullhornmail.com");
+INSERT INTO user VALUES(4, "Long Henry", "123", "prof", "longhenry@hotmail.com");
+INSERT INTO user VALUES(5, "Raven Moore", "ravenhead", "prof", "rmoore@hotmail.com");
+INSERT INTO user VALUES(6, "Dilian Thomas", "airtimer", "prof", "airtime@hotmail.com");
+INSERT INTO user VALUES(7, "Norma Scopes", "scock", "prof", "snorma@hotmail.com");
+INSERT INTO user VALUES(8, "Ned Snyder", "mhm", "prof", "nsynder@hotmail.com");
 
 INSERT INTO course VALUES(1, "Introduction to Database Modeling");
 INSERT INTO course VALUES(2, "Personality Psychology");
@@ -74,14 +74,14 @@ INSERT INTO course VALUES(5, "Psychology 101");
 INSERT INTO course VALUES(6, "Senior Capstone Project 1");
 INSERT INTO course VALUES(7, "Senior Capstone Project 2");
 
-INSERT INTO student VALUES(1, "Harry", "Azcrac", "azcrac@gmail.com");
-INSERT INTO student VALUES(2, "Mike", "Rotchburns", "burninrotch@hotmail.com");
-INSERT INTO student VALUES(3, "Peter", "Pantz", "peterinpantz@gmail.com");
-INSERT INTO student VALUES(4, "Oliver", "Closeoff", "oliveroff@gmail.com");
+INSERT INTO student VALUES(1, "Harrison", "Arts", "harts@gmail.com");
+INSERT INTO student VALUES(2, "Mike", "Burns", "burninrotch@hotmail.com");
+INSERT INTO student VALUES(3, "Peter", "Peck", "peterpeck@gmail.com");
+INSERT INTO student VALUES(4, "Oliver", "Twist", "olivertwist@gmail.com");
 INSERT INTO student VALUES(5, "Kenny", "Dewitt", "dewittin@gmail.com");
-INSERT INTO student VALUES(6, "Ivana", "Tinkle", "ivanaTinkle@hotmail.com");
-INSERT INTO student VALUES(7, "Harry", "Cox", "harcox@gmail.com");
-INSERT INTO student VALUES(8, "Eaton", "Beaver", "beaver@hotmail.com");
+INSERT INTO student VALUES(6, "Ivana", "Smtih", "ivanasmith@hotmail.com");
+INSERT INTO student VALUES(7, "Ryan", "Shmoe", "rshmoe@gmail.com");
+INSERT INTO student VALUES(8, "Jane", "Doe", "jdoe@hotmail.com");
 
 INSERT INTO professor_course VALUES(1, 1);
 INSERT INTO professor_course VALUES(2, 1);
@@ -121,9 +121,9 @@ INSERT INTO login VALUES(4, 3, CURRENT_TIMESTAMP());
 INSERT INTO login VALUES(5, 4, CURRENT_TIMESTAMP());
 INSERT INTO login VALUES(6, 5, CURRENT_TIMESTAMP());
 
-INSERT INTO acquisition VALUES(1, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), "?", "barely_legal", ".mp4", "http://rit.president.munson.com/hidden_hobbies?resolution=4k", 404);
+INSERT INTO acquisition VALUES(1, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), "?", "", ".mp4", "", 404);
 INSERT INTO acquisition VALUES(2, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), "?", "", "", "", 404);
-INSERT INTO acquisition VALUES(3, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), "?", "uncle_tony", ".png", "https://rit.edu/~cjc7342/assets", 500);
+INSERT INTO acquisition VALUES(3, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), "?", "", ".png", "", 500);
 INSERT INTO acquisition VALUES(4, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), "?", "", "", "", 503);
 INSERT INTO acquisition VALUES(5, CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP(), "?", "", "", "", 69);
 

@@ -60,7 +60,7 @@ async function main() {
   // const test = await prisma.user.create(
   //   {
   //     data: {
-  //       username: "Ben O. Verbich",
+  //       username: "Ben Overton",
   //       password: "Please",
   //       role: "prof",
   //       email: "bigben@hotmail.com"
