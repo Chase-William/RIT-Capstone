@@ -1,4 +1,4 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next"
+import { NextApiRequest, NextApiResponse } from "next"
 import { getUserIdFromRequest } from "../../lib/util"
 import prisma from "../../lib/prisma"
 

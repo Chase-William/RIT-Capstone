@@ -8,7 +8,8 @@ async function loginRequest(username: string, password: string): Promise<User> {
     username: username,
     password: password
   })
-  .then(data => data.user)
+  .catch(err => console.log(err.message))
+  .then(data => data?.user)
 }
 
 /**
