@@ -6,10 +6,12 @@ import { PrismaClient } from "@prisma/client"
 const bcrypt = require('bcrypt');
 const prisma = new PrismaClient()
 
+const DEFAULT_DESCRIPTION = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+
 // Must becareful with imports as this is preprocessed by node-ts and including deps leads to errors
 const PROF_ROLE = 'professor'
 const ADMIN_ROLE = 'admin'
-const STUDENT_ROLE = 'student'
+const IT_ANALYST_ROLE = 'itanalyst'
 
 function hashPass(password: string): string {
   const salt = bcrypt.genSaltSync(10);
@@ -125,12 +127,12 @@ async function main() {
           role: PROF_ROLE,
           email: "bfrench@gmail.com"
         },
-        // {
-        //   username: "Student",
-        //   password: hashPass('123'),
-        //   role: STUDENT_ROLE,
-        //   email: "std6666@rit.edu"
-        // }
+        {
+          username: 'it',
+          password: hashPass('123'),
+          role: IT_ANALYST_ROLE,
+          email: 'it@gmail.com'
+        }
       ]
     }
   )
@@ -304,6 +306,31 @@ async function main() {
   await newLogin(5, true);
   await newLogin(5, false);
   await newLogin(5, false);
+
+  await prisma.studentHelpRequest.createMany({
+    data: [
+      {
+        email: 'jxm4975@rit.edu',
+        description: DEFAULT_DESCRIPTION
+      },
+      {
+        email: 'jxm4975@rit.edu',
+        description: DEFAULT_DESCRIPTION
+      },
+      {
+        email: 'jxm4975@rit.edu',
+        description: DEFAULT_DESCRIPTION
+      },
+      {
+        email: 'wxk4582@rit.edu',
+        description: DEFAULT_DESCRIPTION
+      },
+      {
+        email: 'wxk4582@rit.edu',
+        description: DEFAULT_DESCRIPTION
+      }
+    ]
+  })
 
   // const introToDatabaseCourse = prisma.course.findFirst({
   //   where: {

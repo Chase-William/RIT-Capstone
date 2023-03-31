@@ -15,15 +15,24 @@ function renderUserLinks(router: NextRouter, user: User | null) {
   // Custom Admin Routing
   if (user.role == ADMIN_ROLE) {
     return (
-      <Navbar.Link isActive href="accounts">Dashboard</Navbar.Link>
+      <Navbar.Link isActive href="/accounts">Dashboard</Navbar.Link>
     )
   }
 
   // Custom Prof Routing
   if (user.role == PROF_ROLE) {
-    return (
-      <Navbar.Link isActive href="courses">Dashboard</Navbar.Link>
-    )
+    if (window.location.pathname == "/courses") {
+      return (
+        [<Navbar.Link isActive href="/courses">Dashboard</Navbar.Link>,
+        <Navbar.Link href="/alerts">Alerts</Navbar.Link>]
+      )
+    } else {
+      return (
+        [<Navbar.Link href="/courses">Dashboard</Navbar.Link>,
+        <Navbar.Link isActive href="/alerts">Alerts</Navbar.Link>]
+      )
+    }
+
   }
 }
 
@@ -62,7 +71,7 @@ export default function Nav() {
       <Navbar className="header"
         disableShadow
         isCompact
-        >
+      >
         <Image
           width={200}
           src='/RIT_hor_k.png'
@@ -70,8 +79,8 @@ export default function Nav() {
             margin: 0
           }}
         />
-        { user && user.isLoggedIn && 
-          <LogoutButton/>      
+        {user && user.isLoggedIn &&
+          <LogoutButton />
         }
         {/* <Text>
           <span className={navStyles.rit}>RIT</span>

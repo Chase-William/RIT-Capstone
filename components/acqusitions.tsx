@@ -7,6 +7,8 @@ import MyTable from "./my-table";
 export type AugmentedAcquisition = {
   id: number;
   status: boolean;
+  start_time: string;
+  url: string;
   student: {
     id: number,
     email: string;

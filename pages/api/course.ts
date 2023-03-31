@@ -1,4 +1,4 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next"
+import { NextApiRequest, NextApiResponse } from "next"
 import { getUserIdFromRequest } from "../../lib/util"
 import prisma from "../../lib/prisma"
 
@@ -23,6 +23,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           select: {
             id: true,
             status: true,
+            url: true,
+            start_time: true,
             student: {
               select: {
                 id: true,

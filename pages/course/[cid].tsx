@@ -74,6 +74,7 @@ export default function Course({ data }) {
                 return (
                   <Table.Header>
                     <Table.Column>Id</Table.Column>
+                    <Table.Column>Url</Table.Column>
                     <Table.Column>Http Code</Table.Column>
                     <Table.Column>Start</Table.Column>
                     <Table.Column>Finish</Table.Column>
@@ -84,6 +85,7 @@ export default function Course({ data }) {
                 return (
                   <Table.Row key={v.id}>
                     <Table.Cell>{v.id}</Table.Cell>
+                    <Table.Cell>{v.url}</Table.Cell>
                     <Table.Cell>{v.http_code}</Table.Cell>
                     <Table.Cell>{v.start_time.toUTCString().replace(/GMT/, ' ').replace(/\..+/, '')}</Table.Cell>
                     <Table.Cell>{v.finished_time.toUTCString().replace(/GMT/, ' ').replace(/\..+/, '')}</Table.Cell>

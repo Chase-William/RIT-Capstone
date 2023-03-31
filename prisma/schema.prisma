@@ -73,7 +73,7 @@ model AcquisitionAttempt {
 }
 
 model StudentHelpRequest {
-  id          Int    @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   email       String
   course      Course @relation(fields: [course_id], references: [id])
   course_id   Int
