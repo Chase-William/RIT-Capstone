@@ -15,20 +15,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       description: string
     } = req.body
 
-    const id = await prisma.course.findUnique({
+    const course = await prisma.course.findUnique({
       where: {
-        
+        name: info.course
+      },
+      select: {
+        id: true
       }
     })
 
     const r = await prisma.studentHelpRequest.create({
       data: {
         email: info.email,
-        course: info.selected,
+        course_id: course.id,
         description: info.description
       }
     })
     console.log(`Request made for: ${r.email}.`)
-    return res.status(200)
+    return res.status(200).end()
   }
 }

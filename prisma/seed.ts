@@ -311,23 +311,28 @@ async function main() {
     data: [
       {
         email: 'jxm4975@rit.edu',
-        description: DEFAULT_DESCRIPTION
+        description: DEFAULT_DESCRIPTION,
+        course_id: 1   
       },
       {
         email: 'jxm4975@rit.edu',
-        description: DEFAULT_DESCRIPTION
+        description: DEFAULT_DESCRIPTION,
+        course_id: 2
       },
       {
         email: 'jxm4975@rit.edu',
-        description: DEFAULT_DESCRIPTION
+        description: DEFAULT_DESCRIPTION,
+        course_id: 3
       },
       {
         email: 'wxk4582@rit.edu',
-        description: DEFAULT_DESCRIPTION
+        description: DEFAULT_DESCRIPTION,
+        course_id: 4
       },
       {
         email: 'wxk4582@rit.edu',
-        description: DEFAULT_DESCRIPTION
+        description: DEFAULT_DESCRIPTION,
+        course_id: 5
       }
     ]
   })
