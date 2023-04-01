@@ -3,6 +3,7 @@ import prisma from "../../lib/prisma";
 import superjson from 'superjson';
 import { useUser } from "../../lib/userUser";
 import Layout from "../../components/layout";
+import Router, { useRouter } from "next/router";
 import StandardLayout from "../../components/standard-layout";
 import Acquisitions from "../../components/acqusitions";
 import Logins, { defaultLoginHeaderAdapter, defaultLoginRowAdapter } from "../../components/logins";
@@ -48,6 +49,8 @@ export default function Student({ data }) {
     logins: LoginAttempt[];
   }>(data)
 
+  console.log(student)
+
   return (
     <Layout>
       <Container xl>
@@ -58,6 +61,9 @@ export default function Student({ data }) {
         topLeft={
           <Container>
             <Acquisitions
+              handleSelection={(key: string) => {
+                Router.push(`../failedInfo/${key}`)
+              }}
               acquisitions={student.acquisitions}
               headerAdapter={() => {
                 return (
@@ -74,8 +80,8 @@ export default function Student({ data }) {
                   <Table.Row key={v.id}>
                     <Table.Cell>{v.id}</Table.Cell>
                     <Table.Cell>{v.http_code}</Table.Cell>
-                    <Table.Cell>{v.start_time.toUTCString()}</Table.Cell>
-                    <Table.Cell>{v.finished_time.toUTCString()}</Table.Cell>
+                    <Table.Cell>{v.start_time.toUTCString().replace(/GMT/, ' ').replace(/\..+/, '')}</Table.Cell>
+                    <Table.Cell>{v.finished_time.toUTCString().replace(/GMT/, ' ').replace(/\..+/, '')}</Table.Cell>
                   </Table.Row>
                 )
               }}
@@ -92,7 +98,9 @@ export default function Student({ data }) {
         topRight={
           <Container>
           <Logins
-            handleSelection={null}
+            handleSelection={(key: string) => {
+                Router.push(`../failedInfo/${key}`)
+              }}
             title="Failed Logins"
             logins={student.logins}
             headerAdapter={defaultLoginHeaderAdapter}

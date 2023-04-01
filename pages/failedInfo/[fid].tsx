@@ -13,6 +13,7 @@ import { Button, Card, Row} from "@nextui-org/react";
 
 
 
+
 export async function getServerSideProps({ params }: { params: { fid: string } }) {
     const failedInfo = await prisma.student.findUnique({
       where: {
@@ -34,26 +35,57 @@ export async function getServerSideProps({ params }: { params: { fid: string } }
     
     return {
       props: {
-        data: superjson.serialize({failedInfo})
+        data: superjson.serialize(failedInfo)
       }, // will be passed to the page component as props
     }
   }
+// export default function FailedData({ data }) {
+//     const user = useUser()
 
+//     if (!user?.isLoggedIn)
+//       return <NotLoggedIn />
+
+//     console.log(data);
+//     const student = superjson.deserialize<StudentModel & {
+//         acquisitions: AcquisitionAttempt[];
+//         logins: LoginAttempt[];
+//       }>(data.json.failedInfo)
+    
+//     console.log(student)
+
+//     if (!student)
+//       return <div>Loading...</div>
+
+//     return(
+//         <Layout>
+//             <Container>
+//                 <Text>First Name: {student.first_name}</Text>
+//                 <Text>Last Name: {student.last_name}</Text>
+//             </Container>
+//         </Layout>
+//     )
+// }
 export default function FailedData({ data }) {
     const user = useUser()
 
     if (!user?.isLoggedIn)
     return <NotLoggedIn />
 
+    console.log(data);
     const student = superjson.deserialize<StudentModel & {
         acquisitions: AcquisitionAttempt[];
         logins: LoginAttempt[];
       }>(data)
+    
+    console.log(student)
 
     return(
         <Layout>
             <Container>
-                <Text>Username: {student.last_name+','+student.first_name}</Text>
+                <Text>First Name: {student.first_name}</Text>
+                <Text>Last Name: {student.last_name}</Text>
+                <Text>Email: {student.email}</Text>
+                
             </Container>
         </Layout>
     )
