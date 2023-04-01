@@ -25,6 +25,7 @@ export default function Acquisitions(
     title,
     headerAdapter,
     rowAdapter
+    
   }: {
     acquisitions: Array<any>,
     title: string,
