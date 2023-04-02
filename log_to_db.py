@@ -16,6 +16,7 @@ file2 = os.path.join(script_dir2, rel_path2)
 print(file2)
 
 json_data2=open(file2).read()
+# print(json_data2)
 json_obj2 = json.loads(json_data2)
 print(json_obj2)
 
@@ -41,6 +42,8 @@ for i, item in enumerate(json_obj):
     status = validate_string(item.get("status", None))
     student_id = validate_string(item.get("student_id", None))
 
+    cursor.execute("INSERT INTO loginattempt (login_timestamp,	status,	student_id) VALUES (%s,	%s,	%s)", (login_timestamp,	status,	student_id))
+
 # parse json data to SQL insert for Acquisition Attempt
 for i, item in enumerate(json_obj2):
     start_time = validate_string(item.get("start_time", None))
@@ -53,10 +56,9 @@ for i, item in enumerate(json_obj2):
     student_id2 = validate_string(item.get("student_id", None))
     course_id = validate_string(item.get("course_id", None))
 
-
-cursor.execute("INSERT INTO acquisitionattempt (start_time, finished_time, status, file_name," +
+    cursor.execute("INSERT INTO acquisitionattempt (start_time, finished_time, status, file_name," +
                 " file_ext, url, http_code, student_id, course_id) VALUES (%s,	%s,	%s, %s,	%s,	%s, %s,	%s,	%s)", (start_time, finished_time, status2, file_name, file_ext, url, http_code, student_id2, course_id))
-cursor.execute("INSERT INTO loginattempt (login_timestamp,	status,	student_id) VALUES (%s,	%s,	%s)", (login_timestamp,	status,	student_id))
+
 con.commit()
 con.close()
 

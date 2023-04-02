@@ -78,5 +78,6 @@ model StudentHelpRequest {
   course      Course @relation(fields: [course_id], references: [id])
   course_id   Int
   create      DateTime @default(now())
+  isResolved  Boolean @default(false)
   description String @db.VarChar(2048)
 }

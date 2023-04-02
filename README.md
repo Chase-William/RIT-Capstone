@@ -4,11 +4,15 @@
 
 ```
 Professor:
-  Username: Long Henry
+  Username: prof
   Password: 123
 
 Admin:
-  Username: Phil Mahoochie
+  Username: admin
+  Password: 123
+
+IT Analyst
+  Username: it
   Password: 123
 ```
 
