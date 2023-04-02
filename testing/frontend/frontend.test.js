@@ -14,8 +14,9 @@ afterEach(cleanup);
 
 
 //Login Render Test
-it("login render", ()=>{
-    const {queryByInput} = render(Login)
+it('login render', () => {
+    render(<Login />);
+    expect().toBeTruthy();
 });
 
 // Student Help Render Test
