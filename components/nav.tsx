@@ -1,14 +1,30 @@
 import { Navbar, Button, Link, Text, Container, Table, Row, Image } from "@nextui-org/react";
+import { get, post } from '../lib/fetch-wrapper';
 import { useUser } from "../lib/userUser";
 import { User } from "../pages/api/user";
-import { ADMIN_ROLE, PROF_ROLE, STUDENT_ROLE } from "../lib/util";
+import { ADMIN_ROLE, IT_ANALYST_ROLE, PROF_ROLE, STUDENT_ROLE } from "../lib/util";
 import { NextRouter, useRouter } from "next/router";
 import LogoutButton from "./logout-btn";
+import { useEffect, useState } from 'react';
+import { StudentHelpRequest } from '@prisma/client';
 
 const INDEX_PATHNAME = '/'
 
+async function getStudentHelpRequest(): Promise<Array<StudentHelpRequest>> {
+  return await get('/api/student-help-form', {})
+    .then(data => data.requests)
+}
 
 function renderUserLinks(router: NextRouter, user: User | null) {
+  const [requests, setRequests] = useState<Array<StudentHelpRequest>>([])
+
+  useEffect(() => {
+    (async () => {
+      setRequests(await getStudentHelpRequest())
+    })()
+  }, [])
+
+
   if (!user || router.pathname === INDEX_PATHNAME)
     return <></>
 
@@ -24,16 +40,31 @@ function renderUserLinks(router: NextRouter, user: User | null) {
     if (window.location.pathname == "/courses") {
       return (
         [<Navbar.Link isActive href="/courses">Dashboard</Navbar.Link>,
-        <Navbar.Link href="/alerts">Alerts</Navbar.Link>]
+        <Navbar.Link href="/alerts">Alerts</Navbar.Link>,
+        <Navbar.Item>
+        <p className="alertIcon">{requests.length}</p>
+       </Navbar.Item>
+      ]
       )
-    } else {
+    } else if (window.location.pathname == "/alerts") {
+      return (
+        [<Navbar.Link  href="/courses">Dashboard</Navbar.Link>,
+        <Navbar.Link isActive href="/alerts">Alerts</Navbar.Link>,
+      ]
+      )
+    }
+    else {
       return (
         [<Navbar.Link href="/courses">Dashboard</Navbar.Link>,
-        <Navbar.Link isActive href="/alerts">Alerts</Navbar.Link>]
+        <Navbar.Link href="/alerts">Alerts</Navbar.Link>,
+        <Navbar.Item>
+        <p className="alertIcon">{requests.length}</p>
+       </Navbar.Item>]
       )
     }
 
   }
+  
 }
 
 function renderGeneralLinks(router: NextRouter, user: User | null) {
@@ -65,6 +96,7 @@ function renderGeneralLinks(router: NextRouter, user: User | null) {
 export default function Nav() {
   const user = useUser()
   const router = useRouter()
+  
 
   return (
     <>
@@ -112,7 +144,9 @@ export default function Nav() {
         </Navbar.Brand>
         <Navbar.Content hideIn="xs" variant="underline">
           {renderUserLinks(router, user)}
+          
         </Navbar.Content>
+        
         <Navbar.Content>
           <Navbar.Item>
             {renderGeneralLinks(router, user)}

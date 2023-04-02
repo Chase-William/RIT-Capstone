@@ -39,3 +39,15 @@ img {
 Layout{
   margin:0;
 }
+.alertIcon{
+  height:30px;
+  width: 30px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  display:inline-block;
+  color:white;
+  text-align:center;
+  position:relative;
+  right:30px;
+  bottom:10px;
+}
