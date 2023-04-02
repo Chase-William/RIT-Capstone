@@ -1,5 +1,4 @@
-import {render, fireEvent, cleanup} from '@testing-libary/react';
-import { afterEach } from 'node:test';
+import {render, screen, cleanup} from '@testing-library/react';
 import Login from "../../components/auth/login";
 import Home from "../index.ts";
 
@@ -10,15 +9,16 @@ import Home from "../index.ts";
  */
 
 //Unmount and cleanup the DOM once a test is finished
-afterEach(cleanup);
+// afterEach(cleanup);
 
 
 //Login Render Test
-it('login render', () => {
-    render(<Login />);
-    expect().toBeTruthy();
-});
-
+test('login render', () =>{
+    render(<Login/>)
+    const loginElement = screen.getByTestClass(utilStyles.vertical);
+    expect(loginElement).toBeInTheDocument();
+    expect(loginElement).toHaveTextContent();
+})
 // Student Help Render Test
 
 //Dashboard Render Test
