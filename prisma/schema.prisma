@@ -77,5 +77,6 @@ model StudentHelpRequest {
   email       String
   course      Course @relation(fields: [course_id], references: [id])
   course_id   Int
+  create      DateTime @default(now())
   description String @db.VarChar(2048)
 }

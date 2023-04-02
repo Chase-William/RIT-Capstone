@@ -29,7 +29,7 @@ export default function HelpRequestTable({
                 </a>
               </Table.Cell>
               <Table.Cell>{row.description.slice(0, 15) + '...'}</Table.Cell>
-              <Table.Cell>{new Date(row.created).toUTCString()}</Table.Cell>
+              <Table.Cell>{new Date(row.create).toUTCString()}</Table.Cell>
             </Table.Row>
           )
         }}
