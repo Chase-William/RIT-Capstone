@@ -33,13 +33,14 @@ model Student {
 
 model Course {
   id          Int     @id @default(autoincrement())
-  name        String
+  name        String  @unique
   professors  User[] // Implicit many to many with User (Professor)
   students    Student[] // Implicit many to many with Student
 
   // ADDED BELOW ------
 
   acquisitions AcquisitionAttempt[]
+  helpForms    StudentHelpRequest[]
 }
 
 model LoginAttempt {
@@ -74,6 +75,7 @@ model AcquisitionAttempt {
 model StudentHelpRequest {
   id          Int       @id @default(autoincrement())
   email       String
-  description String    @db.VarChar(2048)
-  created     DateTime  @default(now()) // creation time
+  course      Course @relation(fields: [course_id], references: [id])
+  course_id   Int
+  description String @db.VarChar(2048)
 }

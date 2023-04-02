@@ -62,7 +62,7 @@ async function main() {
   // const test = await prisma.user.create(
   //   {
   //     data: {
-  //       username: "Ben O. Verbich",
+  //       username: "Ben Overton",
   //       password: "Please",
   //       role: "prof",
   //       email: "bigben@hotmail.com"
@@ -311,23 +311,28 @@ async function main() {
     data: [
       {
         email: 'jxm4975@rit.edu',
-        description: DEFAULT_DESCRIPTION
+        description: DEFAULT_DESCRIPTION,
+        course_id: 1   
       },
       {
         email: 'jxm4975@rit.edu',
-        description: DEFAULT_DESCRIPTION
+        description: DEFAULT_DESCRIPTION,
+        course_id: 2
       },
       {
         email: 'jxm4975@rit.edu',
-        description: DEFAULT_DESCRIPTION
+        description: DEFAULT_DESCRIPTION,
+        course_id: 3
       },
       {
         email: 'wxk4582@rit.edu',
-        description: DEFAULT_DESCRIPTION
+        description: DEFAULT_DESCRIPTION,
+        course_id: 4
       },
       {
         email: 'wxk4582@rit.edu',
-        description: DEFAULT_DESCRIPTION
+        description: DEFAULT_DESCRIPTION,
+        course_id: 5
       }
     ]
   })
