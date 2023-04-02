@@ -3,15 +3,12 @@
 
 block_cipher = None
 
-added_files = [
-         ( './logs', 'logs' )
-         ]
 
 a = Analysis(
     ['log_to_db.py'],
     pathex=[],
     binaries=[],
-    datas=added_files,
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -21,7 +18,6 @@ a = Analysis(
     win_private_assemblies=False,
     cipher=block_cipher,
     noarchive=False,
-    
 )
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
