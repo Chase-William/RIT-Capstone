@@ -205,19 +205,7 @@ export default function Courses() {
           }
         />
 
-        <Container xl css={{
-          marginTop: '20px'
-        }}>          
-          <Card>
-            <Card.Header style={{ backgroundColor: '#009CBD', maxHeight: '5px' }} />
-            <Card.Body>
-              <Text h3 css={{
-                marginLeft: '40px'
-              }}>Student Help Requests:</Text>
-              <HelpRequestTable requests={requests} />
-            </Card.Body>
-          </Card>
-        </Container>
+      
       </Container>
     </Layout>
   );
