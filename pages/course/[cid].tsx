@@ -57,7 +57,7 @@ export default function Course({ data }) {
   function exportFunc() {
     
   }
-  console.log(data)
+  
   return (
     <Layout>
       <Container lg>
