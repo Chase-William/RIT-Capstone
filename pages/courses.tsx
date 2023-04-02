@@ -205,7 +205,7 @@ export default function Courses() {
           }
         />
 
-        <Container css={{
+        <Container xl css={{
           marginTop: '20px'
         }}>          
           <Card>
