@@ -9,11 +9,12 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()   
     // Use our login functional expression from useLogin()
     const user = await login(username, password)  
+    if (!user)
+      return
     onLoggedIn(user)
   }  
 

@@ -12,7 +12,6 @@ import { post } from "../../lib/fetch-wrapper";
 import { ADMIN_ROLE, IT_ANALYST_ROLE, PROF_ROLE } from "../../lib/util";
 import uidStyles from '../[uid].module.css';
 
-
 export type UserWithoutPassword = {
   username: string
   email: string
