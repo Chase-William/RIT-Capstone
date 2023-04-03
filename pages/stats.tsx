@@ -1,4 +1,4 @@
-import { StudentHelpRequest } from "@prisma/client";
+import { AcquisitionAttempt, LoginAttempt, StudentHelpRequest } from "@prisma/client";
 import { useEffect, useState } from "react";
 import Login from "../components/auth/login";
 import NotLoggedIn from "../components/error/not-logged-in";
@@ -6,6 +6,7 @@ import Layout from "../components/layout";
 import { get, post } from "../lib/fetch-wrapper";
 import { useUser } from "../lib/userUser";
 import HelpRequestTable from '../components/help-request-table';
+import prisma from "../lib/prisma"
 
 
 import CoursesComponent from '../components/courses'
@@ -21,6 +22,9 @@ import { Card, Container, Spacer, Table, Text } from '@nextui-org/react';
 import Chart from 'react-google-charts';
 import RAWRSpacer from '../components/spacer';
 
+
+
+
 type AugmentedCourse = {
   id: number;
   name: string;
@@ -34,8 +38,9 @@ async function getStudentHelpRequest(): Promise<Array<StudentHelpRequest>> {
   return await get('/api/student-help-form', {})
     .then(data => data.requests)
 }
+
 async function getCourses(): Promise<AugmentedCourse[]> {
-  return await post('/api/course', {}).then(data => data.courses)
+  return await post('/api/course', {}).then(data => data.allCourses)
 }
 
 async function getLogins(ids: number[]): Promise<LoginWithStudentEmail[]> {
@@ -68,7 +73,16 @@ export default function Stats() {
   }, [user])
 
   useEffect(() => {
-    if (courses) {
+    // Only fetch course information if user has a cookie (logged in)
+    if (user?.isLoggedIn) {
+      (async () => {
+        setCourses(await getCourses())
+      })()
+    }
+  }, [user])
+
+  useEffect(() => {
+    if(courses){
       // Process Acquisitions
       const tempAcqs = courses.flatMap(course => course.acquisitions.map(acq => acq))
       const ids = courses.flatMap(course => course.students.map(stud => stud.id));
@@ -101,7 +115,7 @@ export default function Stats() {
           setSuccessLogins(success)
         })()
     }
-  }, [courses])
+}, [courses])
 
   if (!user?.isLoggedIn)
     return NotLoggedIn()
