@@ -47,8 +47,41 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     })
 
+    const allCourses = await prisma.course.findMany({
+      select: {
+        id: true,
+        name: true,
+        acquisitions: {
+          select: {
+            id: true,
+            status: true,
+            url: true,
+            start_time: true,
+            student: {
+              select: {
+                id: true,
+                email: true
+              }
+            },
+            course: {
+              select: {
+                id: true,
+                name: true
+              }
+            }
+          }
+        },
+        students: {
+          select: {
+            id: true
+          }
+        }
+      }
+    })
+
     return res.status(200).json({
-      courses: courses
+      courses: courses,
+      allCourses: allCourses
     })
   }
 }
