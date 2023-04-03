@@ -115,3 +115,19 @@ Setup database.
 ```
 source /app/src/setup.sql
 ```
+
+
+
+```
+1. Student Help Request
+
+1. Login
+2. Professor Dashboard
+3. Courses
+4. Individual Student
+5. Alerts
+
+1. It Analyst
+
+1. Admin
+```

@@ -74,19 +74,19 @@ async function main() {
     {
       data: [
         {
-          username: "Long Henry",
+          username: "Chrys Callus",
           password: hashPass('123'),
           role: PROF_ROLE,
-          email: "longhenry@gmail.com"
+          email: "cc@gmail.com"
         },
         {
-          username: "Phil Mahoochie",
+          username: "Tommy Jerry",
           password: hashPass('123'),
           role: PROF_ROLE,
-          email: "pmahoochie@gmail.com"
+          email: "jerrytom@gmail.com"
         },
         {
-          username: "Jim Habermas",
+          username: "Jim Habermass",
           password: hashPass('123'),
           role: PROF_ROLE,
           email: "jhabermas@gmail.com"

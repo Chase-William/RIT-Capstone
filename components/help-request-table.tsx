@@ -1,12 +1,17 @@
 import { Container, Table } from "@nextui-org/react";
 import { StudentHelpRequest } from "@prisma/client";
 import MyTable from "./my-table";
+import Router from "next/router";
 
 export default function HelpRequestTable({
   requests
 }: {
   requests: Array<StudentHelpRequest>
 }) {
+  const handleSelected = (key: string) => {
+    Router.push(`/student-help/${key}`)
+  }
+
   return (
     <Container>
       <MyTable
@@ -22,7 +27,7 @@ export default function HelpRequestTable({
         }}
         rowAdapter={(row: StudentHelpRequest) => {
           return (
-            <Table.Row>
+            <Table.Row key={row.id}>
               <Table.Cell>
                 <a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + row.email + "&su=Help Request Response"}>
                   {row.email}
@@ -33,7 +38,7 @@ export default function HelpRequestTable({
             </Table.Row>
           )
         }}
-        handleSelection={() => { }} />
+        handleSelection={handleSelected} />
     </Container>
   )
 }
