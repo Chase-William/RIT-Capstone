@@ -34,9 +34,8 @@ function renderUserLinks(router: NextRouter, user: User | null) {
       <Navbar.Link isActive href="/accounts">Dashboard</Navbar.Link>
     )
   }
-
   // Custom Prof Routing
-  if (user.role == PROF_ROLE) {
+  else if (user.role == PROF_ROLE) {
     if (window.location.pathname == "/courses") {
       return (
         [<Navbar.Link isActive href="/courses">Dashboard</Navbar.Link>,
@@ -62,7 +61,12 @@ function renderUserLinks(router: NextRouter, user: User | null) {
        </Navbar.Item>]
       )
     }
-
+  }
+  else {
+    return (
+      [<Navbar.Link isActive href="/stats">Dashboard</Navbar.Link>,
+      <Navbar.Link href="/alerts">Alerts</Navbar.Link>]
+    )
   }
   
 }

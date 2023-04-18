@@ -218,7 +218,7 @@ export default function Stats() {
             <CoursesComponent courses={courses} />
           }
         />
-        <Container xl css={{
+        {/* <Container xl css={{
           marginTop: '20px'
         }}>          
           <Card>
@@ -230,7 +230,7 @@ export default function Stats() {
               <HelpRequestTable requests={requests} />
             </Card.Body>
           </Card>
-        </Container>
+        </Container> */}
       </Container>
       
     </Layout>
