@@ -33,7 +33,7 @@ export default function StandardLayout(
             }
           }}>
             <Card.Header style={{ backgroundColor: '#009CBD', maxHeight: '5px' }} />
-            <Card.Body>
+            <Card.Body >
               {topLeft}
             </Card.Body>
           </Card>

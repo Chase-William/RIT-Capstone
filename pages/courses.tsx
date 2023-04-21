@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { get, post } from '../lib/fetch-wrapper';
 import CoursesComponent from '../components/courses'
 import StandardLayout from '../components/standard-layout'
@@ -14,6 +14,7 @@ import Chart from 'react-google-charts';
 import RAWRSpacer from '../components/spacer';
 import HelpRequestTable from '../components/help-request-table';
 import { StudentHelpRequest } from '@prisma/client';
+import ExpandedLayout from '../components/expandedLayout';
 
 type AugmentedCourse = {
   id: number;
@@ -53,6 +54,8 @@ export default function Courses() {
   const [loginAggre, setLoginAggre] = useState<(string | number)[][]>()
 
   const [requests, setRequests] = useState<Array<StudentHelpRequest>>([])
+
+  
 
   useEffect(() => {
     (async () => {
@@ -105,6 +108,7 @@ export default function Courses() {
     }
   }, [courses])
 
+ 
   if (!user)
     return <NotLoggedIn />
 
@@ -116,7 +120,7 @@ export default function Courses() {
       <Container xl>
         <StandardLayout
           topLeft={
-            <>
+            <> 
               <h4>Acqusition Info</h4>
               <Chart
                 chartType="PieChart"

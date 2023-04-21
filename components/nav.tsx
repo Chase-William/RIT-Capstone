@@ -8,7 +8,7 @@ import LogoutButton from "./logout-btn";
 import { useEffect, useState } from 'react';
 import { StudentHelpRequest } from '@prisma/client';
 
-const INDEX_PATHNAME = '/'
+const INDEX_PATHNAME = '/courses'
 
 async function getStudentHelpRequest(): Promise<Array<StudentHelpRequest>> {
   return await get('/api/student-help-form', {})
@@ -37,14 +37,23 @@ function renderUserLinks(router: NextRouter, user: User | null) {
   // Custom Prof Routing
   else if (user.role == PROF_ROLE) {
     if (window.location.pathname == "/courses") {
-      return (
-        [<Navbar.Link isActive href="/courses">Dashboard</Navbar.Link>,
-        <Navbar.Link href="/alerts">Alerts</Navbar.Link>,
-        <Navbar.Item>
-        <p className="alertIcon">{requests.length}</p>
-       </Navbar.Item>
-      ]
-      )
+      if(requests.length > 0){
+        return (
+          [<Navbar.Link isActive href="/courses">Dashboard</Navbar.Link>,
+          <Navbar.Link href="/alerts">Alerts</Navbar.Link>,
+          <Navbar.Item>
+          <p className="alertIcon">{requests.length}</p>
+         </Navbar.Item>
+        ]
+        )
+      }else{
+        return (
+          [<Navbar.Link isActive href="/courses">Dashboard</Navbar.Link>,
+          <Navbar.Link href="/alerts">Alerts</Navbar.Link>,
+        ]
+        )
+      }
+      
     } else if (window.location.pathname == "/alerts") {
       return (
         [<Navbar.Link  href="/courses">Dashboard</Navbar.Link>,
@@ -53,13 +62,21 @@ function renderUserLinks(router: NextRouter, user: User | null) {
       )
     }
     else {
-      return (
-        [<Navbar.Link href="/courses">Dashboard</Navbar.Link>,
-        <Navbar.Link href="/alerts">Alerts</Navbar.Link>,
-        <Navbar.Item>
-        <p className="alertIcon">{requests.length}</p>
-       </Navbar.Item>]
-      )
+      if(requests.length > 0){
+        return (
+          [<Navbar.Link href="/courses">Dashboard</Navbar.Link>,
+          <Navbar.Link href="/alerts">Alerts</Navbar.Link>,
+          <Navbar.Item>
+          <p className="alertIcon">{requests.length}</p>
+         </Navbar.Item>]
+        )
+      }
+      else{
+        return (
+          [<Navbar.Link href="/courses">Dashboard</Navbar.Link>,
+          <Navbar.Link href="/alerts">Alerts</Navbar.Link>,]
+        )
+      }
     }
   }
   else {
