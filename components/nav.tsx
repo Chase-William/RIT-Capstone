@@ -8,7 +8,7 @@ import LogoutButton from "./logout-btn";
 import { useEffect, useState } from 'react';
 import { StudentHelpRequest } from '@prisma/client';
 
-const INDEX_PATHNAME = '/courses'
+const INDEX_PATHNAME = '/'
 
 async function getStudentHelpRequest(): Promise<Array<StudentHelpRequest>> {
   return await get('/api/student-help-form', {})
@@ -146,7 +146,7 @@ export default function Nav() {
 
         <Navbar.Brand>
           <Link
-            href={INDEX_PATHNAME}
+            href={INDEX_PATHNAME+"courses"}
             underline
             color={"text"}
             css={{
