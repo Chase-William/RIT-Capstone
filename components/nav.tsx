@@ -37,6 +37,7 @@ function renderUserLinks(router: NextRouter, user: User | null) {
   // Custom Prof Routing
   else if (user.role == PROF_ROLE) {
     if (window.location.pathname == "/courses") {
+      //SHOW REQUESTS ALERT
       if(requests.length > 0){
         return (
           [<Navbar.Link isActive href="/courses">Dashboard</Navbar.Link>,
@@ -49,18 +50,18 @@ function renderUserLinks(router: NextRouter, user: User | null) {
       }else{
         return (
           [<Navbar.Link isActive href="/courses">Dashboard</Navbar.Link>,
-          <Navbar.Link href="/alerts">Alerts</Navbar.Link>,
+          <Navbar.Link href="/alerts">Alerts</Navbar.Link>
         ]
         )
       }
-      
+      //END OF IF ON COURSES PAGE
     } else if (window.location.pathname == "/alerts") {
       return (
         [<Navbar.Link  href="/courses">Dashboard</Navbar.Link>,
-        <Navbar.Link isActive href="/alerts">Alerts</Navbar.Link>,
+        <Navbar.Link isActive href="/alerts">Alerts</Navbar.Link>
       ]
       )
-    }
+    }//END OF IF ON ALERTS PAGE
     else {
       if(requests.length > 0){
         return (
@@ -78,7 +79,7 @@ function renderUserLinks(router: NextRouter, user: User | null) {
         )
       }
     }
-  }
+  }//END OF IF USER IS PROF
   else {
     return (
       [<Navbar.Link isActive href="/stats">Dashboard</Navbar.Link>,

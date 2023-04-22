@@ -8,13 +8,14 @@ import Logins, { LoginWithStudentEmail } from '../components/logins';
 import { AugmentedAcquisition } from '../components/acqusitions';
 import { useRouter } from 'next/router';
 import { useUser } from '../lib/userUser';
-import { Card, Container, Spacer, Table, Text } from '@nextui-org/react';
+import { Button, Card, Container, Spacer, Table, Text } from '@nextui-org/react';
 import NotLoggedIn from '../components/error/not-logged-in';
 import Chart from 'react-google-charts';
 import RAWRSpacer from '../components/spacer';
 import HelpRequestTable from '../components/help-request-table';
 import { StudentHelpRequest } from '@prisma/client';
 import ExpandedLayout from '../components/expandedLayout';
+import ReactModal from 'react-modal'
 
 type AugmentedCourse = {
   id: number;
@@ -120,7 +121,7 @@ export default function Courses() {
       <Container xl>
         <StandardLayout
           topLeft={
-            <> 
+            <>
               <h4>Acqusition Info</h4>
               <Chart
                 chartType="PieChart"
