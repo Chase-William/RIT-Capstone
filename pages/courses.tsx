@@ -6,7 +6,7 @@ import Layout from '../components/layout';
 import Acquisitions from '../components/acqusitions';
 import Logins, { LoginWithStudentEmail } from '../components/logins';
 import { AugmentedAcquisition } from '../components/acqusitions';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from "next/router";
 import { useUser } from '../lib/userUser';
 import { Button, Card, Container, Spacer, Table, Text } from '@nextui-org/react';
 import NotLoggedIn from '../components/error/not-logged-in';
@@ -136,81 +136,85 @@ export default function Courses() {
 
               <RAWRSpacer />
 
-              <Acquisitions
-                title='Failed Resource Acquisitions' acquisitions={failedAcqs}
-                headerAdapter={() => {
-
-                  return (
-                    <Table.Header>
-                      <Table.Column>Id</Table.Column>
-                      <Table.Column>Student</Table.Column>
-                      <Table.Column>Course</Table.Column>
-                      <Table.Column>Timestamp</Table.Column>
-                      <Table.Column>Url</Table.Column>
-                    </Table.Header>
-                  )
-                }}
-                rowAdapter={(v: AugmentedAcquisition) => {
-
-                  return (
-                    <Table.Row key={v.id}>
-                      <Table.Cell>{v.id}</Table.Cell>
-                      <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
-                      <Table.Cell>{v.course.name}</Table.Cell>
-                      <Table.Cell>{v.start_time.replace(/T/, ' ').replace(/\..+/, '')}</Table.Cell>
-                      <Table.Cell>{v.url}</Table.Cell>
-                    </Table.Row>
-                  )
-                }}
-              />
-            </>
-          }
-          topRight={
-            <>
-              <h4>Login Info</h4>
-              <Chart
-                chartType="PieChart"
-                data={loginAggre}
-                options={{ title: 'Login Distribution' }}
-                width={"100%"}
-                height={"230px"}
-              />
+            <Acquisitions
+              handleSelection={(key: string) => {
+                Router.push(`../failedInfo/${key}`)
+              }}
+              title='Failed Resource Acquisitions' acquisitions={failedAcqs}
+              headerAdapter={() => {
+                
+                return (
+                  <Table.Header>
+                    <Table.Column>Id</Table.Column>
+                    <Table.Column>Student</Table.Column>
+                    <Table.Column>Course</Table.Column>
+                    <Table.Column>Timestamp</Table.Column>
+                    <Table.Column>Url</Table.Column>
+                  </Table.Header>
+                )
+              }}
+              rowAdapter={(v: AugmentedAcquisition) => {
+                
+                return (
+                  <Table.Row key={v.id}>
+                    <Table.Cell>{v.id}</Table.Cell>
+                    <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
+                    <Table.Cell>{v.course.name}</Table.Cell>
+                    <Table.Cell>{v.start_time.replace(/T/, ' ').replace(/\..+/, '')}</Table.Cell>
+                    <Table.Cell>{v.url}</Table.Cell>
+                  </Table.Row>
+                )
+              }}
+            />
+          </>
+        }
+        topRight={
+          <>
+            <h4>Login Info</h4>
+            <Chart
+              chartType="PieChart"
+              data={loginAggre}
+              options={{ title: 'Login Distribution' }}
+              width={"100%"}
+              height={"230px"}
+            />
 
               <Text>Total Failed Logins: {failedLogins.length}</Text>
               <Text>Total Successful Logins: {successLogins.length}</Text>
 
               <RAWRSpacer />
 
-              <Logins
-                handleSelection={null}
-                title={'Failed Logins'}
-                logins={failedLogins}
-                headerAdapter={() => {
-                  return (
-                    <Table.Header>
-                      <Table.Column>Id</Table.Column>
-                      <Table.Column>Student</Table.Column>
-                      <Table.Column>Timestamp</Table.Column>
-                    </Table.Header>
-                  )
-                }}
-                rowAdapter={(v: LoginWithStudentEmail) => {
-                  return (
-                    <Table.Row key={v.id}>
-                      <Table.Cell>{v.id}</Table.Cell>
-                      <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
-                      <Table.Cell>{v.login_timestamp.replace(/T/, ' ').replace(/\..+/, '')}</Table.Cell>
-                    </Table.Row>
-                  )
-                }} />
-            </>
-          }
-          bottom={
-            <CoursesComponent courses={courses} />
-          }
-        />
-
-      
+            <Logins
+              handleSelection={(key: string) => {
+                Router.push(`../failedInfo/${key}`)
+              }}
+              title={'Failed Logins'}
+              logins={failedLogins}
+              headerAdapter={() => {
+                
+                return (
+                  <Table.Header>
+                    <Table.Column>Id</Table.Column>
+                    <Table.Column>Student</Table.Column>
+                    <Table.Column>Timestamp</Table.Column>
+                  </Table.Header>
+                )
+              }}
+              rowAdapter={(v: LoginWithStudentEmail) => {
+                return (
+                  <Table.Row key={v.id}>
+                    <Table.Cell>{v.id}</Table.Cell>
+                    <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
+                    <Table.Cell>{v.login_timestamp.replace(/T/, ' ').replace(/\..+/, '')}</Table.Cell>
+                  </Table.Row>
+                )
+              }} />
+          </>
+        }
+        bottom={
+          <CoursesComponent courses={courses} />
+        }
+      />
       </Container>
     </Layout>
   );

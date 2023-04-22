@@ -39,6 +39,7 @@ export async function getServerSideProps({ params }: { params: { cid: string } }
 }
 
 export default function Course({ data }) {
+  
   const user = useUser()
 
   if (!user?.isLoggedIn)
@@ -56,7 +57,7 @@ export default function Course({ data }) {
   function exportFunc() {
     
   }
-
+  
   return (
     <Layout>
       <Container lg>
@@ -68,6 +69,9 @@ export default function Course({ data }) {
           <Container>
 
             <Acquisitions
+              handleSelection={(key: string) => {
+                Router.push(`../failedInfo/${key}`)
+              }}
               title="Recent Failed Acquisitions"
               acquisitions={course.acquisitions}
               headerAdapter={() => {
