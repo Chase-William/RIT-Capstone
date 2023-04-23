@@ -14,7 +14,6 @@ import Chart from 'react-google-charts';
 import RAWRSpacer from '../components/spacer';
 import HelpRequestTable from '../components/help-request-table';
 import { StudentHelpRequest } from '@prisma/client';
-import ExpandedLayout from '../components/expandedLayout';
 import ReactModal from 'react-modal'
 
 type AugmentedCourse = {
@@ -186,7 +185,7 @@ export default function Courses() {
 
             <Logins
               handleSelection={(key: string) => {
-                Router.push(`../failedInfo/${key}`)
+                Router.push(`../failedLoginInfo/${key}`)
               }}
               title={'Failed Logins'}
               logins={failedLogins}

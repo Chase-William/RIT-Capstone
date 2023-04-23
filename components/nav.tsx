@@ -8,8 +8,8 @@ import LogoutButton from "./logout-btn";
 import { useEffect, useState } from 'react';
 import { StudentHelpRequest } from '@prisma/client';
 
-let INDEX_PATHNAME: string;
-
+//let INDEX_PATHNAME: string;
+let INDEX_PATHNAME="/";
 async function getStudentHelpRequest(): Promise<Array<StudentHelpRequest>> {
   return await get('/api/student-help-form', {})
     .then(data => data.requests)
@@ -28,16 +28,24 @@ function renderUserLinks(router: NextRouter, user: User | null) {
   if (!user || router.pathname === INDEX_PATHNAME)
     return <></>
 
+  //custom IT routing
+  if(user.role == IT_ANALYST_ROLE){
+    //INDEX_PATHNAME = "/stats"
+    return (
+      <Navbar.Link isActive href="/accounts">Dashboard</Navbar.Link>
+    )
+  }
+
   // Custom Admin Routing
   if (user.role == ADMIN_ROLE) {
-    INDEX_PATHNAME = "/accounts"
+    //INDEX_PATHNAME = "/accounts"
     return (
       <Navbar.Link isActive href="/accounts">Dashboard</Navbar.Link>
     )
   }
   // Custom Prof Routing
   else if (user.role == PROF_ROLE) {
-    INDEX_PATHNAME = "/courses"
+    //INDEX_PATHNAME = "/courses"
     if (window.location.pathname == "/courses") {
       //SHOW REQUESTS ALERT
       if(requests.length > 0){
@@ -149,7 +157,7 @@ export default function Nav() {
 
         <Navbar.Brand>
           <Link
-            href={INDEX_PATHNAME+"courses"}
+            href={INDEX_PATHNAME}
             underline
             color={"text"}
             css={{

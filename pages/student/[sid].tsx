@@ -99,7 +99,9 @@ export default function Student({ data }) {
           <Container>
           <Logins
             handleSelection={(key: string) => {
-                Router.push(`../failedInfo/${key}`)
+              const newKey = key.replace(/[.]/g, "");
+              console.log(newKey);
+                Router.push(`../failedLoginInfo/${newKey}`)
               }}
             title="Failed Logins"
             logins={student.logins}

@@ -5,7 +5,7 @@ import { useUser } from "../../lib/userUser";
 import Layout from "../../components/layout";
 import Router, { useRouter } from "next/router";
 import StandardLayout from "../../components/standard-layout";
-import Acquisitions from "../../components/acqusitions";
+import Acquisitions, { AugmentedAcquisition } from "../../components/acqusitions";
 import Logins, { defaultLoginHeaderAdapter, defaultLoginRowAdapter } from "../../components/logins";
 import { AcquisitionAttempt , LoginAttempt , Student as StudentModel } from "@prisma/client";
 import { Container, Table, Text } from "@nextui-org/react";
@@ -28,53 +28,66 @@ export async function getServerSideProps({ params }: { params: { fid: string } }
         url: true,
         http_code: true,
         file_ext: true,
-        file_name: true
+        file_name: true,
+        student_id: true
 
         
+      }
+    })
+    const studentInfo = await prisma.student.findUnique({
+      where:{
+        id: failedInfo.student_id
       }
     })
     
 
     return {
       props: {
-        data: superjson.serialize(failedInfo)
+        data: superjson.serialize(failedInfo),
+        studentData: superjson.serialize(studentInfo)
       }, // will be passed to the page component as props
     }
   }
 
-export default function FailedData({ data }) {
+export default function FailedData({ data, studentData }) {
     const user = useUser()
     
 
     if (!user?.isLoggedIn)
     return <NotLoggedIn />
 
-    console.log(data);
-
     const failedInfo = superjson.deserialize<StudentModel & {
-        acquisitions: AcquisitionAttempt;
-        logins: LoginAttempt;
+        acquisitions: AugmentedAcquisition;
       }>(data)
-       
-    console.log(failedInfo.first_name)
-
+    const studentsData = superjson.deserialize<StudentModel>(studentData)
+    console.log(studentData)
+    
+    
 
     return(
         <Layout>
             <Container>
-                <Text>First Name: {failedInfo.first_name}</Text>
-                <Text>Last Name: {failedInfo.last_name}</Text>
-                <Text>Email: {failedInfo.email}</Text>
-                <Text>ID: {data.id}</Text>
-{/* 
-                <Text>Start Time: {failedInfo.start_time}</Text>
-                <Text>Finished Time: {failedInfo.acquisitions.finished_time}</Text>
-                <Text>Url: {failedInfo.id}</Text>
-                <Text>Http Code: {failedInfo.http_code}</Text>
-                <Text>File Name: {failedInfo.file_name}</Text>
-                <Text>File ext: {failedInfo.file_ext}</Text>           */}
+              <Card>
+              <Card.Header style={{ backgroundColor: '#009CBD', maxHeight: '5px' }}/>
+                
+                <Card.Body>
+                  <Text h3>Failed Resource Acquisition ID: {`${failedInfo.id}`} </Text>
+                  <Text h3>Student Name:</Text><Text>{`${studentsData.last_name},${studentsData.first_name}`}</Text>
+                  <br></br>
+                  <Text h3>Student Email:</Text><Text>{`${studentsData.email}`}</Text>
+                  <br></br>
+                  <Text h4>Resource Name:</Text><Text>{`${failedInfo.file_name}${failedInfo.file_ext}`}</Text>
+                  <br></br>
+                  <Text h4>HTTP ERROR:</Text><Text>{`${failedInfo.http_code}`}</Text>
+                  <br></br>
+                  <Text h4>URL:</Text><Text>{`${failedInfo.url}`}</Text>
+                  <br></br>
+                  <Text h4>Time:</Text><Text>{`${failedInfo.finished_time}`}</Text>
+                </Card.Body>
 
                 
+              </Card>
+                                
             </Container>
         </Layout>
     )
