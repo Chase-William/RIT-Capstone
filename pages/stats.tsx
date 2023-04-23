@@ -15,7 +15,7 @@ import StandardLayout from '../components/standard-layout'
 import Acquisitions from '../components/acqusitions';
 import Logins, { LoginWithStudentEmail } from '../components/logins';
 import { AugmentedAcquisition } from '../components/acqusitions';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from "next/router";
 
 import { Card, Container, Spacer, Table, Text } from '@nextui-org/react';
 
@@ -146,6 +146,9 @@ export default function Stats() {
               <RAWRSpacer />
 
               <Acquisitions
+              handleSelection={(key: string) => {
+                Router.push(`../failedInfo/${key}`)
+              }}
                 title='Failed Resource Acquisitions' acquisitions={failedAcqs}
                 headerAdapter={() => {
 
@@ -191,7 +194,9 @@ export default function Stats() {
               <RAWRSpacer />
 
               <Logins
-                handleSelection={null}
+                handleSelection={(key: string) => {
+                  Router.push(`../failedLoginInfo/${key}`)
+                }}
                 title={'Failed Logins'}
                 logins={failedLogins}
                 headerAdapter={() => {
