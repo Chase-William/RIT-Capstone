@@ -11,7 +11,9 @@ export type AugmentedAcquisition = {
   url: string;
   student: {
     id: number,
-    email: string;
+    email: string,
+    first_name: string,
+    last_name: string;
   };
   course: {
     id: number,
@@ -24,12 +26,14 @@ export default function Acquisitions(
     acquisitions,
     title,
     headerAdapter,
-    rowAdapter
+    rowAdapter,
+    handleSelection
   }: {
     acquisitions: Array<any>,
     title: string,
     headerAdapter: () => JSX.Element,
     rowAdapter: (acqusition: any) => JSX.Element
+    handleSelection: (key: string) => void
   }) {
 
   if (!acquisitions)
@@ -39,7 +43,7 @@ export default function Acquisitions(
     <Container>
       <h6>{title}</h6>
       <MyTable
-        handleSelection={null}
+        handleSelection={handleSelection}
         col={acquisitions}
         headerAdapter={headerAdapter}
         rowAdapter={rowAdapter}

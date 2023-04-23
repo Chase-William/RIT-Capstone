@@ -20,7 +20,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
         student: {
           select: {
-            email: true
+            id: true,
+            email: true,
+            first_name: true,
+            last_name: true
           }
         }
       }

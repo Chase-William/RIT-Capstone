@@ -43,15 +43,19 @@ export default function StudentHelpDescription({ data }) {
       <Container xl css={{
         maxW: '800px'
       }}>
+        <Card>
+          <Card.Header style={{ backgroundColor: '#84BD00', maxHeight: '5px' }} />
+          <Card.Body>
+        
         <Container css={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center'
         }}>
-          <Text h4><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + request.email + "&su=Trouble Accessing Resources"}>{request.email}</a></Text>
-          <Text h5>{request.create.toUTCString()}</Text>
+          <Text h4>Email: <a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + request.email + "&su=Trouble Accessing Resources"}>{request.email}</a></Text>
+          <Text h5>Date: {request.create.toUTCString()}</Text>
         </Container>
-        <Text>{request.description}</Text>
+        <Text h4>Issue:</Text><Text>{request.description}</Text>
         {resolved ?
           <Text h3 color="success" css={{
             margin: '0 auto'
@@ -74,6 +78,8 @@ export default function StudentHelpDescription({ data }) {
             Resolve
           </Button>
         }
+        </Card.Body>
+        </Card>
       </Container>
     </Layout>
   );

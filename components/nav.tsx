@@ -8,8 +8,8 @@ import LogoutButton from "./logout-btn";
 import { useEffect, useState } from 'react';
 import { StudentHelpRequest } from '@prisma/client';
 
-const INDEX_PATHNAME = '/'
-
+//let INDEX_PATHNAME: string;
+let INDEX_PATHNAME="/";
 async function getStudentHelpRequest(): Promise<Array<StudentHelpRequest>> {
   return await get('/api/student-help-form', {})
     .then(data => data.requests)
@@ -28,40 +28,68 @@ function renderUserLinks(router: NextRouter, user: User | null) {
   if (!user || router.pathname === INDEX_PATHNAME)
     return <></>
 
+  //custom IT routing
+  if(user.role == IT_ANALYST_ROLE){
+    //INDEX_PATHNAME = "/stats"
+    return (
+      <Navbar.Link isActive href="/accounts">Dashboard</Navbar.Link>
+    )
+  }
+
   // Custom Admin Routing
   if (user.role == ADMIN_ROLE) {
+    //INDEX_PATHNAME = "/accounts"
     return (
       <Navbar.Link isActive href="/accounts">Dashboard</Navbar.Link>
     )
   }
   // Custom Prof Routing
   else if (user.role == PROF_ROLE) {
+    //INDEX_PATHNAME = "/courses"
     if (window.location.pathname == "/courses") {
+      //SHOW REQUESTS ALERT
+      if(requests.length > 0){
       return (
-        [<Navbar.Link isActive href="/courses">Dashboard</Navbar.Link>,
-        <Navbar.Link href="/alerts">Alerts</Navbar.Link>,
-        <Navbar.Item>
-        <p className="alertIcon">{requests.length}</p>
-       </Navbar.Item>
-      ]
-      )
+          [<Navbar.Link isActive href="/courses">Dashboard</Navbar.Link>,
+          <Navbar.Link href="/alerts">Alerts</Navbar.Link>,
+          <Navbar.Item>
+          <p className="alertIcon">{requests.length}</p>
+         </Navbar.Item>
+        ]
+        )
+      }else{
+        return (
+          [<Navbar.Link isActive href="/courses">Dashboard</Navbar.Link>,
+          <Navbar.Link href="/alerts">Alerts</Navbar.Link>
+        ]
+        )
+      }
+      //END OF IF ON COURSES PAGE
     } else if (window.location.pathname == "/alerts") {
       return (
         [<Navbar.Link  href="/courses">Dashboard</Navbar.Link>,
-        <Navbar.Link isActive href="/alerts">Alerts</Navbar.Link>,
+        <Navbar.Link isActive href="/alerts">Alerts</Navbar.Link>
       ]
       )
-    }
+    }//END OF IF ON ALERTS PAGE
     else {
-      return (
-        [<Navbar.Link href="/courses">Dashboard</Navbar.Link>,
-        <Navbar.Link href="/alerts">Alerts</Navbar.Link>,
-        <Navbar.Item>
-        <p className="alertIcon">{requests.length}</p>
-       </Navbar.Item>]
-      )
+      if(requests.length > 0){
+        return (
+          [<Navbar.Link href="/courses">Dashboard</Navbar.Link>,
+          <Navbar.Link href="/alerts">Alerts</Navbar.Link>,
+          <Navbar.Item>
+          <p className="alertIcon">{requests.length}</p>
+         </Navbar.Item>]
+        )
+      }
+      else{
+        return (
+          [<Navbar.Link href="/courses">Dashboard</Navbar.Link>,
+          <Navbar.Link href="/alerts">Alerts</Navbar.Link>,]
+        )
+      }
     }
-  }
+  }//END OF IF USER IS PROF
   else {
     return (
       [<Navbar.Link isActive href="/stats">Dashboard</Navbar.Link>,
@@ -74,6 +102,7 @@ function renderUserLinks(router: NextRouter, user: User | null) {
 function renderGeneralLinks(router: NextRouter, user: User | null) {
   // User is not logged in
   if (!user || user?.isLoggedIn === false) {
+    INDEX_PATHNAME = "/"
     return (
       <Link
         href="/student-help-form"

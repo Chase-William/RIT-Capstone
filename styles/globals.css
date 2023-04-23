@@ -17,6 +17,11 @@ body {
 .header{
   background-color: #F76902;
   --nextui--navbarBlurBackgroundColor: 'transparent';
+  --nextui--navbarBlur: 0px;
+}
+.nextui-c-hhqfap-gqZKcP-disableBlur-false .nextui-c-egxOLa {
+  background: var(--nextui--navbarBlurBackgroundColor);
+  backdrop-filter: none;
 }
 
 * {
@@ -50,4 +55,7 @@ Layout{
   position:relative;
   right:30px;
   bottom:10px;
+}
+.unstyled-button{
+  border:none;
 }

@@ -1,5 +1,7 @@
 import { Card, Col, Container, Row } from '@nextui-org/react'
 import utilStyles from '../styles/utils.module.css'
+import { useState } from 'react';
+import Modal from "react-modal";
 
 export default function StandardLayout(
   {
@@ -13,17 +15,65 @@ export default function StandardLayout(
   }) {
 
   // Logic
+  const [isTopRightOpen, setIsTopRightOpen] = useState(false);
+  const [isTopLeftOpen, setIsTopLeftOpen] = useState(false);
+
+  function toggleTopLeftModal(){
+    setIsTopLeftOpen(!isTopLeftOpen);
+  }
+  function toggleTopRightModal(){
+    setIsTopRightOpen(!isTopRightOpen);
+  }
+  
 
   return (
     <>
       <Container fluid>
+        <Modal
+          isOpen={isTopLeftOpen}
+          onRequestClose={toggleTopLeftModal}
+          contentLabel="Acquisition Info"
+        >
+          <Container xl>
+            <Row css={{ marginTop: 60 }}>
+              <Card>
+              <Card.Header style={{ backgroundColor: '#009CBD', maxHeight: '5px' }} />
+                <Card.Body >
+                  <div onClick={toggleTopLeftModal}>
+                  {topLeft}
+                  </div>
+                </Card.Body>
+              </Card>
+            </Row>
+          </Container>
+        </Modal>
+
+        <Modal
+          isOpen={isTopRightOpen}
+          onRequestClose={toggleTopRightModal}
+          contentLabel="Acquisition Info"
+        >
+          <Container xl>
+            <Row css={{ marginTop: 60 }}>
+              <Card>
+              <Card.Header style={{ backgroundColor: '#84BD00', maxHeight: '5px' }} />
+                <Card.Body >
+                  <div onClick={toggleTopRightModal}>
+                  {topRight}
+                  </div>
+                </Card.Body>
+              </Card>
+            </Row>
+          </Container>
+        </Modal>
+
         <Row css={{
           '@smMax': {
             display: 'flex',
             flexDirection: 'column'
           }
         }}>
-          <Card css={{
+          <Card  css={{
             maxWidth: '50%',
             '@smMax': {
               maxWidth: '100%'
@@ -34,7 +84,9 @@ export default function StandardLayout(
           }}>
             <Card.Header style={{ backgroundColor: '#009CBD', maxHeight: '5px' }} />
             <Card.Body>
+              <div onClick={toggleTopLeftModal}>
               {topLeft}
+              </div>
             </Card.Body>
           </Card>
           <Card css={{
@@ -46,7 +98,9 @@ export default function StandardLayout(
           }}>
             <Card.Header style={{ backgroundColor: '#84BD00', maxHeight: '5px' }} />
             <Card.Body>
-              {topRight}
+              <div onClick={toggleTopRightModal}>
+                {topRight}
+              </div>
             </Card.Body>
           </Card>
         </Row>

@@ -22,6 +22,7 @@ export default function HelpRequestTable({
               <Table.Column>Email</Table.Column>
               <Table.Column>Description</Table.Column>
               <Table.Column>Created</Table.Column>
+              <Table.Column>Resolved</Table.Column>
             </Table.Header>
           )
         }}
@@ -35,6 +36,7 @@ export default function HelpRequestTable({
               </Table.Cell>
               <Table.Cell>{row.description.slice(0, 15) + '...'}</Table.Cell>
               <Table.Cell>{new Date(row.create).toUTCString()}</Table.Cell>
+              <Table.Cell>{row.isResolved.toString()}</Table.Cell>
             </Table.Row>
           )
         }}
