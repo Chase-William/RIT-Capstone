@@ -158,7 +158,7 @@ export default function Courses() {
                   
                   <Table.Row key={v.id}>
                     <Table.Cell>{v.id}</Table.Cell>
-                    <Table.Cell>{v.student.email}</Table.Cell>
+                    <Table.Cell>{v.student.first_name}</Table.Cell>
                     <Table.Cell>{v.course.name}</Table.Cell>
                     <Table.Cell>{v.start_time.replace(/T/, ' ').replace(/\..+/, '')}</Table.Cell>
                     <Table.Cell>{v.url}</Table.Cell>

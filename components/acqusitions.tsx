@@ -11,7 +11,9 @@ export type AugmentedAcquisition = {
   url: string;
   student: {
     id: number,
-    email: string;
+    email: string,
+    first_name: string,
+    last_name: string;
   };
   course: {
     id: number,
