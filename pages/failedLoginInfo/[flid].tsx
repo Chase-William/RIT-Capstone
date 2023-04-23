@@ -68,7 +68,7 @@ export default function FailedLoginData({ data, studentData }) {
                     <Text h3>Failed Login ID: {`${failedInfo.id}`} </Text>
                     <Text h3>Student Name:</Text><Text>{`${studentsData.last_name},${studentsData.first_name}`}</Text>
                     <br></br>
-                    <Text h3>Student Email:</Text><Text>{`${studentsData.email}`}</Text>
+                    <Text h3>Student Email:</Text><Text><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + studentsData.email + "&su=Trouble Accessing Resources"}>{studentsData.email}</a></Text>
                     <br></br>
                     <Text h4>Login Timestamp:</Text><Text>{`${failedInfo.login_timestamp}`}</Text>
                     
