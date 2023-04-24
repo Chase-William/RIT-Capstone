@@ -17,7 +17,7 @@ import Logins, { LoginWithStudentEmail } from '../components/logins';
 import { AugmentedAcquisition } from '../components/acqusitions';
 import Router, { useRouter } from "next/router";
 
-import { Card, Container, Spacer, Table, Text } from '@nextui-org/react';
+import { Card, Container, Spacer, Table, Text, Tooltip } from '@nextui-org/react';
 
 import Chart from 'react-google-charts';
 import RAWRSpacer from '../components/spacer';
@@ -62,6 +62,8 @@ export default function Stats() {
   const [loginAggre, setLoginAggre] = useState<(string | number)[][]>()
 
   const [requests, setRequests] = useState<Array<StudentHelpRequest>>([])
+  const [acqsForChart, setacqsForChart] = useState<[[string,number|string]]>()
+  const [lgnsForChart, setlgnsForChart] = useState<[[string,number|string]]>()
 
   useEffect(() => {
     if(user?.isLoggedIn){
@@ -88,6 +90,26 @@ export default function Stats() {
       const ids = courses.flatMap(course => course.students.map(stud => stud.id));
       const failed = tempAcqs.filter(v => !v.status)
       const success = tempAcqs.filter(v => v.status)
+      //Setting up data for line chart ACQUISITIONS
+      const myAcqThingy = new Map<string, number>();
+      const myAcqArrayThingy: [[date: string, count: number | string]] = [["date","count"]]
+      for(var val of tempAcqs){
+        const myArr = val.start_time.split("T")
+        if(val.status == false){
+          if(myAcqThingy.has(myArr[0]) == false){
+            myAcqThingy.set(myArr[0], 0)
+          }
+          myAcqThingy.set(myArr[0], myAcqThingy.get(myArr[0])+1)
+        }
+      }
+      //console.log(myThingy)
+      var mapAcqAsc = new Map([...myAcqThingy.entries()].sort());
+      mapAcqAsc.forEach((value: number, key: string) =>{
+        console.log(key, value)
+        myAcqArrayThingy.push([key, value])
+      })
+      console.log(myAcqArrayThingy)
+      setacqsForChart(myAcqArrayThingy)
 
       // Set States
       setAquisAggre([
@@ -113,6 +135,26 @@ export default function Stats() {
           ]);
           setFailedLogins(failed)
           setSuccessLogins(success)
+          //Setting up data for line chart LOGINS
+          const myLgnThingy = new Map<string, number>();
+          const myLgnArrayThingy: [[date: string, count: number | string]] = [["date","count"]]
+          for(var val of logins){
+            const myArr = val.login_timestamp.split("T")
+            if(val.status == false){
+              if(myLgnThingy.has(myArr[0]) == false){
+                myLgnThingy.set(myArr[0], 0)
+              }
+              myLgnThingy.set(myArr[0], myLgnThingy.get(myArr[0])+1)
+            }
+          }
+          //console.log(myThingy)
+          var mapLgnAsc = new Map([...myLgnThingy.entries()].sort());
+          mapLgnAsc.forEach((value: number, key: string) =>{
+            console.log(key, value)
+            myLgnArrayThingy.push([key, value])
+          })
+          console.log(myLgnArrayThingy)
+          setlgnsForChart(myLgnArrayThingy)
         })()
     }
 }, [courses])
@@ -131,7 +173,9 @@ export default function Stats() {
       <StandardLayout
           topLeft={
             <>
+              <Tooltip title="Resource attempts are when a student tries to access a webpage and encounters an issue">
               <h4>Acqusition Info</h4>
+              </Tooltip>
               <Chart
                 chartType="PieChart"
                 data={aquisAggre}
@@ -179,7 +223,9 @@ export default function Stats() {
           }
           topRight={
             <>
+            <Tooltip title="Failed Login attempts">
               <h4>Login Info</h4>
+              </Tooltip>
               <Chart
                 chartType="PieChart"
                 data={loginAggre}
@@ -218,6 +264,38 @@ export default function Stats() {
                   )
                 }} />
             </>
+          }
+          midBottom={
+            <Container style={{ display:"flex"}}>
+              <div style={{margin:"auto"}}>
+                <Chart
+                chartType="LineChart"
+                data={acqsForChart} 
+                options={{title:"Recent Failed Resource Acquisitions",
+                  curveType:"function",
+                  legend:"none",
+                  intervals: {style: "area"}
+                }}
+                width={"100%"}
+                height={"230px"}
+                />
+              </div>
+              <div style={{margin:"auto"}}>
+                <Chart
+                chartType="LineChart"
+                data={lgnsForChart} 
+                options={{title:"Recent Failed Login Attempts",
+                  curveType:"function",
+                  legend:"none",
+                  intervals: {style: "area"}
+                }}
+                width={"100%"}
+                height={"230px"}
+                />
+              </div>
+            </Container>
+            
+            
           }
           bottom={
             <CoursesComponent courses={courses} />
