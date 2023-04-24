@@ -4,11 +4,11 @@ import CoursesComponent from '../components/courses'
 import StandardLayout from '../components/standard-layout'
 import Layout from '../components/layout';
 import Acquisitions from '../components/acqusitions';
-import Logins, { LoginWithStudentEmail } from '../components/logins';
+import Logins, { LoginJustDate, LoginWithStudentEmail } from '../components/logins';
 import { AugmentedAcquisition } from '../components/acqusitions';
 import Router, { useRouter } from "next/router";
 import { useUser } from '../lib/userUser';
-import { Button, Card, Container, Spacer, Table, Text } from '@nextui-org/react';
+import { Button, Card, Container, Spacer, Table, Text, Tooltip } from '@nextui-org/react';
 import NotLoggedIn from '../components/error/not-logged-in';
 import Chart from 'react-google-charts';
 import RAWRSpacer from '../components/spacer';
@@ -54,6 +54,8 @@ export default function Courses() {
   const [loginAggre, setLoginAggre] = useState<(string | number)[][]>()
 
   const [requests, setRequests] = useState<Array<StudentHelpRequest>>([])
+  const [acqsForChart, setacqsForChart] = useState<[[string,number|string]]>()
+  const [lgnsForChart, setlgnsForChart] = useState<[[string,number|string]]>()
 
   
 
@@ -79,6 +81,28 @@ export default function Courses() {
       const ids = courses.flatMap(course => course.students.map(stud => stud.id));
       const failed = tempAcqs.filter(v => !v.status)
       const success = tempAcqs.filter(v => v.status)
+      //Setting up data for line chart ACQUISITIONS
+      const myAcqThingy = new Map<string, number>();
+      const myAcqArrayThingy: [[date: string, count: number | string]] = [["date","count"]]
+      for(var val of tempAcqs){
+        const myArr = val.start_time.split("T")
+        if(val.status == false){
+          if(myAcqThingy.has(myArr[0]) == false){
+            myAcqThingy.set(myArr[0], 0)
+          }
+          myAcqThingy.set(myArr[0], myAcqThingy.get(myArr[0])+1)
+        }
+      }
+      //console.log(myThingy)
+      var mapAcqAsc = new Map([...myAcqThingy.entries()].sort());
+      mapAcqAsc.forEach((value: number, key: string) =>{
+        console.log(key, value)
+        myAcqArrayThingy.push([key, value])
+      })
+      console.log(myAcqArrayThingy)
+      setacqsForChart(myAcqArrayThingy)
+
+      
 
       // Set States
       setAquisAggre([
@@ -91,7 +115,7 @@ export default function Courses() {
 
         ; (async () => {
           const logins = await getLogins(ids)
-          console.log(logins)
+          //console.log(logins)
 
           const failed = logins.filter(v => !v.status)
           const success = logins.filter(v => v.status)
@@ -104,6 +128,27 @@ export default function Courses() {
           ]);
           setFailedLogins(failed)
           setSuccessLogins(success)
+          //Setting up data for line chart LOGINS
+          const myLgnThingy = new Map<string, number>();
+          const myLgnArrayThingy: [[date: string, count: number | string]] = [["date","count"]]
+          for(var val of logins){
+            const myArr = val.login_timestamp.split("T")
+            if(val.status == false){
+              if(myLgnThingy.has(myArr[0]) == false){
+                myLgnThingy.set(myArr[0], 0)
+              }
+              myLgnThingy.set(myArr[0], myLgnThingy.get(myArr[0])+1)
+            }
+          }
+          //console.log(myThingy)
+          var mapLgnAsc = new Map([...myLgnThingy.entries()].sort());
+          mapLgnAsc.forEach((value: number, key: string) =>{
+            console.log(key, value)
+            myLgnArrayThingy.push([key, value])
+          })
+          console.log(myLgnArrayThingy)
+          setlgnsForChart(myLgnArrayThingy)
+
         })()
     }
   }, [courses])
@@ -121,7 +166,9 @@ export default function Courses() {
         <StandardLayout
           topLeft={
             <>
-              <h4>Acqusition Info</h4>
+              <Tooltip title="Resource attempts are when a student tries to access a webpage and encounters an issue">
+              <h4>Resource Attempts</h4>
+              </Tooltip>
               <Chart
                 chartType="PieChart"
                 data={aquisAggre}
@@ -158,7 +205,7 @@ export default function Courses() {
                   
                   <Table.Row key={v.id}>
                     <Table.Cell>{v.id}</Table.Cell>
-                    <Table.Cell>{v.student.first_name}</Table.Cell>
+                    <Table.Cell><a target='_blank' href={"https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=" + v.student.email + "&su=Trouble Accessing Resources"}>{v.student.email}</a></Table.Cell>
                     <Table.Cell>{v.course.name}</Table.Cell>
                     <Table.Cell>{v.start_time.replace(/T/, ' ').replace(/\..+/, '')}</Table.Cell>
                     <Table.Cell>{v.url}</Table.Cell>
@@ -170,7 +217,9 @@ export default function Courses() {
         }
         topRight={
           <>
+            <Tooltip title="Failed login attempts">
             <h4>Login Info</h4>
+            </Tooltip>
             <Chart
               chartType="PieChart"
               data={loginAggre}
@@ -210,6 +259,38 @@ export default function Courses() {
                 )
               }} />
           </>
+        }
+        midBottom={
+          <Container style={{ display:"flex"}}>
+            <div style={{margin:"auto"}}>
+              <Chart
+              chartType="LineChart"
+              data={acqsForChart} 
+              options={{title:"Recent Failed Resource Acquisitions",
+                curveType:"function",
+                legend:"none",
+                intervals: {style: "area"}
+              }}
+              width={"100%"}
+              height={"230px"}
+              />
+            </div>
+            <div style={{margin:"auto"}}>
+              <Chart
+              chartType="LineChart"
+              data={lgnsForChart} 
+              options={{title:"Recent Failed Login Attempts",
+                curveType:"function",
+                legend:"none",
+                intervals: {style: "area"}
+              }}
+              width={"100%"}
+              height={"230px"}
+              />
+            </div>
+          </Container>
+          
+          
         }
         bottom={
           <CoursesComponent courses={courses} />

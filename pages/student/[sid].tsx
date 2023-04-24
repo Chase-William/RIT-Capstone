@@ -115,9 +115,13 @@ export default function Student({ data }) {
         </Container>
 
         }
-        bottom={
+        midBottom={
           <Container fluid>
             <Text h4>Name:</Text><Text>{`${student.last_name}, ${student.first_name}`}</Text>
+          </Container>
+        }
+        bottom={
+          <Container fluid>
             <Text h4>Email:</Text><Text>{student.email}</Text>
           </Container>
         }
